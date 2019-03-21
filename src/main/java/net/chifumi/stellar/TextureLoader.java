@@ -23,79 +23,79 @@ import net.chifumi.stellar.enums.WrapMode;
 import java.io.FileNotFoundException;
 
 public class TextureLoader {
-    private ImageFormat _rawImageFormat;
-    private ImageFormat _internalImageFormat;
-    private WrapMode _wrapS;
-    private WrapMode _wrapT;
-    private FilteringMode _filterMin;
-    private FilteringMode _filterMax;
+    private ImageFormat rawImageFormat;
+    private ImageFormat internalImageFormat;
+    private WrapMode wrapS;
+    private WrapMode wrapT;
+    private FilteringMode filterMin;
+    private FilteringMode filterMax;
 
     public TextureLoader() {
-        _rawImageFormat = ImageFormat.RGBA;
-        _internalImageFormat = ImageFormat.RGBA;
-        _wrapS = WrapMode.REPEAT;
-        _wrapT = WrapMode.REPEAT;
-        _filterMin = FilteringMode.NEAREST;
-        _filterMax = FilteringMode.NEAREST;
+        rawImageFormat = ImageFormat.RGBA;
+        internalImageFormat = ImageFormat.RGBA;
+        wrapS = WrapMode.REPEAT;
+        wrapT = WrapMode.REPEAT;
+        filterMin = FilteringMode.NEAREST;
+        filterMax = FilteringMode.NEAREST;
     }
 
     public Texture load(final String path) throws FileNotFoundException {
         final Texture loadTextureFile = ResourceLoader.LoadTextureFile(path);
-        loadTextureFile.setRawImageFormat(_rawImageFormat);
-        loadTextureFile.setInternalImageFormat(_internalImageFormat);
-        loadTextureFile.setWrapS(_wrapS);
-        loadTextureFile.setWrapT(_wrapT);
-        loadTextureFile.setFilterMin(_filterMin);
-        loadTextureFile.setFilterMax(_filterMax);
+        loadTextureFile.setRawImageFormat(rawImageFormat);
+        loadTextureFile.setInternalImageFormat(internalImageFormat);
+        loadTextureFile.setWrapS(wrapS);
+        loadTextureFile.setWrapT(wrapT);
+        loadTextureFile.setFilterMin(filterMin);
+        loadTextureFile.setFilterMax(filterMax);
         loadTextureFile.generate();
         return loadTextureFile;
     }
 
     public TextureLoader rawImageFormat(final ImageFormat format) {
-        _rawImageFormat = format;
+        rawImageFormat = format;
         return this;
     }
 
     public TextureLoader internalImageFormat(final ImageFormat format) {
-        _internalImageFormat = format;
+        internalImageFormat = format;
         return this;
     }
 
     public TextureLoader imageFormat(final ImageFormat format) {
-        _rawImageFormat = format;
-        _internalImageFormat = format;
+        rawImageFormat = format;
+        internalImageFormat = format;
         return this;
     }
 
     public TextureLoader wrapT(final WrapMode wrapMode) {
-        _wrapS = wrapMode;
+        wrapS = wrapMode;
         return this;
     }
 
     public TextureLoader wrapS(final WrapMode wrapMode) {
-        _wrapT = wrapMode;
+        wrapT = wrapMode;
         return this;
     }
 
     public TextureLoader wrap(final WrapMode wrapMode) {
-        _wrapS = wrapMode;
-        _wrapT = wrapMode;
+        wrapS = wrapMode;
+        wrapT = wrapMode;
         return this;
     }
 
     public TextureLoader filterMin(final FilteringMode filteringMode) {
-        _filterMin = filteringMode;
+        filterMin = filteringMode;
         return this;
     }
 
     public TextureLoader filterMax(final FilteringMode filteringMode) {
-        _filterMax = filteringMode;
+        filterMax = filteringMode;
         return this;
     }
 
     public TextureLoader filter(final FilteringMode filteringMode) {
-        _filterMin = filteringMode;
-        _filterMax = filteringMode;
+        filterMin = filteringMode;
+        filterMax = filteringMode;
         return this;
     }
 }
