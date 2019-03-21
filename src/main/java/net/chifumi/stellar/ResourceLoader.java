@@ -27,10 +27,11 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 
+@SuppressWarnings("SameParameterValue") // This class should be private for now
 enum ResourceLoader {
     ;
 
-    public static Shader loadShader(final String vertexPath, final String fragmentPath) throws FileNotFoundException {
+    static Shader loadShader(final String vertexPath, final String fragmentPath) throws FileNotFoundException {
         return loadShaderFile(vertexPath, fragmentPath);
     }
 
