@@ -1,3 +1,19 @@
+//    Copyright (C) 2019 Nattakit Hosapsin
+//
+//    This file is part of Stellar
+//    Stellar is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as
+//    published by the Free Software Foundation, either
+//    version 3 of the License, or (at your option) any later version.
+//
+//    Stellar is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public
+//    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
+
 package net.chifumi.stellar;
 
 import net.chifumi.stellar.enums.FilteringMode;
@@ -23,7 +39,7 @@ public class TextureLoader {
         _filterMax = FilteringMode.NEAREST;
     }
 
-    public Texture load(final String path) throws FileNotFoundException{
+    public Texture load(final String path) throws FileNotFoundException {
         final Texture loadTextureFile = ResourceLoader.LoadTextureFile(path);
         loadTextureFile.setRawImageFormat(_rawImageFormat);
         loadTextureFile.setInternalImageFormat(_internalImageFormat);

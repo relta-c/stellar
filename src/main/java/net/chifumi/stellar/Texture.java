@@ -1,15 +1,31 @@
+//    Copyright (C) 2019 Nattakit Hosapsin <delta@chifumi.net>
+//
+//    This file is part of Stellar
+//    Stellar is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as
+//    published by the Free Software Foundation, either
+//    version 3 of the License, or (at your option) any later version.
+//
+//    Stellar is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public
+//    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
+
 package net.chifumi.stellar;
 
 import net.chifumi.stellar.enums.FilteringMode;
 import net.chifumi.stellar.enums.ImageFormat;
 import net.chifumi.stellar.enums.WrapMode;
+import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
 
-import org.lwjgl.opengl.GL11;
-
 public class Texture {
     private final int id;
+    private final ByteBuffer data;
     private int width;
     private int height;
     private ImageFormat rawImageFormat;
@@ -18,7 +34,6 @@ public class Texture {
     private WrapMode wrapT;
     private FilteringMode filterMin;
     private FilteringMode filterMax;
-    private final ByteBuffer data;
 
     public Texture() {
         id = GL11.glGenTextures();
@@ -33,7 +48,7 @@ public class Texture {
         data = ByteBuffer.allocate(0);
     }
 
-    public Texture(final int width, final int height, final ByteBuffer data) {
+    Texture(final int width, final int height, final ByteBuffer data) {
         id = GL11.glGenTextures();
         this.width = width;
         this.height = height;
@@ -64,12 +79,12 @@ public class Texture {
         return rawImageFormat;
     }
 
-    public ImageFormat getInternalImageFormat() {
-        return internalImageFormat;
-    }
-
     void setRawImageFormat(final ImageFormat rawImageFormat) {
         this.rawImageFormat = rawImageFormat;
+    }
+
+    public ImageFormat getInternalImageFormat() {
+        return internalImageFormat;
     }
 
     void setInternalImageFormat(final ImageFormat internalImageFormat) {
@@ -108,12 +123,16 @@ public class Texture {
         this.filterMax = filterMax;
     }
 
-    void bind() {
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+    public void delete() {
+        GL11.glDeleteTextures(id);
     }
 
     private static void unbind() {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL11.GL_NONE);
+    }
+
+    void bind() {
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
     }
 
     void generate() {
@@ -121,15 +140,10 @@ public class Texture {
         final int rawFormatId = rawImageFormat.getId();
         final int internalFormatId = internalImageFormat.getId();
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrapS.getId());
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D,GL11. GL_TEXTURE_WRAP_T, wrapT.getId());
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrapT.getId());
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filterMin.getId());
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filterMax.getId());
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, internalFormatId, width, height, 0, rawFormatId, GL11.GL_UNSIGNED_BYTE, data);
-        //STBImage.stbi_image_free(data);
         unbind();
-    }
-
-    public void delete() {
-        GL11.glDeleteTextures(id);
     }
 }
