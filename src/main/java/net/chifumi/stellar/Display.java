@@ -130,7 +130,6 @@ public class Display {
 
         // Initialize OpenGl
         GL.createCapabilities();
-        //GL11.glViewport(0, 0, width, height);
         GL11.glViewport(0, 0, resolution.x, resolution.y);
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glEnable(GL11.GL_BLEND);
