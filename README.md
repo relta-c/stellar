@@ -1,3 +1,3 @@
 # stellar
 
-A simple java 2D application framework
+A simple java 2D game framework.
