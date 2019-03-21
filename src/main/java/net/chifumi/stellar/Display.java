@@ -1,3 +1,19 @@
+//    Copyright (C) 2019 Nattakit Hosapsin <delta@chifumi.net>
+//
+//    This file is part of Stellar
+//    Stellar is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as
+//    published by the Free Software Foundation, either
+//    version 3 of the License, or (at your option) any later version.
+//
+//    Stellar is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public
+//    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
+
 package net.chifumi.stellar;
 
 import org.joml.*;
@@ -12,9 +28,9 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Display {
     private static final float HALF_LEN = 0.5F;
     private final Vector2i resolution;
+    private final Queue<Sprite> drawQueue;
     private Vector2f cameraPosition;
     private Quaternionf cameraRotation;
-    private final Queue<Sprite> drawQueue;
     private long windowId;
     private int vaoId;
     private float zoom;
@@ -53,16 +69,16 @@ public class Display {
         return cameraPosition;
     }
 
+    public void setCameraPosition(final Vector2f cameraPosition) {
+        this.cameraPosition = cameraPosition;
+    }
+
     public float getCameraX() {
         return cameraPosition.x;
     }
 
     public float getCameraY() {
         return cameraPosition.y;
-    }
-
-    public void setCameraPosition(final Vector2f cameraPosition) {
-        this.cameraPosition = cameraPosition;
     }
 
     public void setCameraPosition(final float x, final float y) {
@@ -73,12 +89,12 @@ public class Display {
         return cameraRotation;
     }
 
-    public float getCameraEulerRotation() {
-        return cameraRotation.angle();
-    }
-
     public void setCameraRotation(final Quaternionf cameraRotation) {
         this.cameraRotation = cameraRotation;
+    }
+
+    public float getCameraEulerRotation() {
+        return cameraRotation.angle();
     }
 
     public void setCameraEulerRotation(final float angle) {
