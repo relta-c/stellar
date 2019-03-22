@@ -17,6 +17,7 @@
 package net.chifumi.stellar;
 
 public class Renderer {
+    // TODO : 2nd
     // TODO : Move all drawing function here
 
     // Display display

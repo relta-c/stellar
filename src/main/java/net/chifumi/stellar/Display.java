@@ -27,7 +27,7 @@ import static org.lwjgl.glfw.GLFW.*;
 
 public class Display {
     private final Vector2i resolution;
-    private final Queue<Sprite> drawQueue;
+    private final Queue<Sprite> drawQueue; // TODO : Make draw layer
     private final Camera camera;
     private long windowId;
     private int vaoId;
@@ -129,7 +129,7 @@ public class Display {
         GL11.glEnable(GL11.GL_CULL_FACE);
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make color customizable
+        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
 
         // Load default shaders
         try {
@@ -141,7 +141,7 @@ public class Display {
         shader.setUniform("sprite", 0);
 
         final int vboId;
-        final float[] rectVertices = {
+        final float[] rectVertices = { // TODO ; Move this to static helper class/enum
                 // Pos      // Tex
                 0.0f, 1.0f, 0.0f, 1.0f,
                 1.0f, 0.0f, 1.0f, 0.0f,

@@ -4,7 +4,7 @@ in vec2 fragTexCoords;
 
 out vec4 fragColor;
 
-uniform sampler2D spriteTex;
+uniform sampler2D spriteTex; // TODO : Check this
 uniform vec3 spriteColor;
 
 void main()

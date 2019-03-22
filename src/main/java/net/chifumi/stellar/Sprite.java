@@ -26,7 +26,7 @@ public class Sprite {
     private Vector2f position;
     private Vector2f size;
     private Quaternionf rotation;
-    private Vector3f color;
+    private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
     private Matrix4f model;
 
