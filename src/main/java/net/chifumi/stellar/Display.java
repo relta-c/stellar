@@ -26,31 +26,26 @@ import java.util.Queue;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Display {
-    private static final float HALF_LEN = 0.5F;
     private final Vector2i resolution;
     private final Queue<Sprite> drawQueue;
-    private Vector2f cameraPosition;
-    private Quaternionf cameraRotation;
+    private final Camera camera;
     private long windowId;
     private int vaoId;
     private float zoom;
     private String windowTitle;
-    private Matrix4f view;
     private Matrix4f projection;
     private Shader shader;
 
     public Display(final int width, final int height, final String windowTitle) {
         resolution = new Vector2i(width, height);
-        cameraPosition = new Vector2f();
-        cameraRotation = new Quaternionf();
         this.windowTitle = windowTitle;
         windowId = 0L;
         vaoId = 0;
         zoom = 1.0F;
-        updateViewMatrix();
         updateProjectionMatrix();
         shader = new Shader();
         drawQueue = new LinkedList<>();
+        camera = new Camera(new Vector2i(width, height));
     }
 
     public Vector2i getResolution() {
@@ -66,39 +61,39 @@ public class Display {
     }
 
     public Vector2f getCameraPosition() {
-        return cameraPosition;
+        return camera.getPosition();
     }
 
     public void setCameraPosition(final Vector2f cameraPosition) {
-        this.cameraPosition = cameraPosition;
+        camera.setPosition(cameraPosition);
     }
 
     public float getCameraX() {
-        return cameraPosition.x;
+        return camera.getPosition().x;
     }
 
     public float getCameraY() {
-        return cameraPosition.y;
+        return camera.getPosition().y;
     }
 
     public void setCameraPosition(final float x, final float y) {
-        cameraPosition = new Vector2f(x, y);
+        camera.setPosition(new Vector2f(x, y));
     }
 
     public Quaternionf getCameraRotation() {
-        return cameraRotation;
+        return camera.getRotation();
     }
 
     public void setCameraRotation(final Quaternionf cameraRotation) {
-        this.cameraRotation = cameraRotation;
+        camera.setRotation(cameraRotation);
     }
 
     public float getCameraEulerRotation() {
-        return cameraRotation.angle();
+        return camera.getRotation().angle();
     }
 
     public void setCameraEulerRotation(final float angle) {
-        cameraRotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
+        camera.setRotation(new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle));
     }
 
     public float getZoom() {
@@ -178,9 +173,9 @@ public class Display {
         glfwPollEvents(); // TODO : May need to move this to relevant class
 
         // Update matrix
-        updateViewMatrix();
+        camera.updateViewMatrix();
         updateProjectionMatrix();
-        shader.setUniform("view", view);
+        shader.setUniform("view", camera.getView());
         shader.setUniform("projection", projection);
 
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
@@ -218,17 +213,9 @@ public class Display {
                 1.0F);
     }
 
-    private void updateViewMatrix() {
-        view = new Matrix4f();
-        view.translate(new Vector3f(-cameraPosition.x, -cameraPosition.y, 0.0f));
-        view.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
-        view = view.rotate(cameraRotation);
-        view.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
-    }
-
     private void drawFromQueue(final Sprite sprite) {
         shader.setUniform("projection", projection);
-        shader.setUniform("view", view);
+        shader.setUniform("view", camera.getView());
         shader.setUniform("model", sprite.getModel());
         shader.setUniform("spriteColor", sprite.getColor());
 

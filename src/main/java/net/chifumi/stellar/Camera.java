@@ -16,10 +16,50 @@
 
 package net.chifumi.stellar;
 
+import org.joml.*;
+
 class Camera {
-    // TODO : Move camera related function here (this class should be private)
+    private static final float HALF_LEN = 0.5F;
+    private final Vector2i resolution;
+    private Vector2f position;
+    private Quaternionf rotation;
+    private Matrix4f view;
 
-    // float zoom
+    Camera(final Vector2i resolution) {
+        view = new Matrix4f();
+        position = new Vector2f();
+        this.resolution = resolution;
+        rotation = new Quaternionf();
+        updateViewMatrix();
+    }
 
-    // void setZoom
+    Vector2f getPosition() {
+        return position;
+    }
+
+    void setPosition(final Vector2f position) {
+        this.position = position;
+        updateViewMatrix();
+    }
+
+    Quaternionf getRotation() {
+        return rotation;
+    }
+
+    void setRotation(final Quaternionf rotation) {
+        this.rotation = rotation;
+        updateViewMatrix();
+    }
+
+    Matrix4f getView() {
+        return view;
+    }
+
+    void updateViewMatrix() {
+        view = new Matrix4f();
+        view.translate(new Vector3f(-position.x, -position.y, 0.0f));
+        view.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
+        view = view.rotate(rotation);
+        view.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
+    }
 }
