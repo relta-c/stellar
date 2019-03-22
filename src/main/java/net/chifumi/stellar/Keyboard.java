@@ -17,5 +17,6 @@
 package net.chifumi.stellar;
 
 public class Keyboard {
+    // TODO : 1st
     // TODO : Implement class for key state tracking
 }

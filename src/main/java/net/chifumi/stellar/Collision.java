@@ -17,5 +17,6 @@
 package net.chifumi.stellar;
 
 public class Collision {
+    // TODO : 3rd
     // TODO : Utility class for collision detection
 }
