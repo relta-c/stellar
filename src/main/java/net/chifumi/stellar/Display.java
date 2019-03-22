@@ -138,7 +138,6 @@ public class Display {
             System.err.println("shader file not found");
         }
         shader.use();
-        shader.setUniform("sprite", 0);
 
         final int vboId;
         final float[] rectVertices = { // TODO ; Move this to static helper class/enum
