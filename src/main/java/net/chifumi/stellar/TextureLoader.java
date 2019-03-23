@@ -32,7 +32,7 @@ public class TextureLoader {
 
     public TextureLoader() {
         rawImageFormat = ImageFormat.RGBA;
-        internalImageFormat = ImageFormat.RGBA;
+        internalImageFormat = ImageFormat.RGBA; // TODO : Automatic format detection
         wrapS = WrapMode.REPEAT;
         wrapT = WrapMode.REPEAT;
         filterMin = FilteringMode.NEAREST;
