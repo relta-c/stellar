@@ -18,7 +18,7 @@ package net.chifumi.stellar.enums;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public enum Keys {
+public enum Key {
     ZERO(GLFW_KEY_0),
     ONE(GLFW_KEY_1),
     TWO(GLFW_KEY_2),
@@ -131,7 +131,7 @@ public enum Keys {
 
     private final int id;
 
-    Keys(final int id) {
+    Key(final int id) {
         this.id = id;
     }
 

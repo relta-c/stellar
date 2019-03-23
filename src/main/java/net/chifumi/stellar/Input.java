@@ -17,7 +17,7 @@
 package net.chifumi.stellar;
 
 import net.chifumi.stellar.enums.KeyState;
-import net.chifumi.stellar.enums.Keys;
+import net.chifumi.stellar.enums.Key;
 
 import java.util.Collections;
 import java.util.EnumMap;
@@ -27,36 +27,36 @@ import java.util.Map;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Input {
-    private final Map<Keys, KeyState> state;
-    private final Map<Integer, Keys> keySet;
+    private final Map<Key, KeyState> state;
+    private final Map<Integer, Key> keySet;
 
     public Input(final Display display) {
         final long window = display.getWindowId();
         glfwMakeContextCurrent(window);
         glfwSetKeyCallback(window, this::keyCallback);
-        state = new EnumMap<>(Keys.class);
+        state = new EnumMap<>(Key.class);
         keySet = new HashMap<>(GLFW_KEY_LAST);
-        final Keys[] keyValue = Keys.values();
-        for (final Keys key : keyValue) {
+        final Key[] keyValue = Key.values();
+        for (final Key key : keyValue) {
             keySet.put(key.getId(), key);
         }
     }
 
-    public Map<Keys, KeyState> getState() {
+    public Map<Key, KeyState> getState() {
         return Collections.unmodifiableMap(state);
     }
 
-    public KeyState getKey(final Keys key) {
+    public KeyState getKey(final Key key) {
         return state.get(key);
     }
 
-    private Keys keyFromId(final int id) {
+    private Key keyFromId(final int id) {
         return keySet.get(id);
     }
 
     @SuppressWarnings("unused")
     private void keyCallback(final long window, final int key, final int scancode, final int action, final int mode) {
-        final Keys keyEnum = keyFromId(key);
+        final Key keyEnum = keyFromId(key);
         if (action == GLFW_PRESS) {
             state.put(keyEnum, KeyState.PRESS);
         } else if (action == GLFW_RELEASE) {
