@@ -16,6 +16,7 @@
 
 package net.chifumi.stellar;
 
+import net.chifumi.stellar.enums.Primitive;
 import org.joml.Matrix4f;
 import org.joml.Vector2i;
 import org.lwjgl.opengl.*;
@@ -45,6 +46,7 @@ public class Display {
         drawQueue = new LinkedList<>();
         camera = new Camera(new Vector2i(width, height));
         updateProjectionMatrix();
+        init();
     }
 
     long getWindowId() {
@@ -72,7 +74,7 @@ public class Display {
         this.windowTitle = windowTitle;
     }
 
-    public void init() throws FileNotFoundException {
+    private void init() {
         // Initialize glfw and create window
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -91,25 +93,21 @@ public class Display {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
 
         // Load default shaders
-        shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl");
+        try {
+            shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl");
+        } catch (final FileNotFoundException e) {
+            //noinspection CallToPrintStackTrace
+            e.printStackTrace();
+        }
         shader.use();
 
         final int vboId;
-        final float[] rectVertices = { // TODO ; Move this to static helper class/enum
-                // Pos      // Tex
-                0.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 0.0f
-        };
 
         vaoId = GL30.glGenVertexArrays();
         vboId = GL15.glGenBuffers();
 
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboId);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, rectVertices, GL15.GL_STATIC_DRAW);
+        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, Primitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
 
         GL30.glBindVertexArray(vaoId);
         GL20.glEnableVertexAttribArray(0);
