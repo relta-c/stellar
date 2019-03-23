@@ -23,6 +23,7 @@ import org.joml.Vector3f;
 
 public class Sprite {
     private static final float HALF_LEN = 0.5f;
+    private static final int TWO_RADIAN_DEGREE = 360;
     private Vector2f position;
     private Vector2f size;
     private Quaternionf rotation;
@@ -76,11 +77,15 @@ public class Sprite {
         updateModelMatrix();
     }
 
-    public float getEulerRotation() {
-        return rotation.angle();
+    public double getDegreesRotation() {
+        double degree = Math.toDegrees(rotation.angle());
+        if (rotation.z <= 0 ^ rotation.w <= 0) {
+            degree = TWO_RADIAN_DEGREE - degree;
+        }
+        return degree;
     }
 
-    public void setEulerRotation(final float angle) {
+    public void setDegreesRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
         updateModelMatrix();
     }
