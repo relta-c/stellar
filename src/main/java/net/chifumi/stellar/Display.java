@@ -16,7 +16,8 @@
 
 package net.chifumi.stellar;
 
-import org.joml.*;
+import org.joml.Matrix4f;
+import org.joml.Vector2i;
 import org.lwjgl.opengl.*;
 
 import java.io.FileNotFoundException;
@@ -28,11 +29,10 @@ import static org.lwjgl.glfw.GLFW.*;
 public class Display {
     private final Vector2i resolution;
     private final Queue<Sprite> drawQueue; // TODO : Make draw layer
-    private final Camera camera;
     private long windowId;
     private int vaoId;
-    private float zoom;
     private String windowTitle;
+    private Camera camera;
     private Matrix4f projection;
     private Shader shader;
 
@@ -41,67 +41,22 @@ public class Display {
         this.windowTitle = windowTitle;
         windowId = 0L;
         vaoId = 0;
-        zoom = 1.0F;
-        updateProjectionMatrix();
         shader = new Shader();
         drawQueue = new LinkedList<>();
         camera = new Camera(new Vector2i(width, height));
+        updateProjectionMatrix();
     }
 
     public Vector2i getResolution() {
         return resolution;
     }
 
-    public int getWidth() {
-        return resolution.x;
+    public Camera getCamera() {
+        return camera;
     }
 
-    public int getHeight() {
-        return resolution.y;
-    }
-
-    public Vector2f getCameraPosition() {
-        return camera.getPosition();
-    }
-
-    public void setCameraPosition(final Vector2f cameraPosition) {
-        camera.setPosition(cameraPosition);
-    }
-
-    public float getCameraX() {
-        return camera.getPosition().x;
-    }
-
-    public float getCameraY() {
-        return camera.getPosition().y;
-    }
-
-    public void setCameraPosition(final float x, final float y) {
-        camera.setPosition(new Vector2f(x, y));
-    }
-
-    public Quaternionf getCameraRotation() {
-        return camera.getRotation();
-    }
-
-    public void setCameraRotation(final Quaternionf cameraRotation) {
-        camera.setRotation(cameraRotation);
-    }
-
-    public float getCameraEulerRotation() {
-        return camera.getRotation().angle();
-    }
-
-    public void setCameraEulerRotation(final float angle) {
-        camera.setRotation(new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle));
-    }
-
-    public float getZoom() {
-        return zoom;
-    }
-
-    public void setZoom(final float zoom) {
-        this.zoom = zoom;
+    public void setCamera(final Camera camera) {
+        this.camera = camera;
     }
 
     public CharSequence getWindowTitle() {
@@ -113,7 +68,7 @@ public class Display {
         this.windowTitle = windowTitle;
     }
 
-    public void init() throws FileNotFoundException{
+    public void init() throws FileNotFoundException {
         // Initialize glfw and create window
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -190,20 +145,12 @@ public class Display {
         return glfwWindowShouldClose(windowId);
     }
 
-    private float getZoomX(final float zoom) {
-        return (resolution.x * zoom) - resolution.x;
-    }
-
-    private float getZoomY(final float zoom) {
-        return (resolution.y * zoom) - resolution.y;
-    }
-
     private void updateProjectionMatrix() {
         projection = new Matrix4f().ortho(
-                0.0F - getZoomX(zoom),
-                resolution.x + getZoomX(zoom),
-                resolution.y + getZoomY(zoom),
-                0.0F - getZoomY(zoom),
+                0.0F - camera.getZoomX(),
+                resolution.x + camera.getZoomX(),
+                resolution.y + camera.getZoomY(),
+                0.0F - camera.getZoomY(),
                 -1.0F,
                 1.0F);
     }

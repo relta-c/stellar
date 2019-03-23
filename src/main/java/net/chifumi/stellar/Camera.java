@@ -18,37 +18,64 @@ package net.chifumi.stellar;
 
 import org.joml.*;
 
-class Camera {
+public class Camera {
     private static final float HALF_LEN = 0.5F;
     private final Vector2i resolution;
     private Vector2f position;
     private Quaternionf rotation;
     private Matrix4f view;
+    private float zoom;
 
-    Camera(final Vector2i resolution) {
+    @SuppressWarnings("WeakerAccess")
+    public Camera(final Vector2i resolution) {
         view = new Matrix4f();
         position = new Vector2f();
         this.resolution = resolution;
         rotation = new Quaternionf();
         updateViewMatrix();
+        zoom = 1.0F;
     }
 
-    Vector2f getPosition() {
+    public Vector2f getPosition() {
         return position;
     }
 
-    void setPosition(final Vector2f position) {
+    public void setPosition(final Vector2f position) {
         this.position = position;
         updateViewMatrix();
     }
 
-    Quaternionf getRotation() {
+    public Quaternionf getRotation() {
         return rotation;
     }
 
-    void setRotation(final Quaternionf rotation) {
+    public float getEulerRotation() {
+        return rotation.angle(); // TODO : This may be radian
+    }
+
+    public void setRotation(final Quaternionf rotation) {
         this.rotation = rotation;
         updateViewMatrix();
+    }
+
+    public void setCameraEulerRotation(final float angle) {
+        rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
+    }
+
+    public float getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(final float zoom) {
+        this.zoom = zoom;
+    }
+
+    float getZoomX() {
+        return (resolution.x * zoom) - resolution.x;
+    }
+
+    float getZoomY() {
+        return (resolution.y * zoom) - resolution.y;
     }
 
     Matrix4f getView() {
