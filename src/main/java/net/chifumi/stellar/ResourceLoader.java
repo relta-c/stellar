@@ -69,13 +69,13 @@ enum ResourceLoader {
     }
 
     private static String loadTextFile(final String path) throws FileNotFoundException {
-        String result = null;
+        final String result;
         final InputStream fileStream = loadResourceFile(path);
         try {
             result = IOUtils.toString(fileStream, StandardCharsets.UTF_8);
             fileStream.close();
         } catch (final IOException e) {
-            System.err.println("failed to load file : " + path);
+            throw new FileNotFoundException("failed to load file : " + path);
         }
         if (result == null) {
             throw new FileNotFoundException("failed to load file : " + path);
