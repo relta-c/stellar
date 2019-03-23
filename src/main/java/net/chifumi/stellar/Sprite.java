@@ -77,8 +77,9 @@ public class Sprite {
         updateModelMatrix();
     }
 
-    public double getDegreesRotation() {
-        double degree = Math.toDegrees(rotation.angle());
+    @SuppressWarnings("NumericCastThatLosesPrecision")
+    public float getDegreesRotation() {
+        float degree = (float) Math.toDegrees(rotation.angle());
         if (rotation.z <= 0 ^ rotation.w <= 0) {
             degree = TWO_RADIAN_DEGREE - degree;
         }
