@@ -113,7 +113,7 @@ public class Display {
         this.windowTitle = windowTitle;
     }
 
-    public void init() {
+    public void init() throws FileNotFoundException{
         // Initialize glfw and create window
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -132,11 +132,7 @@ public class Display {
         GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
 
         // Load default shaders
-        try {
-            shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl");
-        } catch (final FileNotFoundException e) {
-            System.err.println("shader file not found");
-        }
+        shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl");
         shader.use();
 
         final int vboId;

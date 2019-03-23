@@ -85,14 +85,14 @@ class Shader {
             if (success == GL11.GL_FALSE) {
                 final String shaderTypeString = ShaderType.PROGRAM.getName();
                 infoLog = GL20.glGetProgramInfoLog(object);
-                System.err.println(shaderTypeString + " error at link time : " + infoLog);
+                throw new IllegalStateException(shaderTypeString + " error at compile time : " + infoLog);
             }
         } else {
             success = GL20.glGetShaderi(object, GL20.GL_COMPILE_STATUS);
             if (success == GL11.GL_FALSE) {
                 final String shaderTypeString = type.getName();
                 infoLog = GL20.glGetShaderInfoLog(object);
-                System.err.println(shaderTypeString + " error at compile time : " + infoLog);
+                throw new IllegalStateException(shaderTypeString + " error at compile time : " + infoLog);
             }
         }
     }
