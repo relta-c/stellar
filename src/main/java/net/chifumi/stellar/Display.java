@@ -47,6 +47,10 @@ public class Display {
         updateProjectionMatrix();
     }
 
+    long getWindowId() {
+        return windowId;
+    }
+
     public Vector2i getResolution() {
         return resolution;
     }
@@ -119,8 +123,7 @@ public class Display {
 
     public void update() {
         glfwMakeContextCurrent(windowId);
-
-        glfwPollEvents(); // TODO : May need to move this to relevant class
+        glfwPollEvents();
 
         // Update matrix
         camera.updateViewMatrix();
@@ -143,6 +146,10 @@ public class Display {
 
     public boolean shouldClose() {
         return glfwWindowShouldClose(windowId);
+    }
+
+    public void close() {
+        glfwSetWindowShouldClose(windowId, true);
     }
 
     private void updateProjectionMatrix() {
