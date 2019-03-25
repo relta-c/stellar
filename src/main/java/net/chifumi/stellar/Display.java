@@ -17,7 +17,6 @@
 package net.chifumi.stellar;
 
 import net.chifumi.stellar.enums.Primitive;
-import org.joml.Matrix4f;
 import org.joml.Vector2i;
 import org.lwjgl.opengl.*;
 
@@ -27,6 +26,8 @@ import java.util.Queue;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+import static org.lwjgl.opengl.GL33.*;
+
 public class Display {
     private final Vector2i resolution;
     private final Queue<Sprite> drawQueue; // TODO : Make draw layer
@@ -34,7 +35,6 @@ public class Display {
     private int vaoId;
     private String windowTitle;
     private Camera camera;
-    private Matrix4f projection;
     private Shader shader;
 
     public Display(final int width, final int height, final String windowTitle) {
@@ -45,7 +45,6 @@ public class Display {
         shader = new Shader();
         drawQueue = new LinkedList<>();
         camera = new Camera(new Vector2i(width, height));
-        updateProjectionMatrix();
         init();
     }
 
@@ -125,11 +124,11 @@ public class Display {
 
         // Update matrix
         camera.updateViewMatrix();
-        updateProjectionMatrix();
+        camera.updateProjectionMatrix();
         shader.setUniform("view", camera.getView());
-        shader.setUniform("projection", projection);
+        shader.setUniform("projection", camera.getProjection());
 
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT);
 
         while (!drawQueue.isEmpty()) {
             drawFromQueue(drawQueue.poll());
@@ -150,18 +149,9 @@ public class Display {
         glfwSetWindowShouldClose(windowId, true);
     }
 
-    private void updateProjectionMatrix() {
-        projection = new Matrix4f().ortho(
-                0.0F - camera.getZoomX(),
-                resolution.x + camera.getZoomX(),
-                resolution.y + camera.getZoomY(),
-                0.0F - camera.getZoomY(),
-                -1.0F,
-                1.0F);
-    }
 
     private void drawFromQueue(final Sprite sprite) {
-        shader.setUniform("projection", projection);
+        shader.setUniform("projection", camera.getProjection());
         shader.setUniform("view", camera.getView());
         shader.setUniform("model", sprite.getModel());
         shader.setUniform("spriteColor", sprite.getColor());
@@ -171,7 +161,5 @@ public class Display {
 
         GL30.glBindVertexArray(vaoId);
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 6);
-        GL30.glBindVertexArray(GL11.GL_NONE);
-        GL13.glActiveTexture(GL11.GL_NONE);
     }
 }
