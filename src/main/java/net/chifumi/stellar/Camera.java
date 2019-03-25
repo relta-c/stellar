@@ -23,17 +23,20 @@ public class Camera {
     private final Vector2i resolution;
     private Vector2f position;
     private Quaternionf rotation;
-    private Matrix4f view;
     private float zoom;
+    private Matrix4f view;
+    private Matrix4f projection;
 
     @SuppressWarnings("WeakerAccess")
     public Camera(final Vector2i resolution) {
         view = new Matrix4f();
+        projection = new Matrix4f();
         position = new Vector2f();
         this.resolution = resolution;
         rotation = new Quaternionf();
-        updateViewMatrix();
         zoom = 1.0F;
+        updateViewMatrix();
+        updateProjectionMatrix();
     }
 
     public Vector2f getPosition() {
@@ -42,23 +45,21 @@ public class Camera {
 
     public void setPosition(final Vector2f position) {
         this.position = position;
-        updateViewMatrix();
     }
 
     public Quaternionf getRotation() {
         return rotation;
     }
 
-    public float getEulerRotation() {
-        return rotation.angle(); // TODO : This may be radian
+    public float getDegreesRotation() {
+        return rotation.angle(); // TODO : This is radian
     }
 
     public void setRotation(final Quaternionf rotation) {
         this.rotation = rotation;
-        updateViewMatrix();
     }
 
-    public void setCameraEulerRotation(final float angle) {
+    public void setDegreesRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
     }
 
@@ -82,11 +83,25 @@ public class Camera {
         return view;
     }
 
+    Matrix4f getProjection() {
+        return projection;
+    }
+
     void updateViewMatrix() {
         view = new Matrix4f();
         view.translate(new Vector3f(-position.x, -position.y, 0.0f));
         view.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
         view = view.rotate(rotation);
         view.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
+    }
+
+    void updateProjectionMatrix() {
+        projection = new Matrix4f().ortho(
+                0.0F - getZoomX(),
+                resolution.x + getZoomX(),
+                resolution.y + getZoomY(),
+                0.0F - getZoomY(),
+                -1.0F,
+                1.0F);
     }
 }
