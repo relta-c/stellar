@@ -16,16 +16,13 @@
 
 package net.chifumi.stellar.enums;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL14;
+import static org.lwjgl.opengl.GL33.*;
 
 public enum WrapMode {
-    REPEAT(GL11.GL_REPEAT),
-    CLAMP_TO_EDGE(GL12.GL_CLAMP_TO_EDGE),
-    CLAMP_TO_BORDER(GL13.GL_CLAMP_TO_BORDER),
-    MIRROR_REPEAT(GL14.GL_MIRRORED_REPEAT);
+    REPEAT(GL_REPEAT),
+    CLAMP_TO_EDGE(GL_CLAMP_TO_EDGE),
+    CLAMP_TO_BORDER(GL_CLAMP_TO_BORDER),
+    MIRROR_REPEAT(GL_MIRRORED_REPEAT);
 
     private final int id;
 

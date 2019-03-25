@@ -19,9 +19,10 @@ package net.chifumi.stellar;
 import net.chifumi.stellar.enums.FilteringMode;
 import net.chifumi.stellar.enums.ImageFormat;
 import net.chifumi.stellar.enums.WrapMode;
-import org.lwjgl.opengl.GL11;
 
 import java.nio.ByteBuffer;
+
+import static org.lwjgl.opengl.GL33.*;
 
 public class Texture {
     private final int id;
@@ -36,7 +37,7 @@ public class Texture {
     private FilteringMode filterMax;
 
     public Texture() {
-        id = GL11.glGenTextures();
+        id = glGenTextures();
         width = 0;
         width = 0;
         rawImageFormat = ImageFormat.RGB;
@@ -49,7 +50,7 @@ public class Texture {
     }
 
     Texture(final int width, final int height, final ByteBuffer data) {
-        id = GL11.glGenTextures();
+        id = glGenTextures();
         this.width = width;
         this.height = height;
         rawImageFormat = ImageFormat.RGBA;
@@ -124,26 +125,26 @@ public class Texture {
     }
 
     public void delete() {
-        GL11.glDeleteTextures(id);
+        glDeleteTextures(id);
     }
 
     private static void unbind() {
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, GL11.GL_NONE);
+        glBindTexture(GL_TEXTURE_2D, GL_NONE);
     }
 
     void bind() {
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
+        glBindTexture(GL_TEXTURE_2D, id);
     }
 
     void generate() {
         bind();
         final int rawFormatId = rawImageFormat.getId();
         final int internalFormatId = internalImageFormat.getId();
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, wrapS.getId());
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, wrapT.getId());
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, filterMin.getId());
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, filterMax.getId());
-        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, internalFormatId, width, height, 0, rawFormatId, GL11.GL_UNSIGNED_BYTE, data);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS.getId());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT.getId());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMin.getId());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMax.getId());
+        glTexImage2D(GL_TEXTURE_2D, 0, internalFormatId, width, height, 0, rawFormatId, GL_UNSIGNED_BYTE, data);
         unbind();
     }
 }
