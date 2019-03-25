@@ -14,29 +14,9 @@
 //    You should have received a copy of the GNU Lesser General Public
 //    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
 
-package net.chifumi.stellar.enums;
+package net.chifumi.stellar;
 
-import static org.lwjgl.opengl.GL33.*;
-
-public enum ShaderType {
-    VERTEX(GL_VERTEX_SHADER, "Vertex Shader"),
-    FRAGMENT(GL_FRAGMENT_SHADER, "Fragment Shader"),
-    GEOMETRY(GL_GEOMETRY_SHADER, "Geometry Shader"),
-    PROGRAM(GL_NONE, "Shader Program");
-
-    private final int id;
-    private final String name;
-
-    ShaderType(final int id, final String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
+public enum KeyState {
+    PRESS,
+    RELEASE
 }

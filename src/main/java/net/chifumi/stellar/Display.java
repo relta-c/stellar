@@ -16,7 +16,6 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.Primitive;
 import org.joml.Vector2i;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL15;
@@ -140,7 +139,7 @@ public class Display {
         vboId = glGenBuffers();
 
         glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBufferData(GL_ARRAY_BUFFER, Primitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, StaticPrimitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
 
         glBindVertexArray(vaoId);
         glEnableVertexAttribArray(0);

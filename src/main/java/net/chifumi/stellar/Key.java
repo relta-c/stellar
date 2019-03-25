@@ -14,7 +14,7 @@
 //    You should have received a copy of the GNU Lesser General Public
 //    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
 
-package net.chifumi.stellar.enums;
+package net.chifumi.stellar;
 
 import static org.lwjgl.glfw.GLFW.*;
 

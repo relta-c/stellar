@@ -14,23 +14,38 @@
 //    You should have received a copy of the GNU Lesser General Public
 //    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
 
-package net.chifumi.stellar.enums;
+package net.chifumi.stellar;
 
 import static org.lwjgl.opengl.GL33.*;
 
-public enum WrapMode {
-    REPEAT(GL_REPEAT),
-    CLAMP_TO_EDGE(GL_CLAMP_TO_EDGE),
-    CLAMP_TO_BORDER(GL_CLAMP_TO_BORDER),
-    MIRROR_REPEAT(GL_MIRRORED_REPEAT);
+public enum StaticPrimitive implements Primitive {
+    RECT(new float[]{
+            0.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 1.0f, 1.0f,
+            1.0f, 0.0f, 1.0f, 0.0f}, 6, GL_TRIANGLES);
 
-    private final int id;
+    private final float[] vertices;
+    private final int verticesNum;
+    private final int drawMode;
 
-    WrapMode(final int id) {
-        this.id = id;
+    StaticPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
+        this.vertices = vertices;
+        this.verticesNum = verticesNum;
+        this.drawMode = drawMode;
     }
 
-    public int getId() {
-        return id;
+    public float[] getVertices() {
+        return vertices.clone();
+    }
+
+    public int getDrawMode() {
+        return drawMode;
+    }
+
+    public int getVerticesNum() {
+        return verticesNum;
     }
 }

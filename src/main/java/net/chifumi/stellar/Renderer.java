@@ -16,9 +16,7 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.Primitive;
-
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL33.*;
@@ -28,10 +26,9 @@ public class Renderer {
     private final Map<Primitive, Integer> vbo;
 
     public Renderer(final Display display) {
-        vao = new EnumMap<>(Primitive.class);
-        vbo = new EnumMap<>(Primitive.class);
+        vao = new HashMap<>();
+        vbo = new HashMap<>();
     }
-
 
     private void init(final Primitive primitive) {
         vao.put(primitive, glGenVertexArrays());
@@ -51,7 +48,7 @@ public class Renderer {
     }
 
     public void draw(final Display display, final Sprite sprite) {
-        final Primitive primitive = sprite.getPrimitive();
+        final Primitive primitive = sprite.getStaticPrimitive();
         final Shader shader = display.getShader();
 
         if (vao.get(primitive) == null) {
@@ -68,6 +65,6 @@ public class Renderer {
         sprite.getTexture().bind();
 
         glBindVertexArray(vao.get(primitive));
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());
     }
 }
