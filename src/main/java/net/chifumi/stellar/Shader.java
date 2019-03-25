@@ -16,7 +16,6 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.ShaderType;
 import org.joml.Matrix4fc;
 import org.joml.Vector2fc;
 import org.joml.Vector3fc;

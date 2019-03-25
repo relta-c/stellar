@@ -16,10 +16,6 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.FilteringMode;
-import net.chifumi.stellar.enums.ImageFormat;
-import net.chifumi.stellar.enums.WrapMode;
-
 import java.io.FileNotFoundException;
 
 public class TextureLoader {

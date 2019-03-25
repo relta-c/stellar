@@ -14,24 +14,29 @@
 //    You should have received a copy of the GNU Lesser General Public
 //    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
 
-package net.chifumi.stellar.enums;
+package net.chifumi.stellar;
 
-public enum Primitive {
-    RECT(new float[]{
-            0.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 1.0f, 1.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f});
+import static org.lwjgl.opengl.GL33.*;
 
-    private final float[] vertices;
+public enum ShaderType {
+    VERTEX(GL_VERTEX_SHADER, "Vertex Shader"),
+    FRAGMENT(GL_FRAGMENT_SHADER, "Fragment Shader"),
+    GEOMETRY(GL_GEOMETRY_SHADER, "Geometry Shader"),
+    PROGRAM(GL_NONE, "Shader Program");
 
-    Primitive(final float[] vertices) {
-        this.vertices = vertices;
+    private final int id;
+    private final String name;
+
+    ShaderType(final int id, final String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public float[] getVertices() {
-        return vertices.clone();
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

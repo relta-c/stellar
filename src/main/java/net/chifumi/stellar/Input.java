@@ -16,9 +16,6 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.KeyState;
-import net.chifumi.stellar.enums.Key;
-
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;

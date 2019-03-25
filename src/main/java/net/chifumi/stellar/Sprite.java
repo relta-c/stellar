@@ -16,7 +16,6 @@
 
 package net.chifumi.stellar;
 
-import net.chifumi.stellar.enums.Primitive;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
@@ -31,7 +30,7 @@ public class Sprite {
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
     private Matrix4f model;
-    private Primitive primitive;
+    private StaticPrimitive staticPrimitive;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
@@ -39,7 +38,7 @@ public class Sprite {
         rotation = new Quaternionf();
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
-        primitive = Primitive.RECT;
+        staticPrimitive = StaticPrimitive.RECT;
         updateModelMatrix();
     }
 
@@ -120,8 +119,8 @@ public class Sprite {
         return model;
     }
 
-    Primitive getPrimitive() {
-        return primitive;
+    StaticPrimitive getStaticPrimitive() {
+        return staticPrimitive;
     }
 
     private void updateModelMatrix() {
