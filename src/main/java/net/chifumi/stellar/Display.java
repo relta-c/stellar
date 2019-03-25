@@ -18,15 +18,15 @@ package net.chifumi.stellar;
 
 import net.chifumi.stellar.enums.Primitive;
 import org.joml.Vector2i;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL15;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL33.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL33.glClear;
+import static org.lwjgl.opengl.GL33.*;
 
 public class Display {
     private final Vector2i resolution;
@@ -79,13 +79,12 @@ public class Display {
         shader.setUniform("view", camera.getView());
         shader.setUniform("projection", camera.getProjection());
 
-        glClear(GL_COLOR_BUFFER_BIT);
-
         while (!drawQueue.isEmpty()) {
             drawFromQueue(drawQueue.poll());
         }
 
         glfwSwapBuffers(windowId);
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 
     public void draw(final Sprite sprite) {
@@ -104,23 +103,27 @@ public class Display {
         return windowId;
     }
 
+    Shader getShader() {
+        return shader;
+    }
+
     private void init() {
         // Initialize glfw and create window
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_RESIZABLE, GL11.GL_FALSE);
+        glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
         windowId = glfwCreateWindow(resolution.x, resolution.y, windowTitle, 0L, 0L);
 
         glfwMakeContextCurrent(windowId);  // TODO : Use this in every window update
 
         // Initialize OpenGl
         GL.createCapabilities();
-        GL11.glViewport(0, 0, resolution.x, resolution.y);
-        GL11.glEnable(GL11.GL_CULL_FACE);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
+        glViewport(0, 0, resolution.x, resolution.y);
+        glEnable(GL_CULL_FACE);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
 
         // Load default shaders
         try {
@@ -133,20 +136,20 @@ public class Display {
 
         final int vboId;
 
-        vaoId = GL30.glGenVertexArrays();
-        vboId = GL15.glGenBuffers();
+        vaoId = glGenVertexArrays();
+        vboId = glGenBuffers();
 
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vboId);
-        GL15.glBufferData(GL15.GL_ARRAY_BUFFER, Primitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, vboId);
+        glBufferData(GL_ARRAY_BUFFER, Primitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
 
-        GL30.glBindVertexArray(vaoId);
-        GL20.glEnableVertexAttribArray(0);
-        GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT, false, 4 << 2, 0L);
-        GL20.glEnableVertexAttribArray(1);
-        GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT, false, 4 << 2, 0L);
+        glBindVertexArray(vaoId);
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 << 2, 0L);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 << 2, 0L);
 
-        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, GL11.GL_NONE);
-        GL30.glBindVertexArray(GL11.GL_NONE);
+        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
+        glBindVertexArray(GL_NONE);
     }
 
     private void drawFromQueue(final Sprite sprite) {
@@ -155,10 +158,10 @@ public class Display {
         shader.setUniform("model", sprite.getModel());
         shader.setUniform("spriteColor", sprite.getColor());
 
-        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE0);
         sprite.getTexture().bind();
 
-        GL30.glBindVertexArray(vaoId);
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 6);
+        glBindVertexArray(vaoId);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }
