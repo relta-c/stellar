@@ -25,8 +25,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.lwjgl.glfw.GLFW.*;
-
-import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL33.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL33.glClear;
 
 public class Display {
     private final Vector2i resolution;
@@ -48,10 +48,6 @@ public class Display {
         init();
     }
 
-    long getWindowId() {
-        return windowId;
-    }
-
     public Vector2i getResolution() {
         return resolution;
     }
@@ -71,6 +67,41 @@ public class Display {
     public void setWindowTitle(final String windowTitle) {
         glfwSetWindowTitle(windowId, windowTitle);
         this.windowTitle = windowTitle;
+    }
+
+    public void update() {
+        glfwMakeContextCurrent(windowId);
+        glfwPollEvents();
+
+        // Update matrix
+        camera.updateViewMatrix();
+        camera.updateProjectionMatrix();
+        shader.setUniform("view", camera.getView());
+        shader.setUniform("projection", camera.getProjection());
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        while (!drawQueue.isEmpty()) {
+            drawFromQueue(drawQueue.poll());
+        }
+
+        glfwSwapBuffers(windowId);
+    }
+
+    public void draw(final Sprite sprite) {
+        drawQueue.add(sprite);
+    }
+
+    public boolean shouldClose() {
+        return glfwWindowShouldClose(windowId);
+    }
+
+    public void close() {
+        glfwSetWindowShouldClose(windowId, true);
+    }
+
+    long getWindowId() {
+        return windowId;
     }
 
     private void init() {
@@ -117,38 +148,6 @@ public class Display {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, GL11.GL_NONE);
         GL30.glBindVertexArray(GL11.GL_NONE);
     }
-
-    public void update() {
-        glfwMakeContextCurrent(windowId);
-        glfwPollEvents();
-
-        // Update matrix
-        camera.updateViewMatrix();
-        camera.updateProjectionMatrix();
-        shader.setUniform("view", camera.getView());
-        shader.setUniform("projection", camera.getProjection());
-
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        while (!drawQueue.isEmpty()) {
-            drawFromQueue(drawQueue.poll());
-        }
-
-        glfwSwapBuffers(windowId);
-    }
-
-    public void draw(final Sprite sprite) {
-        drawQueue.add(sprite);
-    }
-
-    public boolean shouldClose() {
-        return glfwWindowShouldClose(windowId);
-    }
-
-    public void close() {
-        glfwSetWindowShouldClose(windowId, true);
-    }
-
 
     private void drawFromQueue(final Sprite sprite) {
         shader.setUniform("projection", camera.getProjection());

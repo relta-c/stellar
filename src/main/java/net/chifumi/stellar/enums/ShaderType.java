@@ -16,15 +16,13 @@
 
 package net.chifumi.stellar.enums;
 
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL32;
+import static org.lwjgl.opengl.GL33.*;
 
 public enum ShaderType {
-    VERTEX(GL20.GL_VERTEX_SHADER, "Vertex Shader"),
-    FRAGMENT(GL20.GL_FRAGMENT_SHADER, "Fragment Shader"),
-    GEOMETRY(GL32.GL_GEOMETRY_SHADER, "Geometry Shader"),
-    PROGRAM(GL11.GL_NONE, "Shader Program");
+    VERTEX(GL_VERTEX_SHADER, "Vertex Shader"),
+    FRAGMENT(GL_FRAGMENT_SHADER, "Fragment Shader"),
+    GEOMETRY(GL_GEOMETRY_SHADER, "Geometry Shader"),
+    PROGRAM(GL_NONE, "Shader Program");
 
     private final int id;
     private final String name;

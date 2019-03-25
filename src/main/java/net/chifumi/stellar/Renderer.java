@@ -16,14 +16,15 @@
 
 package net.chifumi.stellar;
 
+import net.chifumi.stellar.enums.Primitive;
+
+import java.util.EnumMap;
+import java.util.Map;
+
 public class Renderer {
-    // TODO : 2nd
-    // TODO : Move all drawing function here
+    private final Map<Primitive, Integer> vao;
 
-    // Display display
-
-    // void drawPoint
-    // void drawLine
-    // void drawRect
-    // void drawCircle
+    public Renderer() {
+        vao = new EnumMap<>(Primitive.class);
+    }
 }

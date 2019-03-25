@@ -16,11 +16,12 @@
 
 package net.chifumi.stellar.enums;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL33.GL_RGB;
+import static org.lwjgl.opengl.GL33.GL_RGBA;
 
 public enum ImageFormat {
-    RGB(GL11.GL_RGB),
-    RGBA(GL11.GL_RGBA);
+    RGB(GL_RGB),
+    RGBA(GL_RGBA);
 
     private final int id;
 

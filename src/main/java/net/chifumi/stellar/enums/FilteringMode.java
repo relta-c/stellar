@@ -16,11 +16,12 @@
 
 package net.chifumi.stellar.enums;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL33.GL_LINEAR;
+import static org.lwjgl.opengl.GL33.GL_NEAREST;
 
 public enum FilteringMode {
-    NEAREST(GL11.GL_NEAREST),
-    LINEAR(GL11.GL_LINEAR);
+    NEAREST(GL_NEAREST),
+    LINEAR(GL_LINEAR);
 
     private final int id;
 
