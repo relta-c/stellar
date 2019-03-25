@@ -18,7 +18,10 @@ package net.chifumi.stellar;
 
 import org.joml.*;
 
+import java.lang.Math;
+
 public class Camera {
+    private static final int TWO_RADIAN_DEGREE = 360;
     private static final float HALF_LEN = 0.5F;
     private final Vector2i resolution;
     private Vector2f position;
@@ -51,8 +54,13 @@ public class Camera {
         return rotation;
     }
 
+    @SuppressWarnings("NumericCastThatLosesPrecision")
     public float getDegreesRotation() {
-        return rotation.angle(); // TODO : This is radian
+        float degree = (float) Math.toDegrees(rotation.angle());
+        if (rotation.z <= 0 ^ rotation.w <= 0) {
+            degree = TWO_RADIAN_DEGREE - degree;
+        }
+        return degree;
     }
 
     public void setRotation(final Quaternionf rotation) {
@@ -71,11 +79,11 @@ public class Camera {
         this.zoom = zoom;
     }
 
-    float getZoomX() {
+    private float getZoomX() {
         return (resolution.x * zoom) - resolution.x;
     }
 
-    float getZoomY() {
+    private float getZoomY() {
         return (resolution.y * zoom) - resolution.y;
     }
 
