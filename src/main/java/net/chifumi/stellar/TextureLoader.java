@@ -36,7 +36,7 @@ public class TextureLoader {
     }
 
     public Texture load(final String path) throws FileNotFoundException {
-        final Texture loadTextureFile = ResourceLoader.LoadTextureFile(path);
+        final Texture loadTextureFile = Resource.LoadTextureFile(path);
         loadTextureFile.setRawImageFormat(rawImageFormat);
         loadTextureFile.setInternalImageFormat(internalImageFormat);
         loadTextureFile.setWrapS(wrapS);

@@ -28,8 +28,12 @@ import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 
 @SuppressWarnings("SameParameterValue") // This class should be private for now
-enum ResourceLoader {
+enum Resource {
     ;
+
+    static Shader loadShader(final ShaderSet shaderSet) throws FileNotFoundException {
+        return loadShaderFile(shaderSet.getVertex(), shaderSet.getFragment());
+    }
 
     static Shader loadShader(final String vertexPath, final String fragmentPath) throws FileNotFoundException {
         return loadShaderFile(vertexPath, fragmentPath);
@@ -84,7 +88,7 @@ enum ResourceLoader {
     }
 
     private static InputStream loadResourceFile(final String path) throws FileNotFoundException {
-        final InputStream fileStream = ResourceLoader.class.getResourceAsStream(path);
+        final InputStream fileStream = Resource.class.getResourceAsStream(path);
         if (fileStream == null) {
             throw new FileNotFoundException("File not found : " + path);
         }

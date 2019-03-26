@@ -19,8 +19,6 @@ package net.chifumi.stellar;
 import org.joml.Vector2i;
 import org.lwjgl.opengl.GL;
 
-import java.io.FileNotFoundException;
-
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
@@ -29,13 +27,11 @@ public class Display {
     private long windowId;
     private String windowTitle;
     private Camera camera;
-    private Shader shader;
 
     public Display(final int width, final int height, final String windowTitle) {
         resolution = new Vector2i(width, height);
         this.windowTitle = windowTitle;
         windowId = 0L;
-        shader = new Shader();
         camera = new Camera(new Vector2i(width, height));
         init();
     }
@@ -69,8 +65,6 @@ public class Display {
         // Update matrix
         camera.updateViewMatrix();
         camera.updateProjectionMatrix();
-        shader.setUniform("view", camera.getView());
-        shader.setUniform("projection", camera.getProjection());
 
         glfwSwapBuffers(windowId);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -86,10 +80,6 @@ public class Display {
 
     long getWindowId() {
         return windowId;
-    }
-
-    Shader getShader() {
-        return shader;
     }
 
     private void init() {
@@ -109,14 +99,5 @@ public class Display {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
-
-        // Load default shaders
-        try {
-            shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl"); // TODO : Make shader enums
-        } catch (final FileNotFoundException e) {
-            //noinspection CallToPrintStackTrace
-            e.printStackTrace();
-        }
-        shader.use();
     }
 }

@@ -16,18 +16,44 @@
 
 package net.chifumi.stellar;
 
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
+    private Shader shader;
     private final Map<Primitive, Integer> vao;
     private final Map<Primitive, Integer> vbo;
 
+    @SuppressWarnings("CallToPrintStackTrace")
     public Renderer(final Display display) {
+        try {
+            shader = Resource.loadShader(ShaderSet.DEFAULT);
+        } catch (final FileNotFoundException e) {
+            e.printStackTrace();
+            shader = new Shader();
+        }
         vao = new HashMap<>();
         vbo = new HashMap<>();
+    }
+
+    public Shader getShader() {
+        return shader;
+    }
+
+    public void setShader(final Shader shader) {
+        this.shader = shader;
+    }
+
+    @SuppressWarnings("CallToPrintStackTrace")
+    public void setShader(final ShaderSet shaderSet) {
+        try {
+            shader = Resource.loadShader(shaderSet);
+        } catch (final FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void init(final Primitive primitive) {
@@ -49,7 +75,6 @@ public class Renderer {
 
     public void draw(final Display display, final Sprite sprite) {
         final Primitive primitive = sprite.getStaticPrimitive();
-        final Shader shader = display.getShader();
 
         if (vao.get(primitive) == null) {
             init(primitive);
@@ -59,7 +84,7 @@ public class Renderer {
         shader.setUniform("projection", display.getCamera().getProjection());
         shader.setUniform("view", display.getCamera().getView());
         shader.setUniform("model", sprite.getModel());
-        shader.setUniform("spriteColor", sprite.getColor());
+        shader.setUniform("color", sprite.getColor());
 
         glActiveTexture(GL_TEXTURE0);
         sprite.getTexture().bind();
