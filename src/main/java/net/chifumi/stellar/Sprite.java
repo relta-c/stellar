@@ -30,7 +30,7 @@ public class Sprite {
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
     private Matrix4f model;
-    private StaticPrimitive staticPrimitive;
+    private final StaticPrimitive staticPrimitive;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
