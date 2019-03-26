@@ -18,20 +18,15 @@ package net.chifumi.stellar;
 
 import org.joml.Vector2i;
 import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL15;
 
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
 public class Display {
     private final Vector2i resolution;
-    private final Queue<Sprite> drawQueue; // TODO : Make draw layer
     private long windowId;
-    private int vaoId;
     private String windowTitle;
     private Camera camera;
     private Shader shader;
@@ -40,9 +35,7 @@ public class Display {
         resolution = new Vector2i(width, height);
         this.windowTitle = windowTitle;
         windowId = 0L;
-        vaoId = 0;
         shader = new Shader();
-        drawQueue = new LinkedList<>();
         camera = new Camera(new Vector2i(width, height));
         init();
     }
@@ -51,6 +44,7 @@ public class Display {
         return resolution;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public Camera getCamera() {
         return camera;
     }
@@ -78,16 +72,8 @@ public class Display {
         shader.setUniform("view", camera.getView());
         shader.setUniform("projection", camera.getProjection());
 
-        while (!drawQueue.isEmpty()) {
-            drawFromQueue(drawQueue.poll());
-        }
-
         glfwSwapBuffers(windowId);
         glClear(GL_COLOR_BUFFER_BIT);
-    }
-
-    public void draw(final Sprite sprite) {
-        drawQueue.add(sprite);
     }
 
     public boolean shouldClose() {
@@ -126,41 +112,11 @@ public class Display {
 
         // Load default shaders
         try {
-            shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl");
+            shader = ResourceLoader.loadShader("/shaders/vs_default.glsl", "/shaders/fs_default.glsl"); // TODO : Make shader enums
         } catch (final FileNotFoundException e) {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
         }
         shader.use();
-
-        final int vboId;
-
-        vaoId = glGenVertexArrays();
-        vboId = glGenBuffers();
-
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBufferData(GL_ARRAY_BUFFER, StaticPrimitive.RECT.getVertices(), GL15.GL_STATIC_DRAW);
-
-        glBindVertexArray(vaoId);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 << 2, 0L);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 << 2, 0L);
-
-        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
-        glBindVertexArray(GL_NONE);
-    }
-
-    private void drawFromQueue(final Sprite sprite) {
-        shader.setUniform("projection", camera.getProjection());
-        shader.setUniform("view", camera.getView());
-        shader.setUniform("model", sprite.getModel());
-        shader.setUniform("spriteColor", sprite.getColor());
-
-        glActiveTexture(GL_TEXTURE0);
-        sprite.getTexture().bind();
-
-        glBindVertexArray(vaoId);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 }

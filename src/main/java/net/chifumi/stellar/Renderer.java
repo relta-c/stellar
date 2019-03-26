@@ -55,7 +55,7 @@ public class Renderer {
             init(primitive);
         }
 
-        shader.use();
+        shader.use(); // TODO : Move shader
         shader.setUniform("projection", display.getCamera().getProjection());
         shader.setUniform("view", display.getCamera().getView());
         shader.setUniform("model", sprite.getModel());
