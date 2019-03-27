@@ -31,7 +31,6 @@ public class Sprite implements Drawable{
     private Texture texture;
     private Matrix4f model;
     private final StaticPrimitive staticPrimitive;
-    private final boolean haveTexture;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
@@ -40,7 +39,6 @@ public class Sprite implements Drawable{
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
         staticPrimitive = StaticPrimitive.RECT;
-        haveTexture = true;
         updateModelMatrix();
     }
 
@@ -113,10 +111,6 @@ public class Sprite implements Drawable{
 
     public void setTexture(final Texture texture) {
         this.texture = texture;
-    }
-
-    public boolean isHaveTexture() {
-        return haveTexture;
     }
 
     public Matrix4f getModel() {

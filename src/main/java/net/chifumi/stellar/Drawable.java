@@ -8,5 +8,4 @@ public interface Drawable {
     Matrix4fc getModel();
     Vector3fc getColor();
     Texture getTexture();
-    boolean isHaveTexture();
 }

@@ -9,13 +9,11 @@ public class Line implements Drawable {
     private Texture texture;
     private final Matrix4f model;
     private final Primitive primitive;
-    private final boolean haveTexture;
 
     public Line(final Vector2fc pointA, final Vector2fc pointB) {
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         texture = new Texture();
         primitive = new LinePrimitive(pointA, pointB);
-        haveTexture = false;
         model = new Matrix4f().identity();
     }
 
@@ -37,10 +35,6 @@ public class Line implements Drawable {
 
     public void setTexture(final Texture texture) {
         this.texture = texture;
-    }
-
-    public boolean isHaveTexture() {
-        return haveTexture;
     }
 
     public Matrix4f getModel() {
