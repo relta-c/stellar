@@ -23,7 +23,8 @@ public enum StaticPrimitive implements Primitive {
             0.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f}, 6, DrawMode.RECTANGLE.getId());
+            1.0f, 0.0f, 1.0f, 0.0f},
+            6, DrawMode.RECTANGLE.getId());
 
     private final float[] vertices;
     private final int verticesNum;
@@ -35,14 +36,17 @@ public enum StaticPrimitive implements Primitive {
         this.drawMode = drawMode;
     }
 
+    @Override
     public float[] getVertices() {
         return vertices.clone();
     }
 
+    @Override
     public int getDrawMode() {
         return drawMode;
     }
 
+    @Override
     public int getVerticesNum() {
         return verticesNum;
     }

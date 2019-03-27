@@ -16,13 +16,14 @@
 
 package net.chifumi.stellar;
 
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import org.joml.*;
 
-public class Sprite implements Drawable{
-    private static final float HALF_LEN = 0.5f;
+import java.lang.Math;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Sprite implements Drawable {
+    private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
     private Vector2f position;
     private Vector2f size;
@@ -93,6 +94,7 @@ public class Sprite implements Drawable{
         updateModelMatrix();
     }
 
+    @Override
     public Vector3f getColor() {
         return color;
     }
@@ -105,6 +107,7 @@ public class Sprite implements Drawable{
         color = new Vector3f(red, green, blue);
     }
 
+    @Override
     public Texture getTexture() {
         return texture;
     }
@@ -113,20 +116,44 @@ public class Sprite implements Drawable{
         this.texture = texture;
     }
 
+    @Override
     public Matrix4f getModel() {
         return model;
     }
 
+    public void setModel(final Matrix4f model) {
+        this.model = model;
+    }
+
+    @Override
     public Primitive getPrimitive() {
         return staticPrimitive;
+    }
+
+    public List<Vector2f> getConner() {
+        Vector4f localPosition;
+        final List<Vector2f> result = new ArrayList<>();
+        localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
+        final Vector4f topLeft = localPosition.mul(model);
+        result.add(new Vector2f(topLeft.x, topLeft.y));
+        localPosition = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
+        final Vector4f topRight = localPosition.mul(model);
+        result.add(new Vector2f(topRight.x, topRight.y));
+        localPosition = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
+        final Vector4f bottomRight = localPosition.mul(model);
+        result.add(new Vector2f(bottomRight.x, bottomRight.y));
+        localPosition = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
+        final Vector4f bottomLeft = localPosition.mul(model);
+        result.add(new Vector2f(bottomLeft.x, bottomLeft.y));
+        return result;
     }
 
     private void updateModelMatrix() {
         model = new Matrix4f();
         model = model.translate(new Vector3f(position, 0.0f));
-        model = model.translate(new Vector3f(HALF_LEN * size.x(), HALF_LEN * size.y(), 0.0F));
+        model = model.translate(new Vector3f(HALF * size.x(), HALF * size.y(), 0.0F));
         model = model.rotate(rotation);
-        model = model.translate(new Vector3f(-HALF_LEN * size.x(), -HALF_LEN * size.y(), 0.0F));
+        model = model.translate(new Vector3f(-HALF * size.x(), -HALF * size.y(), 0.0F));
         model.scale(new Vector3f(size, 1.0F));
     }
 }

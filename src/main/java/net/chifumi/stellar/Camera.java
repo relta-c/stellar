@@ -30,7 +30,6 @@ public class Camera {
     private Matrix4f view;
     private Matrix4f projection;
 
-    @SuppressWarnings("WeakerAccess")
     public Camera(final Vector2i resolution) {
         view = new Matrix4f();
         projection = new Matrix4f();

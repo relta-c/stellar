@@ -17,14 +17,15 @@
 package net.chifumi.stellar;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
 public class Line implements Drawable {
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
-    private final Matrix4f model;
-    private final Primitive primitive;
+    private Matrix4f model;
+    private Primitive primitive;
 
     public Line(final Vector2fc pointA, final Vector2fc pointB) {
         color = new Vector3f(1.0f, 1.0f, 1.0f);
@@ -33,6 +34,19 @@ public class Line implements Drawable {
         model = new Matrix4f().identity();
     }
 
+    public void setPosition(final Vector2fc pointA, final Vector2fc pointB) {
+        primitive = new LinePrimitive(pointA, pointB);
+    }
+
+    public Vector2f getPointA() {
+        return new Vector2f(primitive.getVertices()[0], primitive.getVertices()[1]);
+    }
+
+    public Vector2f getPointB() {
+        return new Vector2f(primitive.getVertices()[4], primitive.getVertices()[5]);
+    }
+
+    @Override
     public Vector3f getColor() {
         return color;
     }
@@ -45,6 +59,7 @@ public class Line implements Drawable {
         color = new Vector3f(red, green, blue);
     }
 
+    @Override
     public Texture getTexture() {
         return texture;
     }
@@ -53,10 +68,16 @@ public class Line implements Drawable {
         this.texture = texture;
     }
 
+    public void setModel(final Matrix4f model) {
+        this.model = model;
+    }
+
+    @Override
     public Matrix4f getModel() {
         return model;
     }
 
+    @Override
     public Primitive getPrimitive() {
         return primitive;
     }
