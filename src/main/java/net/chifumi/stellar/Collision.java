@@ -16,7 +16,62 @@
 
 package net.chifumi.stellar;
 
-public class Collision {
-    // TODO : 3rd
-    // TODO : Utility class for collision detection (may be use inheritance instead)
+import org.joml.Vector2f;
+import org.joml.Vector2fc;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public enum  Collision {
+    ;
+
+    public  static boolean checkAABB(final Sprite spriteA, final Sprite spriteB) {
+        return true;
+    }
+
+    public static boolean checkSAT(final Sprite sharpA, final Sprite sharpB) {
+        final List<Vector2f> axes = getAxis(sharpA.getConner());
+        axes.addAll(getAxis(sharpB.getConner()));
+        boolean result = true;
+        for (final Vector2f axis : axes) {
+            final Vector2f projectionA = project(axis, sharpA.getConner());
+            final Vector2f projectionB = project(axis, sharpB.getConner());
+            if (!isOverlap(projectionA, projectionB)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    static Vector2f project(final Vector2fc axis, final List<? extends Vector2f> vertices) {
+        float min = axis.dot(vertices.get(0));
+        float max = min;
+
+        for (int i = 1; i < vertices.size(); i++) {
+            final float point = axis.dot(vertices.get(i));
+            if (point < min) {
+                min = point;
+            } else if (point > max) {
+                max = point;
+            }
+        }
+        return new Vector2f(min, max);
+    }
+
+    static List<Vector2f> getAxis(final List<? extends Vector2f> conner) { // TODO : optimize for rectangles
+        final List<Vector2f> result = new   ArrayList<>();
+        for (int i = 0; i < conner.size(); i++) {
+            final Vector2f currentVertex = conner.get(i);
+            final Vector2f nextVertex = conner.get((i + 1) % conner.size());
+            final Vector2f edge = currentVertex.sub(nextVertex);
+            final Vector2f normal = edge.perpendicular().normalize();
+            result.add(normal);
+        }
+        return result;
+    }
+
+    static boolean isOverlap(final Vector2f projectionA, final Vector2f projectionB) {
+        return !(projectionA.x > projectionB.y) && !(projectionB.x > projectionA.y);
+    }
 }

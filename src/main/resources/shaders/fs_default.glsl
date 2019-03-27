@@ -6,7 +6,7 @@ out vec4 fragColor;
 
 uniform sampler2D sprite; // TODO : Check this
 uniform vec3 color;
-uniform bool haveTexture;
+uniform bool haveTexture; //TODO : make sperate shader
 
 void main()
 {

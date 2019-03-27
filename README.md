@@ -1,4 +1,4 @@
-## Stellar Game framework
+## Stellar Game Framework
 
 Stellar is a simple java 2D game framework. 
 Designed to be very easy to use.
@@ -13,7 +13,9 @@ Designed to be very easy to use.
     - [x] Keyboard
     - [ ] Mouse
     - [ ] Joystick
-- [ ] Collision detection
+- [x] Collision Detection
+    - [ ] AABB
+    - [x] SAT
 - [ ] Sound Support
 
 ### Documentation
