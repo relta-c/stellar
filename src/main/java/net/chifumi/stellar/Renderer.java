@@ -80,14 +80,16 @@ public class Renderer {
             init(primitive);
         }
 
+        final boolean haveTexture =  drawable.getTexture().getId() != -1;
+
         shader.use();
-        shader.setUniform("haveTexture", drawable.isHaveTexture() ? 1 : 0);
+        shader.setUniform("haveTexture", haveTexture? 1 : 0);
         shader.setUniform("projection", display.getCamera().getProjection());
         shader.setUniform("view", display.getCamera().getView());
         shader.setUniform("model", drawable.getModel());
         shader.setUniform("color", drawable.getColor());
 
-        if (drawable.isHaveTexture()) {
+        if (haveTexture) {
             glActiveTexture(GL_TEXTURE0);
             drawable.getTexture().bind();
         }

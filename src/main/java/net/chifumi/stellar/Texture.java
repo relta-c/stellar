@@ -35,7 +35,7 @@ public class Texture {
     private FilteringMode filterMax;
 
     public Texture() {
-        id = glGenTextures();
+        id = -1;
         width = 0;
         width = 0;
         rawImageFormat = ImageFormat.RGB;
