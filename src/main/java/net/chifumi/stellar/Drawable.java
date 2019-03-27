@@ -23,5 +23,4 @@ public interface Drawable {
     Primitive getPrimitive();
     Matrix4fc getModel();
     Vector3fc getColor();
-    Texture getTexture();
 }

@@ -16,7 +16,7 @@
 
 package net.chifumi.stellar;
 
-public enum StaticPrimitive implements Primitive {
+public enum NormalizedPrimitive implements Primitive {
     RECT(new float[]{
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f,
@@ -30,7 +30,7 @@ public enum StaticPrimitive implements Primitive {
     private final int verticesNum;
     private final int drawMode;
 
-    StaticPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
+    NormalizedPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
         this.vertices = vertices;
         this.verticesNum = verticesNum;
         this.drawMode = drawMode;
@@ -49,5 +49,10 @@ public enum StaticPrimitive implements Primitive {
     @Override
     public int getVerticesNum() {
         return verticesNum;
+    }
+
+    @Override
+    public boolean isNormalized() {
+        return true;
     }
 }

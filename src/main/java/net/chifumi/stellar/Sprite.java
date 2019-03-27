@@ -22,7 +22,7 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sprite implements Drawable {
+public class Sprite implements TexturedDrawable, Convex {
     private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
     private Vector2f position;
@@ -31,7 +31,7 @@ public class Sprite implements Drawable {
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
     private Matrix4f model;
-    private final StaticPrimitive staticPrimitive;
+    private final NormalizedPrimitive normalizedPrimitive;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
@@ -39,7 +39,7 @@ public class Sprite implements Drawable {
         rotation = new Quaternionf();
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
-        staticPrimitive = StaticPrimitive.RECT;
+        normalizedPrimitive = NormalizedPrimitive.RECT;
         updateModelMatrix();
     }
 
@@ -127,10 +127,10 @@ public class Sprite implements Drawable {
 
     @Override
     public Primitive getPrimitive() {
-        return staticPrimitive;
+        return normalizedPrimitive;
     }
 
-    public List<Vector2f> getConner() {
+    public List<Vector2f> getVertices() {
         Vector4f localPosition;
         final List<Vector2f> result = new ArrayList<>();
         localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);

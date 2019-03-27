@@ -23,13 +23,11 @@ import org.joml.Vector3f;
 
 public class Line implements Drawable {
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
-    private Texture texture;
     private Matrix4f model;
     private Primitive primitive;
 
     public Line(final Vector2fc pointA, final Vector2fc pointB) {
         color = new Vector3f(1.0f, 1.0f, 1.0f);
-        texture = new Texture();
         primitive = new LinePrimitive(pointA, pointB);
         model = new Matrix4f().identity();
     }
@@ -57,15 +55,6 @@ public class Line implements Drawable {
 
     public void setColor(final float red, final float green, final float blue) {
         color = new Vector3f(red, green, blue);
-    }
-
-    @Override
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public void setTexture(final Texture texture) {
-        this.texture = texture;
     }
 
     public void setModel(final Matrix4f model) {

@@ -25,17 +25,22 @@ import java.util.List;
 public enum  Collision {
     ;
 
-    public  static boolean checkAABB(final Sprite spriteA, final Sprite spriteB) {
+    public static boolean checkCollision(final Convex convexA, final Convex convexB) {
+        return checkSAT(convexA, convexB);
+    }
+
+    @SuppressWarnings("unused") // TODO : Use this for axis-aligned rectangle
+    static boolean checkAABB(final Convex spriteA, final Convex spriteB) {
         return true;
     }
 
-    public static boolean checkSAT(final Sprite sharpA, final Sprite sharpB) {
-        final List<Vector2f> axes = getAxis(sharpA.getConner());
-        axes.addAll(getAxis(sharpB.getConner()));
+    static boolean checkSAT(final Convex convexA, final Convex convexB) {
+        final List<Vector2f> axes = getAxis(convexA.getVertices());
+        axes.addAll(getAxis(convexB.getVertices()));
         boolean result = true;
         for (final Vector2f axis : axes) {
-            final Vector2f projectionA = project(axis, sharpA.getConner());
-            final Vector2f projectionB = project(axis, sharpB.getConner());
+            final Vector2f projectionA = project(axis, convexA.getVertices());
+            final Vector2f projectionB = project(axis, convexB.getVertices());
             if (!isOverlap(projectionA, projectionB)) {
                 result = false;
                 break;

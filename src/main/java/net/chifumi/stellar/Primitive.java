@@ -16,8 +16,9 @@
 
 package net.chifumi.stellar;
 
-public interface Primitive {
+interface Primitive {
     float[] getVertices();
     int getDrawMode();
     int getVerticesNum();
+    boolean isNormalized();
 }

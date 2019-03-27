@@ -90,7 +90,7 @@ public class Display {
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
         windowId = glfwCreateWindow(resolution.x, resolution.y, windowTitle, 0L, 0L);
 
-        glfwMakeContextCurrent(windowId);  // TODO : Use this in every window update
+        glfwMakeContextCurrent(windowId);
 
         // Initialize OpenGl
         GL.createCapabilities();
