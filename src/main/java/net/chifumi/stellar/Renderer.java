@@ -37,6 +37,7 @@ public class Renderer {
         }
         vao = new HashMap<>();
         vbo = new HashMap<>();
+        shader.use();
     }
 
     public Shader getShader() {
@@ -80,20 +81,36 @@ public class Renderer {
             init(primitive);
         }
 
-        final boolean haveTexture =  drawable.getTexture().getId() != -1;
+        shader.setUniform("haveTexture", 0);
+        setUniformValues(display, drawable);
 
-        shader.use();
-        shader.setUniform("haveTexture", haveTexture? 1 : 0);
+        drawArrays(primitive);
+    }
+
+    public void draw(final Display display, final TexturedDrawable texturedDrawable) {
+        final Primitive primitive = texturedDrawable.getPrimitive();
+
+        if (vao.get(primitive) == null) {
+            init(primitive);
+        }
+
+        shader.setUniform("haveTexture", 1);
+        setUniformValues(display, texturedDrawable);
+
+        glActiveTexture(GL_TEXTURE0);
+        texturedDrawable.getTexture().bind();
+
+        drawArrays(primitive);
+    }
+
+    private void setUniformValues(final Display display, final Drawable drawable) {
         shader.setUniform("projection", display.getCamera().getProjection());
         shader.setUniform("view", display.getCamera().getView());
         shader.setUniform("model", drawable.getModel());
         shader.setUniform("color", drawable.getColor());
+    }
 
-        if (haveTexture) {
-            glActiveTexture(GL_TEXTURE0);
-            drawable.getTexture().bind();
-        }
-
+    private void drawArrays(final Primitive primitive) {
         glBindVertexArray(vao.get(primitive));
         glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());
     }
