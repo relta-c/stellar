@@ -35,6 +35,7 @@ enum Resource {
         return loadShaderFile(shaderSet.getVertex(), shaderSet.getFragment());
     }
 
+    @SuppressWarnings("unused")
     static Shader loadShader(final String vertexPath, final String fragmentPath) throws FileNotFoundException {
         return loadShaderFile(vertexPath, fragmentPath);
     }

@@ -21,7 +21,7 @@ import org.joml.Quaternionf;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-public class Sprite {
+public class Sprite implements Drawable{
     private static final float HALF_LEN = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
     private Vector2f position;
@@ -31,6 +31,7 @@ public class Sprite {
     private Texture texture;
     private Matrix4f model;
     private final StaticPrimitive staticPrimitive;
+    private final boolean haveTexture;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
@@ -39,6 +40,7 @@ public class Sprite {
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
         staticPrimitive = StaticPrimitive.RECT;
+        haveTexture = true;
         updateModelMatrix();
     }
 
@@ -93,7 +95,6 @@ public class Sprite {
         updateModelMatrix();
     }
 
-    @SuppressWarnings("WeakerAccess")
     public Vector3f getColor() {
         return color;
     }
@@ -106,7 +107,6 @@ public class Sprite {
         color = new Vector3f(red, green, blue);
     }
 
-    @SuppressWarnings("WeakerAccess")
     public Texture getTexture() {
         return texture;
     }
@@ -115,11 +115,15 @@ public class Sprite {
         this.texture = texture;
     }
 
-    Matrix4f getModel() {
+    public boolean isHaveTexture() {
+        return haveTexture;
+    }
+
+    public Matrix4f getModel() {
         return model;
     }
 
-    StaticPrimitive getStaticPrimitive() {
+    public Primitive getPrimitive() {
         return staticPrimitive;
     }
 
