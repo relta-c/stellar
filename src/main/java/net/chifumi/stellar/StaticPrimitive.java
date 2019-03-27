@@ -16,8 +16,6 @@
 
 package net.chifumi.stellar;
 
-import static org.lwjgl.opengl.GL33.*;
-
 public enum StaticPrimitive implements Primitive {
     RECT(new float[]{
             0.0f, 1.0f, 0.0f, 1.0f,
@@ -25,7 +23,7 @@ public enum StaticPrimitive implements Primitive {
             0.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f}, 6, GL_TRIANGLES);
+            1.0f, 0.0f, 1.0f, 0.0f}, 6, DrawMode.RECTANGLE.getId());
 
     private final float[] vertices;
     private final int verticesNum;

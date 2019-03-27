@@ -73,21 +73,24 @@ public class Renderer {
         glBindVertexArray(GL_NONE);
     }
 
-    public void draw(final Display display, final Sprite sprite) {
-        final Primitive primitive = sprite.getStaticPrimitive();
+    public void draw(final Display display, final Drawable drawable) {
+        final Primitive primitive = drawable.getPrimitive();
 
         if (vao.get(primitive) == null) {
             init(primitive);
         }
 
-        shader.use(); // TODO : Move shader
+        shader.use();
+        shader.setUniform("haveTexture", drawable.isHaveTexture() ? 1 : 0);
         shader.setUniform("projection", display.getCamera().getProjection());
         shader.setUniform("view", display.getCamera().getView());
-        shader.setUniform("model", sprite.getModel());
-        shader.setUniform("color", sprite.getColor());
+        shader.setUniform("model", drawable.getModel());
+        shader.setUniform("color", drawable.getColor());
 
-        glActiveTexture(GL_TEXTURE0);
-        sprite.getTexture().bind();
+        if (drawable.isHaveTexture()) {
+            glActiveTexture(GL_TEXTURE0);
+            drawable.getTexture().bind();
+        }
 
         glBindVertexArray(vao.get(primitive));
         glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());

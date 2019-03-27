@@ -6,8 +6,13 @@ out vec4 fragColor;
 
 uniform sampler2D sprite; // TODO : Check this
 uniform vec3 color;
+uniform bool haveTexture;
 
 void main()
 {
-    fragColor = vec4(color.rgb, 1.0f) * texture(sprite, fragTexCoords);
+    if (!haveTexture) {
+        fragColor = vec4(color.rgb, 1.0f);
+    } else {
+        fragColor = vec4(color.rgb, 1.0f) * texture(sprite, fragTexCoords);
+    }
 }

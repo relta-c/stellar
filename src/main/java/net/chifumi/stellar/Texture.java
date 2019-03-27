@@ -16,6 +16,8 @@
 
 package net.chifumi.stellar;
 
+import org.lwjgl.stb.STBImage;
+
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL33.*;
@@ -122,6 +124,7 @@ public class Texture {
 
     public void delete() {
         glDeleteTextures(id);
+        STBImage.stbi_image_free(data);
     }
 
     private static void unbind() {
