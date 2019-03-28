@@ -16,7 +16,7 @@
 
 package net.chifumi.stellar;
 
-public enum NormalizedPrimitive implements Primitive {
+public enum NormalizedPrimitive implements Primitive { // TODO : Use EBO
     RECT(new float[]{
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f,
@@ -24,7 +24,7 @@ public enum NormalizedPrimitive implements Primitive {
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f},
-            6, DrawMode.RECTANGLE.getId());
+            6, DrawMode.TRIANGLES.getId());
 
     private final float[] vertices;
     private final int verticesNum;
@@ -49,10 +49,5 @@ public enum NormalizedPrimitive implements Primitive {
     @Override
     public int getVerticesNum() {
         return verticesNum;
-    }
-
-    @Override
-    public boolean isNormalized() {
-        return true;
     }
 }

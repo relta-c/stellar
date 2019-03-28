@@ -19,8 +19,9 @@ package net.chifumi.stellar;
 import static org.lwjgl.opengl.GL33.*;
 
 enum DrawMode {
-    RECTANGLE(GL_TRIANGLES),
-    LINE(GL_LINES);
+    LINE(GL_LINES),
+    TRIANGLES(GL_TRIANGLES),
+    TRIANGLE_FAN(GL_TRIANGLE_FAN);
 
     private final int id;
 
