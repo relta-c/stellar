@@ -18,7 +18,7 @@ package net.chifumi.stellar;
 
 import org.joml.Vector2fc;
 
-class LinePrimitive extends nonNormalizedPrimitive {
+class LinePrimitive implements Primitive {
     private final float[] vertices;
     private final int verticesNum;
     private final int drawMode;

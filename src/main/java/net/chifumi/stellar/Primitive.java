@@ -20,5 +20,4 @@ interface Primitive {
     float[] getVertices();
     int getDrawMode();
     int getVerticesNum();
-    boolean isNormalized();
 }

@@ -16,6 +16,7 @@ Designed to be very easy to use.
 - [x] Collision Detection
     - [ ] AABB
     - [x] SAT
+    - [ ] Circle-Polygon
 - [ ] Sound Support
 
 ### Documentation

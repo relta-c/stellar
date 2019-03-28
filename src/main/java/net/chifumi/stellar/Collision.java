@@ -22,7 +22,7 @@ import org.joml.Vector2fc;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum  Collision {
+public enum Collision {
     ;
 
     public static boolean checkCollision(final Convex convexA, final Convex convexB) {
@@ -65,7 +65,7 @@ public enum  Collision {
     }
 
     static List<Vector2f> getAxis(final List<? extends Vector2f> conner) { // TODO : optimize for rectangles
-        final List<Vector2f> result = new   ArrayList<>();
+        final List<Vector2f> result = new ArrayList<>();
         for (int i = 0; i < conner.size(); i++) {
             final Vector2f currentVertex = conner.get(i);
             final Vector2f nextVertex = conner.get((i + 1) % conner.size());
