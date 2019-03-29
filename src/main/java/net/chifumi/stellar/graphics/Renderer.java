@@ -33,7 +33,6 @@ public class Renderer {
     private final Map<Primitive, Integer> vao;
     private final Map<Primitive, Integer> vbo;
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public Renderer(final Display display) {
         try {
             shader = Resource.loadShader(ShaderSet.DEFAULT);
@@ -54,7 +53,6 @@ public class Renderer {
         this.shader = shader;
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
     public void setShader(final ShaderSet shaderSet) {
         try {
             shader = Resource.loadShader(shaderSet);
