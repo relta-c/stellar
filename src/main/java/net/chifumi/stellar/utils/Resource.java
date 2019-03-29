@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.util;
+package net.chifumi.stellar.utils;
 
 import net.chifumi.stellar.graphics.Shader;
 import net.chifumi.stellar.graphics.ShaderSet;
