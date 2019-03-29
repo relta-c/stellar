@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.util.Resource;
+import net.chifumi.stellar.utils.Resource;
 import net.chifumi.stellar.geometry.Primitive;
 
 import java.io.FileNotFoundException;

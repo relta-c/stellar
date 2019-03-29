@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.image;
 
-import net.chifumi.stellar.util.Resource;
+import net.chifumi.stellar.utils.Resource;
 
 import java.io.FileNotFoundException;
 
