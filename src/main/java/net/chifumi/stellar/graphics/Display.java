@@ -66,10 +66,10 @@ public class Display {
     /**
      * Get current window resolution.
      *
-     * @return window resolution in int array of [width, height]
+     * @return window resolution
      */
-    public int[] getResolution() {
-        return new int[]{resolution.x, resolution.y};
+    public Vector2i getResolution() {
+        return resolution;
     }
 
     /**
