@@ -26,7 +26,7 @@ import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL33.*;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SameParameterValue"})
 public
 class Shader {
     private static final int MATRIX4_CAPACITY = 16;

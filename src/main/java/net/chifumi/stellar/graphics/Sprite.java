@@ -34,7 +34,7 @@ public class Sprite implements TexturedDrawable, Polygon {
     private Quaternionf rotation;
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
     private Texture texture;
-    private Matrix4f model;
+    private Matrix4f modelMatrix;
     private final NormalizedPrimitive normalizedPrimitive;
 
     public Sprite(final Texture texture) {
@@ -53,10 +53,12 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     public void setPosition(final Vector2f position) {
         this.position = position;
+        updateModelMatrix();
     }
 
     public void setPosition(final float x, final float y) {
         position = new Vector2f(x, y);
+        updateModelMatrix();
     }
 
     public Vector2f getSize() {
@@ -65,18 +67,22 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     public void setSize(final Vector2fc size) {
         this.size = (Vector2f) size;
+        updateModelMatrix();
     }
 
     public void setSize(final float width, final float height) {
         size = new Vector2f(width, height);
+        updateModelMatrix();
     }
 
-    public Quaternionf getRotation() {
+    public Quaternionf getRotation()
+    {
         return rotation;
     }
 
     public void setRotation(final Quaternionfc rotation) {
         this.rotation = (Quaternionf) rotation;
+        updateModelMatrix();
     }
 
     @SuppressWarnings("NumericCastThatLosesPrecision")
@@ -90,6 +96,7 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     public void setDegreesRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
+        updateModelMatrix();
     }
 
     @Override
@@ -115,13 +122,12 @@ public class Sprite implements TexturedDrawable, Polygon {
     }
 
     @Override
-    public Matrix4f getModel() {
-        updateModelMatrix();
-        return model;
+    public Matrix4f getModelMatrix() {
+        return modelMatrix;
     }
 
-    public void setModel(final Matrix4f model) {
-        this.model = model;
+    public void setModelMatrix(final Matrix4fc modelMatrix) {
+        this.modelMatrix = (Matrix4f) modelMatrix;
     }
 
     @Override
@@ -133,26 +139,26 @@ public class Sprite implements TexturedDrawable, Polygon {
         Vector4f localPosition;
         final List<Vector2f> result = new ArrayList<>();
         localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topLeft = localPosition.mul(model);
+        final Vector4f topLeft = localPosition.mul(modelMatrix);
         result.add(new Vector2f(topLeft.x, topLeft.y));
         localPosition = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topRight = localPosition.mul(model);
+        final Vector4f topRight = localPosition.mul(modelMatrix);
         result.add(new Vector2f(topRight.x, topRight.y));
         localPosition = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomRight = localPosition.mul(model);
+        final Vector4f bottomRight = localPosition.mul(modelMatrix);
         result.add(new Vector2f(bottomRight.x, bottomRight.y));
         localPosition = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomLeft = localPosition.mul(model);
+        final Vector4f bottomLeft = localPosition.mul(modelMatrix);
         result.add(new Vector2f(bottomLeft.x, bottomLeft.y));
         return result;
     }
 
     private void updateModelMatrix() {
-        model = new Matrix4f();
-        model = model.translate(new Vector3f(position, 0.0f));
-        model = model.translate(new Vector3f(HALF * size.x(), HALF * size.y(), 0.0F));
-        model = model.rotate(rotation);
-        model = model.translate(new Vector3f(-HALF * size.x(), -HALF * size.y(), 0.0F));
-        model.scale(new Vector3f(size, 1.0F));
+        modelMatrix = new Matrix4f();
+        modelMatrix = modelMatrix.translate(new Vector3f(position, 0.0f));
+        modelMatrix = modelMatrix.translate(new Vector3f(HALF * size.x(), HALF * size.y(), 0.0F));
+        modelMatrix = modelMatrix.rotate(rotation);
+        modelMatrix = modelMatrix.translate(new Vector3f(-HALF * size.x(), -HALF * size.y(), 0.0F));
+        modelMatrix.scale(new Vector3f(size, 1.0F));
     }
 }

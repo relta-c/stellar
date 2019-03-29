@@ -27,12 +27,12 @@ public class Camera {
     private Vector2f position;
     private Quaternionf rotation;
     private float zoom;
-    private Matrix4f view;
-    private Matrix4f projection;
+    private Matrix4f viewMatrix;
+    private Matrix4f projectionMatrix;
 
     public Camera(final Vector2i resolution) {
-        view = new Matrix4f();
-        projection = new Matrix4f();
+        viewMatrix = new Matrix4f();
+        projectionMatrix = new Matrix4f();
         position = new Vector2f();
         this.resolution = resolution;
         rotation = new Quaternionf();
@@ -86,29 +86,27 @@ public class Camera {
         return (resolution.y * zoom) - resolution.y;
     }
 
-    Matrix4f getView() {
-        return view;
+    Matrix4f getViewMatrix() {
+        return viewMatrix;
     }
 
-    Matrix4f getProjection() {
-        return projection;
+    Matrix4f getProjectionMatrix() {
+        return projectionMatrix;
     }
 
     void updateViewMatrix() {
-        view = new Matrix4f();
-        view.translate(new Vector3f(-position.x, -position.y, 0.0f));
-        view.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
-        view = view.rotate(rotation);
-        view.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
+        viewMatrix = new Matrix4f();
+        viewMatrix.translate(new Vector3f(-position.x, -position.y, 0.0f));
+        viewMatrix.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
+        viewMatrix = viewMatrix.rotate(rotation);
+        viewMatrix.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
     }
 
     void updateProjectionMatrix() {
-        projection = new Matrix4f().ortho(
+        projectionMatrix = new Matrix4f().ortho2D(
                 0.0F - getZoomX(),
                 resolution.x + getZoomX(),
                 resolution.y + getZoomY(),
-                0.0F - getZoomY(),
-                -1.0F,
-                1.0F);
+                0.0F - getZoomY());
     }
 }

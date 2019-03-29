@@ -107,9 +107,9 @@ public class Renderer {
     }
 
     private void setUniformValues(final Display display, final Drawable drawable) {
-        shader.setUniform("projection", display.getCamera().getProjection());
-        shader.setUniform("view", display.getCamera().getView());
-        shader.setUniform("model", drawable.getModel());
+        shader.setUniform("projection", display.getCamera().getProjectionMatrix());
+        shader.setUniform("view", display.getCamera().getViewMatrix());
+        shader.setUniform("model", drawable.getModelMatrix());
         shader.setUniform("color", drawable.getColor());
     }
 
