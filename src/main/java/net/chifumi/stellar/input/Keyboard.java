@@ -33,14 +33,14 @@ public class Keyboard {
     private final Map<Integer, Key> keySet;
 
     public Keyboard(final Display display) {
-        final long window = display.getId();
+        final long window = display.getID();
         glfwMakeContextCurrent(window);
         glfwSetKeyCallback(window, this::keyCallback);
         state = new EnumMap<>(Key.class);
         keySet = new HashMap<>(GLFW_KEY_LAST);
         final Key[] keyValue = Key.values();
         for (final Key key : keyValue) {
-            keySet.put(key.getId(), key);
+            keySet.put(key.getID(), key);
         }
     }
 

@@ -31,7 +31,7 @@ class LinePrimitive implements Primitive {
                 pointA.x(), pointA.y(), 0.0f, 0.0f,
                 pointB.x(), pointB.y(), 0.0f, 0.0f};
         verticesNum = 2;
-        drawMode = PrimitiveDrawMode.LINE.getId();
+        drawMode = PrimitiveDrawMode.LINE.getID();
     }
 
     @Override

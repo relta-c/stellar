@@ -27,7 +27,7 @@ public enum NormalizedPrimitive implements Primitive { // TODO : Use EBO
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f},
-            6, PrimitiveDrawMode.TRIANGLES.getId());
+            6, PrimitiveDrawMode.TRIANGLES.getID());
 
     private final float[] vertices;
     private final int verticesNum;

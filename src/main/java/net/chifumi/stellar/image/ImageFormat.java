@@ -32,7 +32,7 @@ public enum ImageFormat {
         this.id = id;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 }
