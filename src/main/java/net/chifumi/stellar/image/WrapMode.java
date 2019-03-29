@@ -1,0 +1,36 @@
+//    Copyright (C) 2019 Nattakit Hosapsin <delta@chifumi.net>
+//
+//    This file is part of Stellar
+//    Stellar is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU Lesser General Public License as
+//    published by the Free Software Foundation, either
+//    version 3 of the License, or (at your option) any later version.
+//
+//    Stellar is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU Lesser General Public License for more details.
+//
+//    You should have received a copy of the GNU Lesser General Public
+//    License along with Stellar.  If not, see <https://www.gnu.org/licenses/lgpl.html>.
+
+package net.chifumi.stellar.image;
+
+import static org.lwjgl.opengl.GL33.*;
+
+public enum WrapMode {
+    REPEAT(GL_REPEAT),
+    CLAMP_TO_EDGE(GL_CLAMP_TO_EDGE),
+    CLAMP_TO_BORDER(GL_CLAMP_TO_BORDER),
+    MIRROR_REPEAT(GL_MIRRORED_REPEAT);
+
+    private final int id;
+
+    WrapMode(final int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+}

@@ -5,7 +5,10 @@ Designed to be very easy to use.
 
 ### Features
 
-- [x] 2D Render Engine
+- [x] 2D Render
+    - [x] Line
+    - [x] Circle
+    - [x] Sprite
     - [x] Camera
     - [ ] Lighting
     - [ ] Custom Shader
@@ -14,15 +17,14 @@ Designed to be very easy to use.
     - [ ] Mouse
     - [ ] Joystick
 - [x] Collision Detection
-    - [ ] AABB
-    - [x] SAT
-    - [ ] Circle-Polygon
+    - [x] Polygon-Polygon
+    - [x] Circle-Polygon
 - [ ] Sound Support
 
 ### Documentation
 [Getting Start](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
 
-[Java Doc]()
+[Java Doc](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
 
 ### Depandencies
 - [Apache Common IO](http://commons.apache.org/proper/commons-io/)
