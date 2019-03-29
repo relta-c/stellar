@@ -19,34 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Primitive;
-import org.joml.Matrix4fc;
-import org.joml.Vector3fc;
-
-/**
- * Interface for object that can be draw.
- *
+/*
+ * Provides classes for rendering.
  * @author Nattakit Hosapsin
  */
-public interface Drawable {
-    /**
-     * Get {@link Primitive} for drawing.
-     *
-     * @return primitive
-     */
-    Primitive getPrimitive();
-
-    /**
-     * Get object model matrix to transform object to global space.
-     *
-     * @return model matrix
-     */
-    Matrix4fc getModelMatrix();
-
-    /**
-     * Gen object color for drawing.
-     *
-     * @return object color
-     */
-    Vector3fc getColor();
-}

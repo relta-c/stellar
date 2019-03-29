@@ -25,23 +25,24 @@ import java.lang.Math;
 
 public class Camera {
     private static final int TWO_RADIAN_DEGREE = 360;
-    private static final float HALF_LEN = 0.5F;
+    private static final float HALF = 0.5F;
     private final Vector2i resolution;
-    private Vector2f position;
-    private Quaternionf rotation;
     private float zoom;
+    private Vector2f position;
     private Matrix4f viewMatrix;
     private Matrix4f projectionMatrix;
+    private Quaternionf rotation;
 
     public Camera(final Vector2i resolution) {
+        this.resolution = resolution;
+        position = new Vector2f();
         viewMatrix = new Matrix4f();
         projectionMatrix = new Matrix4f();
-        position = new Vector2f();
-        this.resolution = resolution;
         rotation = new Quaternionf();
         zoom = 1.0F;
         updateViewMatrix();
         updateProjectionMatrix();
+
     }
 
     public Vector2f getPosition() {
@@ -56,6 +57,10 @@ public class Camera {
         return rotation;
     }
 
+    public void setRotation(final Quaternionf rotation) {
+        this.rotation = rotation;
+    }
+
     @SuppressWarnings("NumericCastThatLosesPrecision")
     public float getDegreesRotation() {
         float degree = (float) Math.toDegrees(rotation.angle());
@@ -63,10 +68,6 @@ public class Camera {
             degree = TWO_RADIAN_DEGREE - degree;
         }
         return degree;
-    }
-
-    public void setRotation(final Quaternionf rotation) {
-        this.rotation = rotation;
     }
 
     public void setDegreesRotation(final float angle) {
@@ -81,14 +82,6 @@ public class Camera {
         this.zoom = zoom;
     }
 
-    private float getZoomX() {
-        return (resolution.x * zoom) - resolution.x;
-    }
-
-    private float getZoomY() {
-        return (resolution.y * zoom) - resolution.y;
-    }
-
     Matrix4f getViewMatrix() {
         return viewMatrix;
     }
@@ -100,9 +93,9 @@ public class Camera {
     void updateViewMatrix() {
         viewMatrix = new Matrix4f();
         viewMatrix.translate(new Vector3f(-position.x, -position.y, 0.0f));
-        viewMatrix.translate(new Vector3f(HALF_LEN * resolution.x, HALF_LEN * resolution.y, 0.0f));
+        viewMatrix.translate(new Vector3f(HALF * resolution.x, HALF * resolution.y, 0.0f));
         viewMatrix = viewMatrix.rotate(rotation);
-        viewMatrix.translate(new Vector3f(-HALF_LEN * resolution.x, -HALF_LEN * resolution.y, 0.0f));
+        viewMatrix.translate(new Vector3f(-HALF * resolution.x, -HALF * resolution.y, 0.0f));
     }
 
     void updateProjectionMatrix() {
@@ -111,5 +104,13 @@ public class Camera {
                 resolution.x + getZoomX(),
                 resolution.y + getZoomY(),
                 0.0F - getZoomY());
+    }
+
+    private float getZoomX() {
+        return (resolution.x * zoom) - resolution.x;
+    }
+
+    private float getZoomY() {
+        return (resolution.y * zoom) - resolution.y;
     }
 }

@@ -33,7 +33,7 @@ public class Keyboard {
     private final Map<Integer, Key> keySet;
 
     public Keyboard(final Display display) {
-        final long window = display.getWindowId();
+        final long window = display.getId();
         glfwMakeContextCurrent(window);
         glfwSetKeyCallback(window, this::keyCallback);
         state = new EnumMap<>(Key.class);

@@ -25,77 +25,142 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * Represents game's window and various window properties.
+ * <p>This class must be initialized before using any rendering function.</p>
+ *
+ * @author Nattakit Hosapsin
+ */
 public class Display {
+    /**
+     * Window resolution
+     */
     private final Vector2i resolution;
-    private long windowId;
-    private String windowTitle;
+    /**
+     * ID of OpenGL window object
+     */
+    private long id;
+    /**
+     * Window title
+     */
+    private String title;
+    /**
+     * Camera object that will be use to transform view
+     */
     private Camera camera;
 
-    public Display(final int width, final int height, final String windowTitle) {
+    /**
+     * Create a new {@link Display} with some default values for further rendering operation.
+     *
+     * @param width  window resolution width
+     * @param height window resolution height
+     * @param title  window title
+     */
+    public Display(final int width, final int height, final String title) {
+        this.title = title;
         resolution = new Vector2i(width, height);
-        this.windowTitle = windowTitle;
-        windowId = 0L;
         camera = new Camera(new Vector2i(width, height));
-        init();
+        initialize();
     }
 
-    public Vector2i getResolution() {
-        return resolution;
+    /**
+     * Get current window resolution.
+     *
+     * @return window resolution in int array of [width, height]
+     */
+    public int[] getResolution() {
+        return new int[]{resolution.x, resolution.y};
     }
 
+    /**
+     * Get current {@link Camera} object.
+     *
+     * @return camera object
+     */
     @SuppressWarnings("WeakerAccess")
     public Camera getCamera() {
         return camera;
     }
 
+    /**
+     * Set a new {@link Camera} to transform view.
+     * <p>This have to be used very time to change camera's parameter.</p>
+     *
+     * @param camera new camera object
+     */
     public void setCamera(final Camera camera) {
         this.camera = camera;
     }
 
+    /**
+     * Get window title.
+     *
+     * @return window title
+     */
     public CharSequence getWindowTitle() {
-        return windowTitle;
+        return title;
     }
 
-    public void setWindowTitle(final String windowTitle) {
-        glfwSetWindowTitle(windowId, windowTitle);
-        this.windowTitle = windowTitle;
+    /**
+     * Set window title
+     *
+     * @param title window title
+     */
+    public void setWindowTitle(final String title) {
+        glfwSetWindowTitle(id, title);
+        this.title = title;
     }
 
+    /**
+     * Update widow state and swap framebuffer.
+     * <p>This method should be used after every thing have been drawn</p>
+     */
     public void update() {
-        glfwMakeContextCurrent(windowId);
+        glfwMakeContextCurrent(id);
         glfwPollEvents();
 
-        // Update matrix
+        // Update transform matrix
         camera.updateViewMatrix();
         camera.updateProjectionMatrix();
 
-        glfwSwapBuffers(windowId);
+        glfwSwapBuffers(id);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
+    /**
+     * Check if window are closing.
+     *
+     * @return window closing status
+     */
     public boolean shouldClose() {
-        return glfwWindowShouldClose(windowId);
+        return glfwWindowShouldClose(id);
     }
 
-    public void close() {
-        glfwSetWindowShouldClose(windowId, true);
+    /**
+     * Terminate window
+     */
+    public void terminate() {
+        glfwSetWindowShouldClose(id, true);
     }
 
-    public long getWindowId() {
-        return windowId;
+    /**
+     * @return window OpenGL object id
+     */
+    long getId() {
+        return id;
     }
 
-    private void init() {
+    private void initialize() {
         // Initialize glfw and create window
         glfwInit();
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        windowId = glfwCreateWindow(resolution.x, resolution.y, windowTitle, 0L, 0L);
+        id = glfwCreateWindow(resolution.x, resolution.y, title, 0L, 0L);
 
-        glfwMakeContextCurrent(windowId);
+        glfwMakeContextCurrent(id);
 
-        // Initialize OpenGl
+        // Initialize OpenGL
         GL.createCapabilities();
         glViewport(0, 0, resolution.x, resolution.y);
         glEnable(GL_CULL_FACE);
