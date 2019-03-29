@@ -27,7 +27,7 @@ class CirclePrimitive implements Primitive {
     private int verticesNum;
 
     CirclePrimitive(final Vector2fc origin, final float radius, final int side) {
-        drawMode = PrimitiveDrawMode.TRIANGLE_FAN.getId();
+        drawMode = PrimitiveDrawMode.TRIANGLE_FAN.getID();
         createVertices(origin, radius, side);
     }
 

@@ -130,12 +130,12 @@ public class Texture {
 
     void generate() {
         bind();
-        final int rawFormatId = rawImageFormat.getId();
-        final int internalFormatId = internalImageFormat.getId();
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS.getId());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT.getId());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMin.getId());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMax.getId());
+        final int rawFormatId = rawImageFormat.getID();
+        final int internalFormatId = internalImageFormat.getID();
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapS.getID());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapT.getID());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterMin.getID());
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterMax.getID());
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormatId, width, height, 0, rawFormatId, GL_UNSIGNED_BYTE, data);
         glBindTexture(GL_TEXTURE_2D, GL_NONE);
     }

@@ -19,7 +19,15 @@
 
 package net.chifumi.stellar.geometry;
 
+/**
+ * Interface for sharp that have primitive
+ */
 @FunctionalInterface
 public interface Sharp {
+    /**
+     *  Get Sharp primitive
+     *
+     * @return primitive
+     */
     Primitive getPrimitive();
 }

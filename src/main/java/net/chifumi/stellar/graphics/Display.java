@@ -146,7 +146,7 @@ public class Display {
     /**
      * @return window OpenGL object id
      */
-    long getId() {
+    public long getID() {
         return id;
     }
 

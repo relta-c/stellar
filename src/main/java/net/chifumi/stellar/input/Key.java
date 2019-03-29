@@ -138,7 +138,7 @@ public enum Key {
         this.id = id;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 }
