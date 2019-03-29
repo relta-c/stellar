@@ -26,7 +26,7 @@ import java.util.List;
 public enum SAT {
     ;
 
-    public static boolean check(final Polygon polygonA, final Polygon polygonB) {
+    public static boolean check(final Polygon polygonA, final Polygon polygonB) { // TODO : MTV
         final List<Vector2f> axes = getAxis(polygonA.getVertices());
         axes.addAll(getAxis(polygonB.getVertices()));
         boolean result = true;

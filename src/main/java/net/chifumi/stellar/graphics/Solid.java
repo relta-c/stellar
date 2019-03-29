@@ -1,19 +1,22 @@
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Sharp;
 import net.chifumi.stellar.geometry.Primitive;
+import net.chifumi.stellar.geometry.Sharp;
 import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
 public class Solid implements Drawable {
     private Sharp sharp;
-    private Matrix4f model;
+    private Primitive primitive;
     private Vector3f color;
+    private Matrix4f modelMatrix;
 
     public Solid(final Sharp sharp) {
         this.sharp = sharp;
-        model = new Matrix4f();
+        primitive = sharp.getPrimitive();
+        modelMatrix = new Matrix4f();
         color = new Vector3f();
     }
 
@@ -23,20 +26,11 @@ public class Solid implements Drawable {
 
     public void setSharp(final Sharp sharp) {
         this.sharp = sharp;
+        primitive = sharp.getPrimitive();
     }
 
     public void setColor(final float red, final float green, final float blue) {
         color = new Vector3f(red, green, blue);
-    }
-
-    @Override
-    public Primitive getPrimitive() {
-        return sharp.getPrimitive();
-    }
-
-    @Override
-    public Matrix4f getModel() {
-        return model;
     }
 
     @Override
@@ -48,7 +42,17 @@ public class Solid implements Drawable {
         this.color = (Vector3f) color;
     }
 
-    public void setModel(final Matrix4f model) {
-        this.model = model;
+    @Override
+    public Matrix4f getModelMatrix() {
+        return modelMatrix;
+    }
+
+    public void setModelMatrix(final Matrix4fc modelMatrix) {
+        this.modelMatrix = (Matrix4f) modelMatrix;
+    }
+
+    @Override
+    public Primitive getPrimitive() {
+        return primitive;
     }
 }

@@ -22,6 +22,6 @@ import org.joml.Vector3fc;
 
 public interface Drawable {
     Primitive getPrimitive();
-    Matrix4fc getModel();
+    Matrix4fc getModelMatrix();
     Vector3fc getColor();
 }
