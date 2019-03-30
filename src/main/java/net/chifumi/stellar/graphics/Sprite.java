@@ -32,13 +32,13 @@ import java.util.List;
 public class Sprite implements TexturedDrawable, Polygon {
     private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
+    private final NormalizedPrimitive normalizedPrimitive;
     private Vector2f position;
     private Vector2f size;
-    private Quaternionf rotation;
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
-    private Texture texture;
     private Matrix4f modelMatrix;
-    private final NormalizedPrimitive normalizedPrimitive;
+    private Quaternionf rotation;
+    private Texture texture;
 
     public Sprite(final Texture texture) {
         position = new Vector2f();
@@ -78,8 +78,7 @@ public class Sprite implements TexturedDrawable, Polygon {
         updateModelMatrix();
     }
 
-    public Quaternionf getRotation()
-    {
+    public Quaternionf getRotation() {
         return rotation;
     }
 
@@ -102,15 +101,6 @@ public class Sprite implements TexturedDrawable, Polygon {
         updateModelMatrix();
     }
 
-    @Override
-    public Vector3f getColor() {
-        return color;
-    }
-
-    public void setColor(final Vector3fc color) {
-        this.color = (Vector3f) color;
-    }
-
     public void setColor(final float red, final float green, final float blue) {
         color = new Vector3f(red, green, blue);
     }
@@ -125,17 +115,26 @@ public class Sprite implements TexturedDrawable, Polygon {
     }
 
     @Override
+    public Primitive getPrimitive() {
+        return normalizedPrimitive;
+    }
+
+    @Override
     public Matrix4f getModelMatrix() {
         return modelMatrix;
     }
 
-    public void setModelMatrix(final Matrix4fc modelMatrix) {
-        this.modelMatrix = (Matrix4f) modelMatrix;
+    @Override
+    public Vector3f getColor() {
+        return color;
     }
 
-    @Override
-    public Primitive getPrimitive() {
-        return normalizedPrimitive;
+    public void setColor(final Vector3fc color) {
+        this.color = (Vector3f) color;
+    }
+
+    public void setModelMatrix(final Matrix4fc modelMatrix) {
+        this.modelMatrix = (Matrix4f) modelMatrix;
     }
 
     public List<Vector2f> getVertices() { // TODO : Use EBO, then transform vertices

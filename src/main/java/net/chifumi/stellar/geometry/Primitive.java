@@ -21,6 +21,8 @@ package net.chifumi.stellar.geometry;
 
 public interface Primitive {
     float[] getVertices();
+
     int getDrawMode();
+
     int getVerticesNum();
 }

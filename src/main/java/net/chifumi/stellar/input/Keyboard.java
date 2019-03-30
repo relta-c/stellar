@@ -52,13 +52,13 @@ public class Keyboard {
         return state.get(key);
     }
 
-    private Key keyFromId(final int id) {
+    private Key keyFromID(final int id) {
         return keySet.get(id);
     }
 
     @SuppressWarnings("unused")
     private void keyCallback(final long window, final int key, final int scancode, final int action, final int mode) {
-        final Key keyEnum = keyFromId(key);
+        final Key keyEnum = keyFromID(key);
         if (action == GLFW_PRESS) {
             state.put(keyEnum, KeyState.PRESS);
         } else if (action == GLFW_RELEASE) {

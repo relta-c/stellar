@@ -31,7 +31,7 @@ public class Circle implements Sharp {
     public Circle(final Vector2fc origin, final float radius) {
         this.origin = (Vector2f) origin;
         this.radius = radius;
-        face = (int)radius;
+        face = (int) radius;
     }
 
     public Vector2f getOrigin() {

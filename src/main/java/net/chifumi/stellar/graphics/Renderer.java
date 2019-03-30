@@ -19,8 +19,8 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.utils.Resource;
 import net.chifumi.stellar.geometry.Primitive;
+import net.chifumi.stellar.utils.Resource;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -29,9 +29,9 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
-    private Shader shader;
     private final Map<Primitive, Integer> vao;
     private final Map<Primitive, Integer> vbo;
+    private Shader shader;
 
     public Renderer(final Display display) {
         try {
@@ -61,23 +61,6 @@ public class Renderer {
         }
     }
 
-    private void init(final Primitive primitive) {
-        vao.put(primitive, glGenVertexArrays());
-        vbo.put(primitive, glGenBuffers());
-
-        glBindBuffer(GL_ARRAY_BUFFER, vbo.get(primitive));
-        glBufferData(GL_ARRAY_BUFFER, primitive.getVertices(), GL_STATIC_DRAW);
-
-        glBindVertexArray(vao.get(primitive));
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * 4, 0L);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * 4, 0L);
-
-        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
-        glBindVertexArray(GL_NONE);
-    }
-
     public void draw(final Display display, final Drawable drawable) {
         final Primitive primitive = drawable.getPrimitive();
 
@@ -105,6 +88,23 @@ public class Renderer {
         texturedDrawable.getTexture().bind();
 
         drawArrays(primitive);
+    }
+
+    private void init(final Primitive primitive) {
+        vao.put(primitive, glGenVertexArrays());
+        vbo.put(primitive, glGenBuffers());
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo.get(primitive));
+        glBufferData(GL_ARRAY_BUFFER, primitive.getVertices(), GL_STATIC_DRAW);
+
+        glBindVertexArray(vao.get(primitive));
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * 4, 0L);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * 4, 0L);
+
+        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
+        glBindVertexArray(GL_NONE);
     }
 
     private void setUniformValues(final Display display, final Drawable drawable) {
