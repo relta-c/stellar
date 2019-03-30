@@ -124,6 +124,10 @@ public class Sprite implements TexturedDrawable, Polygon {
         return modelMatrix;
     }
 
+    public void setModelMatrix(final Matrix4fc modelMatrix) {
+        this.modelMatrix = (Matrix4f) modelMatrix;
+    }
+
     @Override
     public Vector3f getColor() {
         return color;
@@ -131,10 +135,6 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     public void setColor(final Vector3fc color) {
         this.color = (Vector3f) color;
-    }
-
-    public void setModelMatrix(final Matrix4fc modelMatrix) {
-        this.modelMatrix = (Matrix4f) modelMatrix;
     }
 
     public List<Vector2f> getVertices() { // TODO : Use EBO, then transform vertices

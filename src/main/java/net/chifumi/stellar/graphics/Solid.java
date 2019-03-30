@@ -62,6 +62,10 @@ public class Solid implements Drawable {
         return modelMatrix;
     }
 
+    public void setModelMatrix(final Matrix4fc modelMatrix) {
+        this.modelMatrix = (Matrix4f) modelMatrix;
+    }
+
     @Override
     public Vector3f getColor() {
         return color;
@@ -69,9 +73,5 @@ public class Solid implements Drawable {
 
     public void setColor(final Vector3fc color) {
         this.color = (Vector3f) color;
-    }
-
-    public void setModelMatrix(final Matrix4fc modelMatrix) {
-        this.modelMatrix = (Matrix4f) modelMatrix;
     }
 }
