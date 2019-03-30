@@ -90,7 +90,7 @@ public enum SAT {
         return result;
     }
 
-    static List<Vector2f>  getCircleAxis(final Vector2fc origin, final Polygon polygon) {
+    static List<Vector2f> getCircleAxis(final Vector2fc origin, final Polygon polygon) {
         final List<Vector2f> result = new ArrayList<>();
         Vector2f circleAxis = null;
         for (int i = 0; i < polygon.getVertices().size(); i++) { // TODO : Optimize this (Beware, Vector is mutable)

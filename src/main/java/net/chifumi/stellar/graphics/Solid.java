@@ -53,6 +53,16 @@ public class Solid implements Drawable {
     }
 
     @Override
+    public Primitive getPrimitive() {
+        return primitive;
+    }
+
+    @Override
+    public Matrix4f getModelMatrix() {
+        return modelMatrix;
+    }
+
+    @Override
     public Vector3f getColor() {
         return color;
     }
@@ -61,17 +71,7 @@ public class Solid implements Drawable {
         this.color = (Vector3f) color;
     }
 
-    @Override
-    public Matrix4f getModelMatrix() {
-        return modelMatrix;
-    }
-
     public void setModelMatrix(final Matrix4fc modelMatrix) {
         this.modelMatrix = (Matrix4f) modelMatrix;
-    }
-
-    @Override
-    public Primitive getPrimitive() {
-        return primitive;
     }
 }
