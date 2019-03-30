@@ -52,12 +52,15 @@ public class Display {
     /**
      * Create a new {@link Display} with some default values for further rendering operation.
      *
-     * @param width  window resolution width
-     * @param height window resolution height
-     * @param title  window title
+     * @param width
+     *         window resolution width
+     * @param height
+     *         window resolution height
+     * @param title
+     *         window title
      */
-    public Display(final int width, final int height, final String title) {
-        this.title = title;
+    public Display(final int width, final int height, final CharSequence title) {
+        this.title = (String) title;
         resolution = new Vector2i(width, height);
         camera = new Camera(new Vector2i(width, height));
         initialize();
@@ -86,7 +89,8 @@ public class Display {
      * Set a new {@link Camera} to transform view.
      * <p>This have to be used very time to change camera's parameter.</p>
      *
-     * @param camera new camera object
+     * @param camera
+     *         new camera object
      */
     public void setCamera(final Camera camera) {
         this.camera = camera;
@@ -97,18 +101,19 @@ public class Display {
      *
      * @return window title
      */
-    public CharSequence getWindowTitle() {
+    public String getWindowTitle() {
         return title;
     }
 
     /**
      * Set window title
      *
-     * @param title window title
+     * @param title
+     *         window title
      */
-    public void setWindowTitle(final String title) {
+    public void setWindowTitle(final CharSequence title) {
         glfwSetWindowTitle(id, title);
-        this.title = title;
+        this.title = (String) title;
     }
 
     /**
