@@ -17,25 +17,24 @@
  *
  */
 
-package net.chifumi.stellar.collision;
+package net.chifumi.stellar.geometry;
 
-import net.chifumi.stellar.geometry.Circle;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public enum SAT {
+public enum Collision {
     ;
 
     public static boolean check(final Polygon polygonA, final Polygon polygonB) { // TODO : MTV
-        final List<Vector2f> axes = getAxis(polygonA.getVertices());
-        axes.addAll(getAxis(polygonB.getVertices()));
+        final List<Vector2f> axes = getAxis(polygonA.getAbsoluteVertices());
+        axes.addAll(getAxis(polygonB.getAbsoluteVertices()));
         boolean result = true;
         for (final Vector2f axis : axes) {
-            final Vector2f projectionA = project(axis, polygonA.getVertices());
-            final Vector2f projectionB = project(axis, polygonB.getVertices());
+            final Vector2f projectionA = project(axis, polygonA.getAbsoluteVertices());
+            final Vector2f projectionB = project(axis, polygonB.getAbsoluteVertices());
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
                 break;
@@ -48,7 +47,7 @@ public enum SAT {
         final List<Vector2f> axes = getCircleAxis(circle.getOrigin(), polygonA);
         boolean result = true;
         for (final Vector2fc axis : axes) {
-            final Vector2fc projectionA = project(axis, polygonA.getVertices());
+            final Vector2fc projectionA = project(axis, polygonA.getAbsoluteVertices());
             final Vector2fc projectionB = projectCircle(axis, circle);
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
@@ -58,7 +57,16 @@ public enum SAT {
         return result;
     }
 
-    static Vector2f project(final Vector2fc axis, final List<? extends Vector2f> vertices) {
+    public static boolean check(final Circle circleA, final Circle circleB) {
+        final Vector2f originVector = new Vector2f(circleB.getOrigin());
+        originVector.sub(circleA.getOrigin());
+        final float originDistant = originVector.length();
+        final float radiusSum = circleA.getRadius() + circleB.getRadius();
+
+        return originDistant < radiusSum;
+    }
+
+    private static Vector2f project(final Vector2fc axis, final List<? extends Vector2f> vertices) {
         float min = axis.dot(vertices.get(0));
         float max = min;
 
@@ -73,12 +81,12 @@ public enum SAT {
         return new Vector2f(min, max);
     }
 
-    static Vector2f projectCircle(final Vector2fc axis, final Circle circle) {
+    private static Vector2f projectCircle(final Vector2fc axis, final Circle circle) {
         final float projection = axis.dot(circle.getOrigin());
         return new Vector2f(projection - circle.getRadius(), projection + circle.getRadius());
     }
 
-    static List<Vector2f> getAxis(final List<? extends Vector2f> conner) { // TODO : optimize for rectangles
+    private static List<Vector2f> getAxis(final List<? extends Vector2f> conner) { // TODO : optimize for rectangles
         final List<Vector2f> result = new ArrayList<>();
         for (int i = 0; i < conner.size(); i++) {
             final Vector2f currentVertex = conner.get(i);
@@ -90,17 +98,19 @@ public enum SAT {
         return result;
     }
 
-    static List<Vector2f> getCircleAxis(final Vector2fc origin, final Polygon polygon) {
+    private static List<Vector2f> getCircleAxis(final Vector2fc origin, final Polygon polygon) {
         final List<Vector2f> result = new ArrayList<>();
         Vector2f circleAxis = null;
-        for (int i = 0; i < polygon.getVertices().size(); i++) { // TODO : Optimize this (Beware, Vector is mutable)
-            final Vector2f currentVertex = polygon.getVertices().get(i);
-            final Vector2f nextVertex = polygon.getVertices().get((i + 1) % polygon.getVertices().size());
+        for (int i = 0; i < polygon.getAbsoluteVertices()
+                .size(); i++) { // TODO : Optimize this (Beware, Vector is mutable)
+            final Vector2f currentVertex = polygon.getAbsoluteVertices().get(i);
+            final Vector2f nextVertex = polygon.getAbsoluteVertices()
+                    .get((i + 1) % polygon.getAbsoluteVertices().size());
             final Vector2f edge = currentVertex.sub(nextVertex);
             final Vector2f normal = edge.perpendicular();
             result.add(normal.normalize());
 
-            final Vector2f vertexToCircle = polygon.getVertices().get(i).sub(origin);
+            final Vector2f vertexToCircle = polygon.getAbsoluteVertices().get(i).sub(origin);
             if (circleAxis != null) {
                 if (vertexToCircle.lengthSquared() < circleAxis.lengthSquared()) {
                     circleAxis = vertexToCircle;
@@ -114,7 +124,7 @@ public enum SAT {
         return result;
     }
 
-    static boolean isOverlap(final Vector2fc projectionA, final Vector2fc projectionB) {
+    private static boolean isOverlap(final Vector2fc projectionA, final Vector2fc projectionB) {
         return projectionA.x() > projectionB.y() || projectionB.x() > projectionA.y();
     }
 }
