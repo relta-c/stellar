@@ -36,8 +36,8 @@ import java.nio.charset.StandardCharsets;
 public enum IO {
     ;
 
-    public static Shader loadShader(final ShaderSet shaderSet) throws FileNotFoundException {
-        return loadShaderFile(shaderSet.getVertex(), shaderSet.getFragment());
+    public static Shader loadShader(final ShaderSet vertex, final ShaderSet fragment) throws FileNotFoundException {
+        return loadShaderFile(vertex.getPath(), fragment.getPath());
     }
 
     @SuppressWarnings("unused")

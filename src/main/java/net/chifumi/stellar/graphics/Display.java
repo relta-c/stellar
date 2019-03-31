@@ -164,6 +164,7 @@ public class Display {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+        glfwWindowHint(GLFW_SAMPLES, 8);
         id = glfwCreateWindow(resolution.x, resolution.y, title, 0L, 0L);
 
         glfwMakeContextCurrent(id);
@@ -172,6 +173,7 @@ public class Display {
         GL.createCapabilities();
         glViewport(0, 0, resolution.x, resolution.y);
         glEnable(GL_BLEND);
+        glEnable(GL_MULTISAMPLE);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
     }

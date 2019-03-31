@@ -20,22 +20,19 @@
 package net.chifumi.stellar.graphics;
 
 public enum ShaderSet {
-    DEFAULT("/shaders/vs_default.glsl", "/shaders/fs_default.glsl"),
-    INVERT("/shaders/vs_default.glsl", "/shaders/fs_invert.glsl");
+    DEFAULT("/shaders/vs_default.glsl"),
+    SPRITE("/shaders/fs_sprite.glsl"),
+    SOLID("/shaders/fs_solid.glsl"),
+    INVERT("/shaders/fs_invert.glsl"),
+    FRAMEBUFFER("/shaders/vs_framebuffer.glsl");
 
-    private final String vertex;
-    private final String fragment;
+    private final String path;
 
-    ShaderSet(final CharSequence vertex, final CharSequence fragment) {
-        this.vertex = (String) vertex;
-        this.fragment = (String) fragment;
+    ShaderSet(final CharSequence path) {
+        this.path = (String) path;
     }
 
-    public String getVertex() {
-        return vertex;
-    }
-
-    public String getFragment() {
-        return fragment;
+    public String getPath() {
+        return path;
     }
 }

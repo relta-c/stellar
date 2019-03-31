@@ -30,34 +30,20 @@ import static org.lwjgl.opengl.GL33.*;
 public class Renderer {
     private final Map<Primitive, Integer> vao;
     private final Map<Primitive, Integer> vbo;
-    private Shader shader;
+    private Shader texturedShader;
+    private Shader solidShader;
 
     public Renderer(final Display display) {
         try {
-            shader = IO.loadShader(ShaderSet.DEFAULT);
+            texturedShader = IO.loadShader(ShaderSet.DEFAULT, ShaderSet.SPRITE);
+            solidShader = IO.loadShader(ShaderSet.DEFAULT, ShaderSet.SOLID);
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
-            shader = new Shader();
+            texturedShader = new Shader();
+            solidShader = new Shader();
         }
         vao = new HashMap<>();
         vbo = new HashMap<>();
-        shader.use();
-    }
-
-    public Shader getShader() {
-        return shader;
-    }
-
-    public void setShader(final Shader shader) {
-        this.shader = shader;
-    }
-
-    public void setShader(final ShaderSet shaderSet) {
-        try {
-            shader = IO.loadShader(shaderSet);
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public void draw(final Display display, final Drawable drawable) {
@@ -67,8 +53,7 @@ public class Renderer {
             init(primitive);
         }
 
-        shader.setUniform("haveTexture", 0);
-        setUniformValues(display, drawable);
+        setUniformValues(solidShader, display, drawable);
 
         drawArrays(primitive);
     }
@@ -80,13 +65,19 @@ public class Renderer {
             init(primitive);
         }
 
-        shader.setUniform("haveTexture", 1);
-        setUniformValues(display, texturedDrawable);
+        setUniformValues(texturedShader, display, texturedDrawable);
 
         glActiveTexture(GL_TEXTURE0);
         texturedDrawable.getTexture().bind();
 
         drawArrays(primitive);
+    }
+
+    private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {
+        shader.setUniform("projection", display.getCamera().getProjectionMatrix());
+        shader.setUniform("view", display.getCamera().getViewMatrix());
+        shader.setUniform("model", drawable.getModelMatrix());
+        shader.setUniform("color", drawable.getColor());
     }
 
     private void init(final Primitive primitive) {
@@ -104,13 +95,6 @@ public class Renderer {
 
         glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
         glBindVertexArray(GL_NONE);
-    }
-
-    private void setUniformValues(final Display display, final Drawable drawable) {
-        shader.setUniform("projection", display.getCamera().getProjectionMatrix());
-        shader.setUniform("view", display.getCamera().getViewMatrix());
-        shader.setUniform("model", drawable.getModelMatrix());
-        shader.setUniform("color", drawable.getColor());
     }
 
     private void drawArrays(final Primitive primitive) {
