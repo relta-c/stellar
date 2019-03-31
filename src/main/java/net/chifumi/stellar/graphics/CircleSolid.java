@@ -22,13 +22,15 @@ package net.chifumi.stellar.graphics;
 import net.chifumi.stellar.geometry.Circle;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector2fc;
 import org.joml.Vector3f;
+
 
 public class CircleSolid extends Solid {
     private int face;
     private Circle circle;
 
-    public CircleSolid(final Vector2f origin, final float radius, final int face) {
+    public CircleSolid(final Vector2fc origin, final float radius, final int face) {
         super(new CirclePrimitive(face));
         this.face = face;
         circle = new Circle(origin, radius);
@@ -54,7 +56,7 @@ public class CircleSolid extends Solid {
         return circle.getOrigin();
     }
 
-    public void setOrigin(final Vector2f origin) {
+    public void setOrigin(final Vector2fc origin) {
         circle = new Circle(origin, getRadius());
     }
 

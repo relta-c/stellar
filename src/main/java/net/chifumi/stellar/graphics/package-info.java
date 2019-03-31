@@ -20,6 +20,6 @@
 package net.chifumi.stellar.graphics;
 
 /*
- * Provides classes for rendering.
+ * Provides classes for graphic rendering.
  * @author Nattakit Hosapsin
  */

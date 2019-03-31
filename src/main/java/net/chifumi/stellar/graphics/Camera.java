@@ -33,8 +33,8 @@ public class Camera {
     private Matrix4f projectionMatrix;
     private Quaternionf rotation;
 
-    public Camera(final Vector2i resolution) {
-        this.resolution = resolution;
+    public Camera(final Vector2ic resolution) {
+        this.resolution = (Vector2i) resolution;
         position = new Vector2f();
         viewMatrix = new Matrix4f();
         projectionMatrix = new Matrix4f();
@@ -56,8 +56,8 @@ public class Camera {
         return rotation;
     }
 
-    public void setRotation(final Quaternionf rotation) {
-        this.rotation = rotation;
+    public void setRotation(final Quaternionfc rotation) {
+        this.rotation = (Quaternionf) rotation;
     }
 
     @SuppressWarnings("NumericCastThatLosesPrecision")

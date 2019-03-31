@@ -80,7 +80,7 @@ public class Display {
      *
      * @return camera object
      */
-    @SuppressWarnings("WeakerAccess")
+
     public Camera getCamera() {
         return camera;
     }
@@ -171,7 +171,6 @@ public class Display {
         // Initialize OpenGL
         GL.createCapabilities();
         glViewport(0, 0, resolution.x, resolution.y);
-        glEnable(GL_CULL_FACE);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable

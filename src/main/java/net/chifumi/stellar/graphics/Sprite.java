@@ -52,8 +52,8 @@ public class Sprite implements TexturedDrawable, Polygon {
         return position;
     }
 
-    public void setPosition(final Vector2f position) {
-        this.position = position;
+    public void setPosition(final Vector2fc position) {
+        this.position = (Vector2f) position;
         updateModelMatrix();
     }
 
