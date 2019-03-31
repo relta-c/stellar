@@ -36,7 +36,7 @@ class Shader {
     private int id;
 
     Shader() {
-        id = 0;
+        id = -1;
     }
 
     public Shader(final CharSequence vertexSource, final CharSequence fragmentSource) {
@@ -52,15 +52,15 @@ class Shader {
     }
 
     void setUniform(final CharSequence name, final int value) {
-        glUniform1i(glGetUniformLocation(id, name), value);
+        glUniform1i(getUniformLocation(name), value);
     }
 
     void setUniform(final CharSequence name, final float value) {
-        glUniform1f(glGetUniformLocation(id, name), value);
+        glUniform1f(getUniformLocation(name), value);
     }
 
     void setUniform(final CharSequence name, final float x, final float y) {
-        glUniform2f(glGetUniformLocation(id, name), x, y);
+        glUniform2f(getUniformLocation(name), x, y);
     }
 
     void setUniform(final CharSequence name, final Vector2fc vec2) {
@@ -166,6 +166,7 @@ class Shader {
     }
 
     private int getUniformLocation(final CharSequence name) {
+        use();
         return glGetUniformLocation(id, name);
     }
 }

@@ -4,10 +4,9 @@ in vec2 fragTexCoords;
 
 out vec4 fragColor;
 
-uniform sampler2D sprite;
-uniform vec3 color;
+uniform sampler2D scene;
 
-void main() // TODO : Use postprocessing
+void main()
 {
-    fragColor = vec4(1.0 - texture(sprite, fragTexCoords).rgb, texture(sprite, fragTexCoords).a);
+    fragColor = vec4(1.0 - texture(scene, fragTexCoords).rgb, texture(scene, fragTexCoords).a);
 }
