@@ -20,15 +20,16 @@
 package net.chifumi.stellar.graphics;
 
 import org.joml.Vector2f;
+import org.joml.Vector2fc;
 
 public class LineSolid extends Solid {
     private Vector2f pointA;
     private Vector2f pointB;
 
-    public LineSolid(final Vector2f pointA, final Vector2f pointB) {
+    public LineSolid(final Vector2fc pointA, final Vector2fc pointB) {
         super(new LinePrimitive(pointA, pointB));
-        this.pointA = pointA;
-        this.pointB = pointB;
+        this.pointA = (Vector2f) pointA;
+        this.pointB = (Vector2f) pointB;
     }
 
     public LineSolid(final float ax, final float ay, final float bx, final float by) {
@@ -41,8 +42,8 @@ public class LineSolid extends Solid {
         return pointA;
     }
 
-    public void setPointA(final Vector2f pointA) {
-        this.pointA = pointA;
+    public void setPointA(final Vector2fc pointA) {
+        this.pointA = (Vector2f) pointA;
         updatePrimitive();
     }
 
@@ -55,8 +56,8 @@ public class LineSolid extends Solid {
         return pointB;
     }
 
-    public void setPointB(final Vector2f pointB) {
-        this.pointB = pointB;
+    public void setPointB(final Vector2fc pointB) {
+        this.pointB = (Vector2f) pointB;
         updatePrimitive();
     }
 
