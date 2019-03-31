@@ -26,7 +26,7 @@ Designed to be very easy to use.
 
 [Java Doc](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
 
-### Depandencies
+### Dependencies
 - [Apache Common IO](http://commons.apache.org/proper/commons-io/)
 - [Lightweight Java Game Library 3](https://www.lwjgl.org/customize)
     - OpenGL

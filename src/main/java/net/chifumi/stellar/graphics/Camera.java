@@ -42,7 +42,6 @@ public class Camera {
         zoom = 1.0F;
         updateViewMatrix();
         updateProjectionMatrix();
-
     }
 
     public Vector2f getPosition() {

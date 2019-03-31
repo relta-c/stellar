@@ -17,22 +17,12 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.graphics;
 
-import static org.lwjgl.opengl.GL33.*;
+public interface Primitive {
+    float[] getVertices();
 
-enum PrimitiveDrawMode {
-    LINE(GL_LINES),
-    TRIANGLES(GL_TRIANGLES),
-    TRIANGLE_FAN(GL_TRIANGLE_FAN);
+    int getDrawMode();
 
-    private final int id;
-
-    PrimitiveDrawMode(final int id) {
-        this.id = id;
-    }
-
-    public int getID() {
-        return id;
-    }
+    int getVerticesNum();
 }

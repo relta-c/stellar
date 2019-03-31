@@ -19,7 +19,6 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Primitive;
 import org.joml.Matrix4fc;
 import org.joml.Vector3fc;
 
@@ -39,9 +38,15 @@ public interface Drawable {
     /**
      * Get object model matrix to transform object to global space.
      *
-     * @return model matrix
+     * @return model transform matrix
      */
     Matrix4fc getModelMatrix();
+
+    /**
+     * @param modelMatrix
+     *         model transform matrix
+     */
+    void setModelMatrix(final Matrix4fc modelMatrix);
 
     /**
      * Gen object color for drawing.

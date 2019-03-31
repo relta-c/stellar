@@ -19,9 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.collision.Polygon;
-import net.chifumi.stellar.geometry.NormalizedPrimitive;
-import net.chifumi.stellar.geometry.Primitive;
+import net.chifumi.stellar.geometry.Polygon;
 import net.chifumi.stellar.image.Texture;
 import org.joml.*;
 
@@ -32,7 +30,7 @@ import java.util.List;
 public class Sprite implements TexturedDrawable, Polygon {
     private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
-    private final NormalizedPrimitive normalizedPrimitive;
+    private final StaticPrimitive staticPrimitive;
     private Vector2f position;
     private Vector2f size;
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
@@ -46,7 +44,7 @@ public class Sprite implements TexturedDrawable, Polygon {
         rotation = new Quaternionf();
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
-        normalizedPrimitive = NormalizedPrimitive.RECT;
+        staticPrimitive = StaticPrimitive.RECT;
         updateModelMatrix();
     }
 
@@ -116,7 +114,7 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     @Override
     public Primitive getPrimitive() {
-        return normalizedPrimitive;
+        return staticPrimitive;
     }
 
     @Override
@@ -124,6 +122,7 @@ public class Sprite implements TexturedDrawable, Polygon {
         return modelMatrix;
     }
 
+    @Override
     public void setModelMatrix(final Matrix4fc modelMatrix) {
         this.modelMatrix = (Matrix4f) modelMatrix;
     }
@@ -137,7 +136,7 @@ public class Sprite implements TexturedDrawable, Polygon {
         this.color = (Vector3f) color;
     }
 
-    public List<Vector2f> getVertices() { // TODO : Use EBO, then transform vertices
+    public List<Vector2f> getAbsoluteVertices() { // TODO : Use EBO, then transform vertices
         Vector4f localPosition;
         final List<Vector2f> result = new ArrayList<>();
         localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);

@@ -17,12 +17,35 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.graphics;
 
-public interface Primitive {
-    float[] getVertices();
+import org.joml.Vector2fc;
 
-    int getDrawMode();
+class LinePrimitive implements Primitive {
+    private final float[] vertices;
+    private final int verticesNum;
+    private final int drawMode;
 
-    int getVerticesNum();
+    LinePrimitive(final Vector2fc pointA, final Vector2fc pointB) {
+        vertices = new float[]{
+                pointA.x(), pointA.y(), 0.0f, 0.0f,
+                pointB.x(), pointB.y(), 0.0f, 0.0f};
+        verticesNum = 2;
+        drawMode = DrawMode.LINE.getID();
+    }
+
+    @Override
+    public float[] getVertices() {
+        return vertices.clone();
+    }
+
+    @Override
+    public int getDrawMode() {
+        return drawMode;
+    }
+
+    @Override
+    public int getVerticesNum() {
+        return verticesNum;
+    }
 }

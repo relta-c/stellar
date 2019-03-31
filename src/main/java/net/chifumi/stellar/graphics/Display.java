@@ -155,6 +155,9 @@ public class Display {
         return id;
     }
 
+    /**
+     * Initialize glfw and openGL with default configuration
+     */
     private void initialize() {
         // Initialize glfw and create window
         glfwInit();

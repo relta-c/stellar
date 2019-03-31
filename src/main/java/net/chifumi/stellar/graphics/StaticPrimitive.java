@@ -17,9 +17,9 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.graphics;
 
-public enum NormalizedPrimitive implements Primitive { // TODO : Use EBO
+public enum StaticPrimitive implements Primitive { // TODO : Use EBO
     RECT(new float[]{
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f,
@@ -27,13 +27,13 @@ public enum NormalizedPrimitive implements Primitive { // TODO : Use EBO
             0.0f, 1.0f, 0.0f, 1.0f,
             1.0f, 1.0f, 1.0f, 1.0f,
             1.0f, 0.0f, 1.0f, 0.0f},
-         6, PrimitiveDrawMode.TRIANGLES.getID());
+         6, DrawMode.TRIANGLES.getID());
 
     private final float[] vertices;
     private final int verticesNum;
     private final int drawMode;
 
-    NormalizedPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
+    StaticPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
         this.vertices = vertices;
         this.verticesNum = verticesNum;
         this.drawMode = drawMode;
