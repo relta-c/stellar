@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.image;
 
-import net.chifumi.stellar.utils.Resource;
+import net.chifumi.stellar.utils.IO;
 
 import java.io.FileNotFoundException;
 
@@ -40,8 +40,8 @@ public class TextureLoader {
         filterMax = FilteringMode.NEAREST;
     }
 
-    public Texture load(final String path) throws FileNotFoundException {
-        final Texture loadTextureFile = Resource.LoadTextureFile(path);
+    public Texture load(final CharSequence path) throws FileNotFoundException {
+        final Texture loadTextureFile = IO.LoadTextureFile(path);
         loadTextureFile.setRawImageFormat(rawImageFormat);
         loadTextureFile.setInternalImageFormat(internalImageFormat);
         loadTextureFile.setWrapS(wrapS);

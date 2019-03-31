@@ -19,8 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Primitive;
-import net.chifumi.stellar.utils.Resource;
+import net.chifumi.stellar.utils.IO;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class Renderer {
 
     public Renderer(final Display display) {
         try {
-            shader = Resource.loadShader(ShaderSet.DEFAULT);
+            shader = IO.loadShader(ShaderSet.DEFAULT);
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             shader = new Shader();
@@ -55,7 +54,7 @@ public class Renderer {
 
     public void setShader(final ShaderSet shaderSet) {
         try {
-            shader = Resource.loadShader(shaderSet);
+            shader = IO.loadShader(shaderSet);
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }

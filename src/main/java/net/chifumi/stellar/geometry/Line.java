@@ -22,7 +22,7 @@ package net.chifumi.stellar.geometry;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 
-public class Line implements Sharp {
+public class Line {
     private final Vector2f pointA;
     private final Vector2f pointB;
 
@@ -42,10 +42,5 @@ public class Line implements Sharp {
 
     public Vector2f getPointB() {
         return pointB;
-    }
-
-    @Override
-    public Primitive getPrimitive() {
-        return new LinePrimitive(pointA, pointB);
     }
 }

@@ -17,13 +17,22 @@
  *
  */
 
-package net.chifumi.stellar.collision;
+package net.chifumi.stellar.graphics;
 
-import org.joml.Vector2f;
+import static org.lwjgl.opengl.GL33.*;
 
-import java.util.List;
+enum DrawMode {
+    LINE(GL_LINES),
+    TRIANGLES(GL_TRIANGLES),
+    TRIANGLE_FAN(GL_TRIANGLE_FAN);
 
-@FunctionalInterface
-public interface Polygon {
-    List<Vector2f> getVertices();
+    private final int id;
+
+    DrawMode(final int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return id;
+    }
 }

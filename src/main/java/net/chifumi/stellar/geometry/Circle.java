@@ -22,16 +22,13 @@ package net.chifumi.stellar.geometry;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 
-public class Circle implements Sharp {
-    private final int face;
+public class Circle {
     private Vector2f origin;
     private float radius;
 
-    @SuppressWarnings("NumericCastThatLosesPrecision")
     public Circle(final Vector2fc origin, final float radius) {
         this.origin = (Vector2f) origin;
         this.radius = radius;
-        face = (int) radius;
     }
 
     public Vector2f getOrigin() {
@@ -48,10 +45,5 @@ public class Circle implements Sharp {
 
     public void setRadius(final float radius) {
         this.radius = radius;
-    }
-
-    @Override
-    public Primitive getPrimitive() {
-        return new CirclePrimitive(origin, radius, face);
     }
 }

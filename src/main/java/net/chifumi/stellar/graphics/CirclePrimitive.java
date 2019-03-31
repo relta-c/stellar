@@ -17,18 +17,16 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
-
-import org.joml.Vector2fc;
+package net.chifumi.stellar.graphics;
 
 class CirclePrimitive implements Primitive {
     private final int drawMode;
     private float[] vertices;
     private int verticesNum;
 
-    CirclePrimitive(final Vector2fc origin, final float radius, final int side) {
-        drawMode = PrimitiveDrawMode.TRIANGLE_FAN.getID();
-        createVertices(origin, radius, side);
+    CirclePrimitive(final int side) {
+        drawMode = DrawMode.TRIANGLE_FAN.getID();
+        createVertices(side);
     }
 
     @Override
@@ -47,19 +45,19 @@ class CirclePrimitive implements Primitive {
     }
 
     @SuppressWarnings("NumericCastThatLosesPrecision")
-    private void createVertices(final Vector2fc origin, final float radius, final int side) {
+    private void createVertices(final int side) {
         verticesNum = side + 2;
         final double doublePi = 2 * Math.PI;
 
         final double[] verticesX = new double[verticesNum];
         final double[] verticesY = new double[verticesNum];
 
-        verticesX[0] = origin.x();
-        verticesY[0] = origin.y();
+        verticesX[0] = 0;
+        verticesY[0] = 0;
 
         for (int i = 1; i < verticesNum; i++) {
-            verticesX[i] = origin.x() + (radius * StrictMath.cos(i * doublePi / side));
-            verticesY[i] = origin.y() - (radius * StrictMath.sin(i * doublePi / side));
+            verticesX[i] = 0 + (1 * StrictMath.cos(i * doublePi / side));
+            verticesY[i] = 0 - (1 * StrictMath.sin(i * doublePi / side));
         }
 
         vertices = new float[verticesNum * 4];

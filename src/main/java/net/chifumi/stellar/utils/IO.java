@@ -33,7 +33,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.nio.charset.StandardCharsets;
 
-public enum Resource {
+public enum IO {
     ;
 
     public static Shader loadShader(final ShaderSet shaderSet) throws FileNotFoundException {
@@ -94,7 +94,7 @@ public enum Resource {
     }
 
     private static InputStream loadResourceFile(final CharSequence path) throws FileNotFoundException {
-        final InputStream fileStream = Resource.class.getResourceAsStream((String) path);
+        final InputStream fileStream = IO.class.getResourceAsStream((String) path);
         if (fileStream == null) {
             throw new FileNotFoundException("File not found : " + path);
         }
