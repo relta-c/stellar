@@ -19,9 +19,14 @@
 
 package net.chifumi.stellar.graphics;
 
-import org.joml.*;
-
-import java.lang.Math;
+import org.joml.Matrix4f;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
+import org.joml.Vector2f;
+import org.joml.Vector2fc;
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
+import org.joml.Vector3f;
 
 public class Camera {
     private static final int TWO_RADIAN_DEGREE = 360;
