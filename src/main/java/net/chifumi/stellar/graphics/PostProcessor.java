@@ -23,7 +23,6 @@ import net.chifumi.stellar.utils.IO;
 import org.joml.Vector2i;
 
 import java.io.FileNotFoundException;
-import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL33.*;
 
@@ -31,32 +30,24 @@ public class PostProcessor {
     private static final int multiSampleLevel = 8;
     private final Vector2i resolution;
     private final int surface;
-    private final int multiSampledFramebuffer;
-    private final int blittingFramebuffer;
+    private final Framebuffer multiSampledFramebuffer;
+    private final Framebuffer blittingFramebuffer;
     private int vertexArray;
     private Shader shader;
 
     public PostProcessor(final Display display) {
         resolution = display.getResolution();
 
-        multiSampledFramebuffer = glGenFramebuffers();
-        blittingFramebuffer = glGenFramebuffers();
-        final int renderbuffer = glGenRenderbuffers();
+        multiSampledFramebuffer = new Framebuffer();
+        multiSampledFramebuffer.createRenderBufferAttachment(resolution, multiSampleLevel);
 
-        glBindFramebuffer(GL_FRAMEBUFFER, multiSampledFramebuffer);
-        glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
-        glRenderbufferStorageMultisample(GL_RENDERBUFFER, multiSampleLevel, GL_RGB, resolution.x, resolution.y);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, blittingFramebuffer);
-        surface = createTextureAttachment();
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, surface, 0);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, GL_NONE);
+        blittingFramebuffer = new Framebuffer();
+        blittingFramebuffer.createTextureAttachment(resolution);
+        surface = blittingFramebuffer.getAttachment();
 
         initializeRenderData();
         try {
-            shader = IO.loadShader(ShaderSet.FRAMEBUFFER, ShaderSet.BLUR);
+            shader = IO.loadShader(ShaderSet.FRAMEBUFFER, ShaderSet.INVERT);
         } catch (final FileNotFoundException e) {
             shader = new Shader();
             e.printStackTrace();
@@ -64,19 +55,19 @@ public class PostProcessor {
     }
 
     public void begin() {
-        glBindFramebuffer(GL_FRAMEBUFFER, multiSampledFramebuffer);
+        multiSampledFramebuffer.bind();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
     }
 
     public void end() {
-        glBindFramebuffer(GL_READ_FRAMEBUFFER, multiSampledFramebuffer);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, blittingFramebuffer);
+        multiSampledFramebuffer.bindRead();
+        blittingFramebuffer.bindDraw();
         glBlitFramebuffer(0, 0, resolution.x, resolution.y,
                           0, 0, resolution.x, resolution.y,
                           GL_COLOR_BUFFER_BIT,
                           GL_NEAREST);
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        Framebuffer.bindDefault();
     }
 
     public void draw() {
@@ -110,17 +101,5 @@ public class PostProcessor {
         glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * 2, 0L);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(GL_NONE);
-    }
-
-    private int createTextureAttachment() {
-        final int textures = glGenTextures();
-        glBindTexture(GL_TEXTURE_2D, textures);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, resolution.x, resolution.y, 0,
-                     GL_RGB, GL_UNSIGNED_BYTE, (ByteBuffer) null);
-        return textures;
     }
 }

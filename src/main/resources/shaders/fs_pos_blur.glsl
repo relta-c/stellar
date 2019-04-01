@@ -6,7 +6,7 @@ out vec4 fragColor;
 
 uniform sampler2D scene;
 
-const float offset = 1.0 / 300.0;
+const float offset = 1.0 / 300.0;// TODO : Customizeable
 
 void main()
 {
@@ -22,7 +22,7 @@ void main()
     vec2(offset, -offset)
     );
 
-    float kernel[9] = float[](
+    float kernel[9] = float[](// TODO : Gaussian blur
     1.0 / 16, 2.0 / 16, 1.0 / 16,
     2.0 / 16, 4.0 / 16, 2.0 / 16,
     1.0 / 16, 2.0 / 16, 1.0 / 16
