@@ -21,9 +21,16 @@ package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.geometry.Polygon;
 import net.chifumi.stellar.image.Texture;
-import org.joml.*;
+import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
+import org.joml.Vector2f;
+import org.joml.Vector2fc;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
+import org.joml.Vector4f;
 
-import java.lang.Math;
 import java.util.ArrayList;
 import java.util.List;
 
