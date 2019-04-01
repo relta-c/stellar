@@ -23,17 +23,19 @@ import net.chifumi.stellar.utils.IO;
 import org.joml.Vector2i;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL33.*;
 
 public class PostProcessor {
     private static final int multiSampleLevel = 8;
     private final Vector2i resolution;
-    private final int surface;
     private final Framebuffer multiSampledFramebuffer;
-    private final Framebuffer blittingFramebuffer;
+    private final List<Effect> effectList;
+    private final List<Framebuffer> framebufferList;
+    private final List<Shader> shaderList;
     private int vertexArray;
-    private Shader shader;
 
     public PostProcessor(final Display display) {
         resolution = display.getResolution();
@@ -41,16 +43,28 @@ public class PostProcessor {
         multiSampledFramebuffer = new Framebuffer();
         multiSampledFramebuffer.createRenderBufferAttachment(resolution, multiSampleLevel);
 
-        blittingFramebuffer = new Framebuffer();
-        blittingFramebuffer.createTextureAttachment(resolution);
-        surface = blittingFramebuffer.getAttachment();
+        effectList = new ArrayList<>();
+        framebufferList = new ArrayList<>();
+        shaderList = new ArrayList<>();
 
         initializeRenderData();
-        try {
-            shader = IO.loadShader(ShaderSet.FRAMEBUFFER, ShaderSet.INVERT);
-        } catch (final FileNotFoundException e) {
-            shader = new Shader();
-            e.printStackTrace();
+    }
+
+    public void addEffect(final Effect effect) {
+        if (!effectList.contains(effect)) {
+            Shader newShader;
+            try {
+                newShader = IO.loadShader(ShaderPath.FRAMEBUFFER, effect.getPath());
+            } catch (final FileNotFoundException e) {
+                newShader = new Shader();
+                e.printStackTrace();
+            }
+            shaderList.add(newShader);
+
+            final Framebuffer newFramebuffer = new Framebuffer();
+            newFramebuffer.createTextureAttachment(resolution);
+            framebufferList.add(newFramebuffer);
+            effectList.add(effect);
         }
     }
 
@@ -61,8 +75,11 @@ public class PostProcessor {
     }
 
     public void end() {
+        if (framebufferList.isEmpty()) {
+            addEffect(Effect.NORMAL);
+        }
         multiSampledFramebuffer.bindRead();
-        blittingFramebuffer.bindDraw();
+        framebufferList.get(0).bindDraw();
         glBlitFramebuffer(0, 0, resolution.x, resolution.y,
                           0, 0, resolution.x, resolution.y,
                           GL_COLOR_BUFFER_BIT,
@@ -71,11 +88,18 @@ public class PostProcessor {
     }
 
     public void draw() {
-        shader.use();
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, surface);
         glBindVertexArray(vertexArray);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glActiveTexture(GL_TEXTURE0); // TODO : Can optimize
+        for (int i = 0; i < framebufferList.size(); i++) {
+            if (i == framebufferList.size() - 1) {
+                Framebuffer.bindDefault();
+            } else {
+                framebufferList.get(i + 1).bind();
+            }
+            shaderList.get(i).use();
+            glBindTexture(GL_TEXTURE_2D, framebufferList.get(i).getAttachment());
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
         glBindVertexArray(0);
     }
 

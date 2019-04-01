@@ -20,7 +20,7 @@
 package net.chifumi.stellar.utils;
 
 import net.chifumi.stellar.graphics.Shader;
-import net.chifumi.stellar.graphics.ShaderSet;
+import net.chifumi.stellar.graphics.ShaderPath;
 import net.chifumi.stellar.image.Texture;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.stb.STBImage;
@@ -36,7 +36,7 @@ import java.nio.charset.StandardCharsets;
 public enum IO {
     ;
 
-    public static Shader loadShader(final ShaderSet vertex, final ShaderSet fragment) throws FileNotFoundException {
+    public static Shader loadShader(final ShaderPath vertex, final ShaderPath fragment) throws FileNotFoundException {
         return loadShaderFile(vertex.getPath(), fragment.getPath());
     }
 
