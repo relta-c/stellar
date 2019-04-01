@@ -10,8 +10,9 @@ Designed to be very easy to use.
     - [x] Circle
     - [x] Sprite
     - [x] Camera
+    - [x] Postprocessing
+    - [ ] Particles
     - [ ] Lighting
-    - [ ] Custom Shader
 - [x] User Input
     - [x] Keyboard
     - [ ] Mouse
@@ -19,6 +20,7 @@ Designed to be very easy to use.
 - [x] Collision Detection
     - [x] Polygon-Polygon
     - [x] Circle-Polygon
+    - [x] Circle-Circle
 - [ ] Sound Support
 
 ### Documentation
