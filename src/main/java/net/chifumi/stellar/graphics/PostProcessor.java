@@ -56,7 +56,7 @@ public class PostProcessor {
 
         initializeRenderData();
         try {
-            shader = IO.loadShader(ShaderSet.FRAMEBUFFER, ShaderSet.INVERT);
+            shader = IO.loadShader(ShaderSet.FRAMEBUFFER, ShaderSet.BLUR);
         } catch (final FileNotFoundException e) {
             shader = new Shader();
             e.printStackTrace();

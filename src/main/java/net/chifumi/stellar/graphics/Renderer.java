@@ -28,8 +28,8 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL33.*;
 
 public class Renderer {
-    private final Map<Primitive, Integer> vao;
-    private final Map<Primitive, Integer> vbo;
+    private final Map<Primitive, Integer> vertexArraySet;
+    private final Map<Primitive, Integer> vertexBufferSet;
     private Shader texturedShader;
     private Shader solidShader;
 
@@ -42,14 +42,14 @@ public class Renderer {
             texturedShader = new Shader();
             solidShader = new Shader();
         }
-        vao = new HashMap<>();
-        vbo = new HashMap<>();
+        vertexArraySet = new HashMap<>();
+        vertexBufferSet = new HashMap<>();
     }
 
     public void draw(final Display display, final Drawable drawable) {
         final Primitive primitive = drawable.getPrimitive();
 
-        if (vao.get(primitive) == null) {
+        if (vertexArraySet.get(primitive) == null) {
             init(primitive);
         }
 
@@ -61,7 +61,7 @@ public class Renderer {
     public void draw(final Display display, final TexturedDrawable texturedDrawable) {
         final Primitive primitive = texturedDrawable.getPrimitive();
 
-        if (vao.get(primitive) == null) {
+        if (vertexArraySet.get(primitive) == null) {
             init(primitive);
         }
 
@@ -81,13 +81,13 @@ public class Renderer {
     }
 
     private void init(final Primitive primitive) {
-        vao.put(primitive, glGenVertexArrays());
-        vbo.put(primitive, glGenBuffers());
+        vertexArraySet.put(primitive, glGenVertexArrays());
+        vertexBufferSet.put(primitive, glGenBuffers());
 
-        glBindBuffer(GL_ARRAY_BUFFER, vbo.get(primitive));
+        glBindBuffer(GL_ARRAY_BUFFER, vertexBufferSet.get(primitive));
         glBufferData(GL_ARRAY_BUFFER, primitive.getVertices(), GL_STATIC_DRAW);
 
-        glBindVertexArray(vao.get(primitive));
+        glBindVertexArray(vertexArraySet.get(primitive));
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * 4, 0L);
         glEnableVertexAttribArray(1);
@@ -98,7 +98,7 @@ public class Renderer {
     }
 
     private void drawArrays(final Primitive primitive) {
-        glBindVertexArray(vao.get(primitive));
+        glBindVertexArray(vertexArraySet.get(primitive));
         glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());
     }
 }

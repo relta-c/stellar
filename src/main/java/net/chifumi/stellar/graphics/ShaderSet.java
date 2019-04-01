@@ -24,6 +24,9 @@ public enum ShaderSet {
     SPRITE("/shaders/fs_sprite.glsl"),
     SOLID("/shaders/fs_solid.glsl"),
     INVERT("/shaders/fs_invert.glsl"),
+    GRAY("/shaders/fs_gray.glsl"),
+    SHARPEN("/shaders/fs_sharpen.glsl"),
+    BLUR("/shaders/fs_blur.glsl"),
     FRAMEBUFFER("/shaders/vs_framebuffer.glsl");
 
     private final String path;
