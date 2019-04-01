@@ -56,8 +56,8 @@ class CirclePrimitive implements Primitive {
         verticesY[0] = 0;
 
         for (int i = 1; i < verticesNum; i++) {
-            verticesX[i] = 0 + (1 * StrictMath.cos(i * doublePi / side));
-            verticesY[i] = 0 - (1 * StrictMath.sin(i * doublePi / side));
+            verticesX[i] = StrictMath.cos(i * doublePi / side);
+            verticesY[i] = StrictMath.sin(i * doublePi / side);
         }
 
         vertices = new float[verticesNum * 4];
