@@ -36,6 +36,11 @@ public class Display {
      * Window resolution
      */
     private final Vector2i resolution;
+
+    /**
+     * Level of multisample anti-aliasing(MSAA)
+     */
+    private final int multisamplingLevel;
     /**
      * ID of OpenGL window object
      */
@@ -59,8 +64,9 @@ public class Display {
      * @param title
      *         window title
      */
-    public Display(final int width, final int height, final CharSequence title) {
+    public Display(final int width, final int height, final CharSequence title, final int multisamplingLevel) {
         this.title = (String) title;
+        this.multisamplingLevel = multisamplingLevel;
         resolution = new Vector2i(width, height);
         camera = new Camera(new Vector2i(width, height));
         initialize();
@@ -73,6 +79,15 @@ public class Display {
      */
     public Vector2i getResolution() {
         return resolution;
+    }
+
+    /**
+     * Get multisample anti-aliasing level
+     *
+     * @return level of multisampling
+     */
+    public int getMultisamplingLevel() {
+        return multisamplingLevel;
     }
 
     /**
@@ -162,7 +177,7 @@ public class Display {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-        glfwWindowHint(GLFW_SAMPLES, 8);
+        glfwWindowHint(GLFW_SAMPLES, multisamplingLevel);
         id = glfwCreateWindow(resolution.x, resolution.y, title, 0L, 0L);
         glfwMakeContextCurrent(id);
 

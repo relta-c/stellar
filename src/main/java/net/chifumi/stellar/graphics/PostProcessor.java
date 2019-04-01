@@ -29,7 +29,6 @@ import java.util.List;
 import static org.lwjgl.opengl.GL33.*;
 
 public class PostProcessor {
-    private static final int multiSampleLevel = 8;
     private final Vector2i resolution;
     private final Framebuffer multiSampledFramebuffer;
     private final List<Effect> effectList;
@@ -41,7 +40,7 @@ public class PostProcessor {
         resolution = display.getResolution();
 
         multiSampledFramebuffer = new Framebuffer();
-        multiSampledFramebuffer.createRenderBufferAttachment(resolution, multiSampleLevel);
+        multiSampledFramebuffer.createRenderBufferAttachment(resolution, display.getMultisamplingLevel());
 
         effectList = new ArrayList<>();
         framebufferList = new ArrayList<>();
