@@ -19,19 +19,20 @@
 
 package net.chifumi.stellar.graphics;
 
-public enum ShaderSet {
+public enum ShaderPath {
     DEFAULT("/shaders/vs_default.glsl"),
     SPRITE("/shaders/fs_sprite.glsl"),
     SOLID("/shaders/fs_solid.glsl"),
     INVERT("/shaders/fs_pos_invert.glsl"),
-    GRAY("/shaders/fs_pos_greyscale.glsl"),
+    NORMAL("/shaders/fs_pos_normal.glsl"),
+    GRAY_SCALE("/shaders/fs_pos_greyscale.glsl"),
     SHARPEN("/shaders/fs_pos_sharpen.glsl"),
     BLUR("/shaders/fs_pos_blur.glsl"),
     FRAMEBUFFER("/shaders/vs_pos_framebuffer.glsl");
 
     private final String path;
 
-    ShaderSet(final CharSequence path) {
+    ShaderPath(final CharSequence path) {
         this.path = (String) path;
     }
 

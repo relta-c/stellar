@@ -31,6 +31,7 @@ class Framebuffer {
 
     Framebuffer() {
         id = glGenFramebuffers();
+        attachment = -1;
     }
 
 

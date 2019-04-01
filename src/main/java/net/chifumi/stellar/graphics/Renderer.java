@@ -35,8 +35,8 @@ public class Renderer {
 
     public Renderer(final Display display) {
         try {
-            texturedShader = IO.loadShader(ShaderSet.DEFAULT, ShaderSet.SPRITE);
-            solidShader = IO.loadShader(ShaderSet.DEFAULT, ShaderSet.SOLID);
+            texturedShader = IO.loadShader(ShaderPath.DEFAULT, ShaderPath.SPRITE);
+            solidShader = IO.loadShader(ShaderPath.DEFAULT, ShaderPath.SOLID);
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             texturedShader = new Shader();
