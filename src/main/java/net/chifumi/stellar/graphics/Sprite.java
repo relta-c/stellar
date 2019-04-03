@@ -107,7 +107,7 @@ public class Sprite implements TexturedDrawable, Polygon {
     }
 
     public void setColor(final float red, final float green, final float blue) {
-        color = new Vector3f(red, green, blue);
+        color = new Vector3f(red / RGB_MAX, green / RGB_MAX, blue / RGB_MAX);
     }
 
     @Override

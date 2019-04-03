@@ -63,6 +63,21 @@ public enum IO {
         return new Texture(width, height, data);
     }
 
+    public static String loadTextFile(final CharSequence path) throws FileNotFoundException {
+        final String result;
+        final InputStream fileStream = loadResourceFile(path);
+        try {
+            result = IOUtils.toString(fileStream, StandardCharsets.UTF_8);
+            fileStream.close();
+        } catch (final IOException e) {
+            throw new FileNotFoundException("failed to load file : " + path);
+        }
+        if (result == null) {
+            throw new FileNotFoundException("failed to load file : " + path);
+        }
+        return result;
+    }
+
     private static Shader loadShaderFile(final CharSequence vertexPath, final CharSequence fragmentPath) throws FileNotFoundException {
         final String vertexSource = loadTextFile(vertexPath);
         final String fragmentSource = loadTextFile(fragmentPath);
@@ -76,21 +91,6 @@ public enum IO {
         final String geometrySource = loadTextFile(geometryPath);
 
         return new Shader(vertexSource, fragmentSource, geometrySource);
-    }
-
-    private static String loadTextFile(final CharSequence path) throws FileNotFoundException {
-        final String result;
-        final InputStream fileStream = loadResourceFile(path);
-        try {
-            result = IOUtils.toString(fileStream, StandardCharsets.UTF_8);
-            fileStream.close();
-        } catch (final IOException e) {
-            throw new FileNotFoundException("failed to load file : " + path);
-        }
-        if (result == null) {
-            throw new FileNotFoundException("failed to load file : " + path);
-        }
-        return result;
     }
 
     private static InputStream loadResourceFile(final CharSequence path) throws FileNotFoundException {

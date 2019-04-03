@@ -1,7 +1,6 @@
 #version 330 core
 
-layout (location = 0) in vec2 position;
-layout (location = 1) in vec2 texCoords;// TODO : Remove this
+layout (location = 0) in vec4 vertex;// TODO : Optimize this
 
 out vec2 fragTexCoords;
 
@@ -11,6 +10,6 @@ uniform mat4 projection;
 
 void main()
 {
-    fragTexCoords = position;
-    gl_Position = projection * view * model * vec4(position, 0.0, 1.0);
+    fragTexCoords = vertex.zw;
+    gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
 }
