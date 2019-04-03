@@ -28,6 +28,8 @@ import org.joml.Vector3fc;
  * @author Nattakit Hosapsin
  */
 public interface Drawable {
+    float RGB_MAX = 255.0f;
+
     /**
      * Get {@link Primitive} for drawing.
      *
@@ -54,4 +56,6 @@ public interface Drawable {
      * @return object color
      */
     Vector3fc getColor();
+
+    void setColor(final float red, final float green, final float blue);
 }
