@@ -9,7 +9,5 @@ uniform vec3 color;
 
 void main()
 {
-
     fragColor = vec4(color.rgb, 1.0f) * texture(sprite, fragTexCoords);
-
 }

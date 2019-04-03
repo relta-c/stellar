@@ -19,6 +19,8 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.font.DrawableCharacter;
+import net.chifumi.stellar.font.Text;
 import net.chifumi.stellar.utils.IO;
 
 import java.io.FileNotFoundException;
@@ -73,6 +75,15 @@ public class Renderer {
         drawArrays(primitive);
     }
 
+    public void draw(final Display display, final Text text) {
+        final int length = text.getLength();
+        for (int i = 0; i < length; i++) {
+            final DrawableCharacter character = text.getCharacterAt(i);
+            character.setPosition(text.getCursorAt(i));
+            draw(display, character);
+        }
+    }
+
     private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {
         shader.setUniform("projection", display.getCamera().getProjectionMatrix());
         shader.setUniform("view", display.getCamera().getViewMatrix());
@@ -89,9 +100,7 @@ public class Renderer {
 
         glBindVertexArray(vertexArraySet.get(primitive));
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * 4, 0L);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * 4, 0L);
+        glVertexAttribPointer(0, 4, GL_FLOAT, false, 4 * 4, 0L);
 
         glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
         glBindVertexArray(GL_NONE);
