@@ -17,18 +17,19 @@
  *
  */
 
-package net.chifumi.stellar.image;
+package net.chifumi.stellar.texture;
 
-import static org.lwjgl.opengl.GL33.GL_LINEAR;
-import static org.lwjgl.opengl.GL33.GL_NEAREST;
+import static org.lwjgl.opengl.GL33.*;
 
-public enum FilteringMode {
-    NEAREST(GL_NEAREST),
-    LINEAR(GL_LINEAR);
+public enum WrapMode {
+    REPEAT(GL_REPEAT),
+    CLAMP_TO_EDGE(GL_CLAMP_TO_EDGE),
+    CLAMP_TO_BORDER(GL_CLAMP_TO_BORDER),
+    MIRROR_REPEAT(GL_MIRRORED_REPEAT);
 
     private final int id;
 
-    FilteringMode(final int id) {
+    WrapMode(final int id) {
         this.id = id;
     }
 

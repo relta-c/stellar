@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.font;
+package net.chifumi.stellar.text;
 
 import org.joml.Vector2f;
 import org.joml.Vector2fc;

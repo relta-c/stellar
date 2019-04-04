@@ -17,18 +17,18 @@
  *
  */
 
-package net.chifumi.stellar.image;
+package net.chifumi.stellar.texture;
 
-import static org.lwjgl.opengl.GL33.GL_RGB;
-import static org.lwjgl.opengl.GL33.GL_RGBA;
+import static org.lwjgl.opengl.GL33.GL_LINEAR;
+import static org.lwjgl.opengl.GL33.GL_NEAREST;
 
-public enum ImageFormat {
-    RGB(GL_RGB),
-    RGBA(GL_RGBA);
+public enum FilteringMode {
+    NEAREST(GL_NEAREST),
+    LINEAR(GL_LINEAR);
 
     private final int id;
 
-    ImageFormat(final int id) {
+    FilteringMode(final int id) {
         this.id = id;
     }
 

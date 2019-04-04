@@ -17,19 +17,18 @@
  *
  */
 
-package net.chifumi.stellar.image;
+package net.chifumi.stellar.texture;
 
-import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL33.GL_RGB;
+import static org.lwjgl.opengl.GL33.GL_RGBA;
 
-public enum WrapMode {
-    REPEAT(GL_REPEAT),
-    CLAMP_TO_EDGE(GL_CLAMP_TO_EDGE),
-    CLAMP_TO_BORDER(GL_CLAMP_TO_BORDER),
-    MIRROR_REPEAT(GL_MIRRORED_REPEAT);
+public enum ImageFormat {
+    RGB(GL_RGB),
+    RGBA(GL_RGBA);
 
     private final int id;
 
-    WrapMode(final int id) {
+    ImageFormat(final int id) {
         this.id = id;
     }
 
