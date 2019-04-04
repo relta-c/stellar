@@ -29,7 +29,7 @@ import org.joml.Vector2ic;
 import org.joml.Vector3f;
 
 /**
- * Represent game camera.
+ * Represents game camera.
  * <p>Can be used to manipulate game view</p>
  *
  * @author Nattakit Hosapsin
