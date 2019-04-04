@@ -21,7 +21,7 @@ package net.chifumi.stellar.utils;
 
 import net.chifumi.stellar.graphics.Shader;
 import net.chifumi.stellar.graphics.ShaderPath;
-import net.chifumi.stellar.image.Texture;
+import net.chifumi.stellar.texture.Texture;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.stb.STBImage;
 import org.lwjgl.system.MemoryStack;
@@ -94,7 +94,7 @@ public enum IO {
     }
 
     private static InputStream loadResourceFile(final CharSequence path) throws FileNotFoundException {
-        final InputStream fileStream = IO.class.getResourceAsStream((String) path);
+        final InputStream fileStream = IO.class.getResourceAsStream("/" + path);
         if (fileStream == null) {
             throw new FileNotFoundException("File not found : " + path);
         }
