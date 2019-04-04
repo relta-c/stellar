@@ -1,6 +1,8 @@
 # ---> Stellar
 
 src/test/
+*.oga
+*.ogg
 
 # ---> Linux
 *~
