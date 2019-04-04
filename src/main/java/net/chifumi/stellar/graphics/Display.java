@@ -26,10 +26,12 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL33.*;
 
 /**
- * Represents game's window and various window properties.
+ * Represents game window and various window properties.
  * <p>This class must be initialized before using any rendering function.</p>
  *
  * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public class Display {
     /**
@@ -38,7 +40,7 @@ public class Display {
     private final Vector2i resolution;
 
     /**
-     * Level of multisample anti-aliasing(MSAA)
+     * Level of multisample anti-aliasing
      */
     private final int multisamplingLevel;
     /**
@@ -55,7 +57,8 @@ public class Display {
     private Camera camera;
 
     /**
-     * Create a new {@link Display} with some default values for further rendering operation.
+     * Create a new {@link net.chifumi.stellar.graphics.Display}
+     * with some default values for further rendering operation.
      *
      * @param width
      *         window resolution width
@@ -63,12 +66,16 @@ public class Display {
      *         window resolution height
      * @param title
      *         window title
+     * @param multisamplingLevel
+     *         level of multisample anti-aliasing
+     *
+     * @since 1.0.0
      */
     public Display(final int width, final int height, final CharSequence title, final int multisamplingLevel) {
         this.title = (String) title;
         this.multisamplingLevel = multisamplingLevel;
         resolution = new Vector2i(width, height);
-        camera = new Camera(new Vector2i(width, height));
+        camera = new Camera(resolution);
         initialize();
     }
 
@@ -76,6 +83,8 @@ public class Display {
      * Get current window resolution.
      *
      * @return window resolution
+     *
+     * @since 1.0.0
      */
     public Vector2i getResolution() {
         return resolution;
@@ -85,15 +94,19 @@ public class Display {
      * Get multisample anti-aliasing level
      *
      * @return level of multisampling
+     *
+     * @since 1.0.0
      */
     public int getMultisamplingLevel() {
         return multisamplingLevel;
     }
 
     /**
-     * Get current {@link Camera} object.
+     * Get current {@link net.chifumi.stellar.graphics.Camera}.
      *
      * @return camera object
+     *
+     * @since 1.0.0
      */
 
     public Camera getCamera() {
@@ -101,11 +114,13 @@ public class Display {
     }
 
     /**
-     * Set a new {@link Camera} to transform view.
+     * Set a new {@link net.chifumi.stellar.graphics.Camera} to transform view.
      * <p>This have to be used very time to change camera's parameter.</p>
      *
      * @param camera
      *         new camera object
+     *
+     * @since 1.0.0
      */
     public void setCamera(final Camera camera) {
         this.camera = camera;
@@ -115,6 +130,8 @@ public class Display {
      * Get window title.
      *
      * @return window title
+     *
+     * @since 1.0.0
      */
     public String getWindowTitle() {
         return title;
@@ -125,6 +142,8 @@ public class Display {
      *
      * @param title
      *         window title
+     *
+     * @since 1.0.0
      */
     public void setWindowTitle(final CharSequence title) {
         glfwSetWindowTitle(id, title);
@@ -132,8 +151,10 @@ public class Display {
     }
 
     /**
-     * Update widow state and swap framebuffer.
+     * Swap buffer and clear old buffer to update window state.
      * <p>This method should be used after every thing have been drawn</p>
+     *
+     * @since 1.0.0
      */
     public void update() {
         glfwMakeContextCurrent(id);
@@ -147,9 +168,11 @@ public class Display {
     }
 
     /**
-     * Check if window are closing.
+     * Check if window should be close.
      *
      * @return window closing status
+     *
+     * @since 1.0.0
      */
     public boolean shouldClose() {
         return glfwWindowShouldClose(id);
@@ -157,6 +180,8 @@ public class Display {
 
     /**
      * Terminate window
+     *
+     * @since 1.0.0
      */
     public void terminate() {
         glfwSetWindowShouldClose(id, true);
@@ -164,6 +189,8 @@ public class Display {
 
     /**
      * @return window OpenGL object id
+     *
+     * @since 1.0.0
      */
     public long getID() {
         return id;

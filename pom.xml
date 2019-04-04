@@ -41,7 +41,6 @@
             <id>stellar-linux</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-                <!--<os><family>unix</family></os>-->
             </activation>
             <properties>
                 <lwjgl.natives>natives-linux</lwjgl.natives>
