@@ -19,24 +19,23 @@
 
 package net.chifumi.stellar.graphics;
 
-public enum StaticPrimitive implements Primitive { // TODO : Use EBO
-    RECT(new float[]{
-            0.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f, 1.0f,
-            1.0f, 1.0f, 1.0f, 1.0f,
-            1.0f, 0.0f, 1.0f, 0.0f},
-         6, DrawMode.TRIANGLES.getID());
+enum SpritePrimitive implements Primitive { // TODO : Use EBO
+    INSTANCE;
 
     private final float[] vertices;
     private final int verticesNum;
     private final int drawMode;
 
-    StaticPrimitive(final float[] vertices, final int verticesNum, final int drawMode) {
-        this.vertices = vertices;
-        this.verticesNum = verticesNum;
-        this.drawMode = drawMode;
+    SpritePrimitive() {
+        vertices = new float[]{
+                0.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 0.0f};
+        verticesNum = 6;
+        drawMode = DrawMode.TRIANGLES.getID();
     }
 
     @Override

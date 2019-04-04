@@ -27,33 +27,30 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+@SuppressWarnings({"MismatchedReadAndWriteOfArray", "unused"})
 class FontInfo {
     private static final String SEPARATOR = " ";
     private static final String VALUE_SEPARATOR = "=";
     private static final String ARRAY_SEPARATOR = ",";
-    private static final Pattern STRING_PATTERN = Pattern.compile("\"");
-    private final Scanner scanner;
-
-    private String name;
-    private int size;
+    private static final Pattern REMOVE_PATTERN = Pattern.compile("\"");
     private final int[] padding;
     private final int[] spacing;
-
+    private final Scanner scanner;
+    private final Map<Integer, CharacterInfo> characterMap;
+    private int size;
     private int lineHeight;
     private int base;
     private int atlasWidth;
     private int atlasHeight;
-
+    private int characterCount;
+    private String name;
     private String fileName;
 
-    private int characterCount;
-
-    private final Map<Integer, CharacterInfo> characterMap;
-
-    FontInfo(final CharSequence path) throws FileNotFoundException {
+    FontInfo(final CharSequence path) throws FileNotFoundException { // TODO : Check for error in file
         final File file = new File((String) path);
         scanner = new Scanner(file);
         name = "";
+        fileName = "";
         size = 0;
         padding = new int[4];
         spacing = new int[2];
@@ -157,7 +154,7 @@ class FontInfo {
         for (final String valueSet : charCountValueSets) {
             final String[] values = valueSet.split(VALUE_SEPARATOR);
             if ("file".equals(values[0])) {
-                fileName = STRING_PATTERN.matcher(values[1]).replaceAll("");
+                fileName = REMOVE_PATTERN.matcher(values[1]).replaceAll("");
             }
         }
     }

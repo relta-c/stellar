@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.text;
 
-public class CharacterInfo {
+class CharacterInfo {
     private final int x;
     private final int y;
     private final int width;

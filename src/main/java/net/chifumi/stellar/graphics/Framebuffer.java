@@ -34,9 +34,8 @@ class Framebuffer {
         attachment = -1;
     }
 
-
-    int getAttachment() {
-        return attachment;
+    static void bindDefault() {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
     void bind() {
@@ -51,8 +50,8 @@ class Framebuffer {
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, id);
     }
 
-    static void bindDefault() {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    int getAttachment() {
+        return attachment;
     }
 
     void createRenderBufferAttachment(final Vector2ic resolution, final int multiSampleLevel) {

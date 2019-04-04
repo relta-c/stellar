@@ -19,18 +19,22 @@
 
 package net.chifumi.stellar.graphics;
 
+import org.apache.commons.io.IOUtils;
 import org.joml.Matrix4fc;
 import org.joml.Vector2fc;
 import org.joml.Vector3fc;
 import org.joml.Vector4fc;
 import org.lwjgl.BufferUtils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.FloatBuffer;
+import java.nio.charset.StandardCharsets;
 
 import static org.lwjgl.opengl.GL33.*;
 
 @SuppressWarnings({"unused", "SameParameterValue"})
-public
 class Shader {
     private static final int MATRIX4_CAPACITY = 16;
     private int id;
@@ -39,12 +43,10 @@ class Shader {
         id = -1;
     }
 
-    public Shader(final CharSequence vertexSource, final CharSequence fragmentSource) {
+    Shader(final ShaderPath vertexPath, final ShaderPath fragmentPath) throws FileNotFoundException {
+        final String vertexSource = loadTextFile(vertexPath.getPath());
+        final String fragmentSource = loadTextFile(fragmentPath.getPath());
         compile(vertexSource, fragmentSource);
-    }
-
-    public Shader(final CharSequence vertexSource, final CharSequence fragmentSource, final CharSequence geometrySource) {
-        compile(vertexSource, fragmentSource, geometrySource);
     }
 
     void use() {
@@ -103,13 +105,6 @@ class Shader {
         return programID;
     }
 
-    private static int createProgram(final int vertex, final int fragment, final int geometry) {
-        final int programID = initProgram(vertex, fragment);
-        glAttachShader(programID, geometry);
-        compileProgram(programID);
-        return programID;
-    }
-
     private static int initProgram(final int vertex, final int fragment) {
         final int programID;
         programID = glCreateProgram();
@@ -153,20 +148,31 @@ class Shader {
         glDeleteShader(fragment);
     }
 
-    private void compile(final CharSequence vertexSource, final CharSequence fragmentSource, final CharSequence geometrySource) {
-        final int vertex;
-        final int fragment;
-        final int geometry;
-        vertex = createShader(vertexSource, ShaderType.VERTEX);
-        fragment = createShader(fragmentSource, ShaderType.FRAGMENT);
-        geometry = createShader(geometrySource, ShaderType.GEOMETRY);
-        id = createProgram(vertex, fragment, geometry);
-        glDeleteShader(vertex);
-        glDeleteShader(fragment);
-    }
-
     private int getUniformLocation(final CharSequence name) {
         use();
         return glGetUniformLocation(id, name);
+    }
+
+    private static String loadTextFile(final CharSequence path) throws FileNotFoundException {
+        final String result;
+        final InputStream fileStream = loadResourceFile(path);
+        try {
+            result = IOUtils.toString(fileStream, StandardCharsets.UTF_8);
+            fileStream.close();
+        } catch (final IOException e) {
+            throw new FileNotFoundException("failed to load file : " + path);
+        }
+        if (result == null) {
+            throw new FileNotFoundException("failed to load file : " + path);
+        }
+        return result;
+    }
+
+    private static InputStream loadResourceFile(final CharSequence path) throws FileNotFoundException {
+        final InputStream fileStream = Shader.class.getResourceAsStream("/" + path);
+        if (fileStream == null) {
+            throw new FileNotFoundException("File not found : " + path);
+        }
+        return fileStream;
     }
 }

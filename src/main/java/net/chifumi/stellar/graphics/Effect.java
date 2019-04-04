@@ -28,12 +28,11 @@ public enum Effect {
 
     private final ShaderPath path;
 
-    ShaderPath getPath() {
-        return path;
-    }
-
-
     Effect(final ShaderPath path) {
         this.path = path;
+    }
+
+    ShaderPath getPath() {
+        return path;
     }
 }

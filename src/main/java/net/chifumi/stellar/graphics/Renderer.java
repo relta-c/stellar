@@ -21,7 +21,6 @@ package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.text.DrawableCharacter;
 import net.chifumi.stellar.text.Text;
-import net.chifumi.stellar.utils.IO;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -37,8 +36,8 @@ public class Renderer {
 
     public Renderer(final Display display) {
         try {
-            texturedShader = IO.loadShader(ShaderPath.DEFAULT, ShaderPath.SPRITE);
-            solidShader = IO.loadShader(ShaderPath.DEFAULT, ShaderPath.SOLID);
+            texturedShader = new Shader(ShaderPath.DEFAULT, ShaderPath.SPRITE);
+            solidShader = new Shader(ShaderPath.DEFAULT, ShaderPath.SOLID);
         } catch (final FileNotFoundException e) {
             e.printStackTrace();
             texturedShader = new Shader();
@@ -89,6 +88,16 @@ public class Renderer {
         }
     }
 
+    public void terminate() {
+        for (final int vertexArray : vertexArraySet.values()) {
+            glDeleteVertexArrays(vertexArray);
+        }
+
+        for (final int vertexBuffer : vertexBufferSet.values()) {
+            glDeleteBuffers(vertexBuffer);
+        }
+    }
+
     private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {
         shader.setUniform("projection", display.getCamera().getProjectionMatrix());
         shader.setUniform("view", display.getCamera().getViewMatrix());
@@ -114,15 +123,5 @@ public class Renderer {
     private void drawArrays(final Primitive primitive) {
         glBindVertexArray(vertexArraySet.get(primitive));
         glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());
-    }
-
-    public void terminate() {
-        for (final int vertexArray : vertexArraySet.values()) {
-            glDeleteVertexArrays(vertexArray);
-        }
-
-        for (final int vertexBuffer : vertexBufferSet.values()) {
-            glDeleteBuffers(vertexBuffer);
-        }
     }
 }

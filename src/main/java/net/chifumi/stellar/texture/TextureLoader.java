@@ -19,9 +19,12 @@
 
 package net.chifumi.stellar.texture;
 
-import net.chifumi.stellar.utils.IO;
+import org.lwjgl.stb.STBImage;
+import org.lwjgl.system.MemoryStack;
 
 import java.io.FileNotFoundException;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public class TextureLoader {
     private ImageFormat rawImageFormat;
@@ -41,7 +44,7 @@ public class TextureLoader {
     }
 
     public Texture load(final CharSequence path) throws FileNotFoundException {
-        final Texture loadTextureFile = IO.LoadTextureFile(path);
+        final Texture loadTextureFile = LoadTextureFile(path);
         loadTextureFile.setRawImageFormat(rawImageFormat);
         loadTextureFile.setInternalImageFormat(internalImageFormat);
         loadTextureFile.setWrapS(wrapS);
@@ -98,5 +101,23 @@ public class TextureLoader {
         filterMin = filteringMode;
         filterMax = filteringMode;
         return this;
+    }
+
+    private static Texture LoadTextureFile(final CharSequence path) throws FileNotFoundException {
+        final ByteBuffer data;
+        final int width;
+        final int height;
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            final IntBuffer rawWidth = stack.mallocInt(1);
+            final IntBuffer rawHeight = stack.mallocInt(1);
+            final IntBuffer channels = stack.mallocInt(1);
+            data = STBImage.stbi_load(path, rawWidth, rawHeight, channels, 0);
+            if (data == null) {
+                throw new FileNotFoundException("failed to load texture : " + path);
+            }
+            width = rawWidth.get();
+            height = rawHeight.get();
+        }
+        return new Texture(width, height, data);
     }
 }

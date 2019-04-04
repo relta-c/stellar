@@ -50,7 +50,7 @@ public class Texture {
         data = ByteBuffer.allocate(0);
     }
 
-    public Texture(final int width, final int height, final ByteBuffer data) {
+    Texture(final int width, final int height, final ByteBuffer data) {
         id = glGenTextures();
         this.width = width;
         this.height = height;
@@ -139,4 +139,6 @@ public class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormatId, width, height, 0, rawFormatId, GL_UNSIGNED_BYTE, data);
         glBindTexture(GL_TEXTURE_2D, GL_NONE);
     }
+
+
 }

@@ -19,7 +19,6 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.utils.IO;
 import org.joml.Vector2i;
 
 import java.io.FileNotFoundException;
@@ -53,7 +52,7 @@ public class PostProcessor {
         if (!effectList.contains(effect)) {
             Shader newShader;
             try {
-                newShader = IO.loadShader(ShaderPath.FRAMEBUFFER, effect.getPath());
+                newShader = new Shader(ShaderPath.FRAMEBUFFER, effect.getPath());
             } catch (final FileNotFoundException e) {
                 newShader = new Shader();
                 e.printStackTrace();
