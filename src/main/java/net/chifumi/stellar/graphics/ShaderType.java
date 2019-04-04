@@ -21,10 +21,9 @@ package net.chifumi.stellar.graphics;
 
 import static org.lwjgl.opengl.GL33.*;
 
-public enum ShaderType {
+enum ShaderType {
     VERTEX(GL_VERTEX_SHADER, "Vertex Shader"),
     FRAGMENT(GL_FRAGMENT_SHADER, "Fragment Shader"),
-    GEOMETRY(GL_GEOMETRY_SHADER, "Geometry Shader"),
     PROGRAM(GL_NONE, "Shader Program");
 
     private final int id;

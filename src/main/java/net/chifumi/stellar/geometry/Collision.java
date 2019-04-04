@@ -29,12 +29,12 @@ public enum Collision {
     ;
 
     public static boolean check(final Polygon polygonA, final Polygon polygonB) { // TODO : MTV
-        final List<Vector2f> axes = getAxis(polygonA.getAbsoluteVertices());
-        axes.addAll(getAxis(polygonB.getAbsoluteVertices()));
+        final List<Vector2f> axes = getAxis(polygonA.getRealVertices());
+        axes.addAll(getAxis(polygonB.getRealVertices()));
         boolean result = true;
         for (final Vector2f axis : axes) {
-            final Vector2f projectionA = project(axis, polygonA.getAbsoluteVertices());
-            final Vector2f projectionB = project(axis, polygonB.getAbsoluteVertices());
+            final Vector2f projectionA = project(axis, polygonA.getRealVertices());
+            final Vector2f projectionB = project(axis, polygonB.getRealVertices());
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
                 break;
@@ -47,7 +47,7 @@ public enum Collision {
         final List<Vector2f> axes = getCircleAxis(circle.getOrigin(), polygonA);
         boolean result = true;
         for (final Vector2fc axis : axes) {
-            final Vector2fc projectionA = project(axis, polygonA.getAbsoluteVertices());
+            final Vector2fc projectionA = project(axis, polygonA.getRealVertices());
             final Vector2fc projectionB = projectCircle(axis, circle);
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
@@ -101,16 +101,16 @@ public enum Collision {
     private static List<Vector2f> getCircleAxis(final Vector2fc origin, final Polygon polygon) {
         final List<Vector2f> result = new ArrayList<>();
         Vector2f circleAxis = null;
-        for (int i = 0; i < polygon.getAbsoluteVertices()
+        for (int i = 0; i < polygon.getRealVertices()
                 .size(); i++) { // TODO : Optimize this (Beware, Vector is mutable)
-            final Vector2f currentVertex = polygon.getAbsoluteVertices().get(i);
-            final Vector2f nextVertex = polygon.getAbsoluteVertices()
-                    .get((i + 1) % polygon.getAbsoluteVertices().size());
+            final Vector2f currentVertex = polygon.getRealVertices().get(i);
+            final Vector2f nextVertex = polygon.getRealVertices()
+                    .get((i + 1) % polygon.getRealVertices().size());
             final Vector2f edge = currentVertex.sub(nextVertex);
             final Vector2f normal = edge.perpendicular();
             result.add(normal.normalize());
 
-            final Vector2f vertexToCircle = polygon.getAbsoluteVertices().get(i).sub(origin);
+            final Vector2f vertexToCircle = polygon.getRealVertices().get(i).sub(origin);
             if (circleAxis != null) {
                 if (vertexToCircle.lengthSquared() < circleAxis.lengthSquared()) {
                     circleAxis = vertexToCircle;

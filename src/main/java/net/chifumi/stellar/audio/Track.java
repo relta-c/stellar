@@ -77,6 +77,10 @@ public class Track {
         return trackState;
     }
 
+    public float getVolume() {
+        return alGetSourcef(id, AL_GAIN) * MAX_VOLUME;
+    }
+
     public void setVolume(final float volume) {
         float realVolume = volume;
         if (realVolume > MAX_VOLUME) {
@@ -85,10 +89,6 @@ public class Track {
             realVolume = 0;
         }
         alSourcef(id, AL_GAIN, realVolume / MAX_VOLUME);
-    }
-
-    public float getVolume() {
-        return alGetSourcef(id, AL_GAIN) * MAX_VOLUME;
     }
 
     public boolean isLooping() {

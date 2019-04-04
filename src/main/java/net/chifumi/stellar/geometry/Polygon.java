@@ -25,5 +25,5 @@ import java.util.List;
 
 @FunctionalInterface
 public interface Polygon {
-    List<Vector2f> getAbsoluteVertices();
+    List<Vector2f> getRealVertices();
 }

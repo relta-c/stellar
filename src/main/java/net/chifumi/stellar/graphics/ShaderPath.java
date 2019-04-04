@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-public enum ShaderPath {
+enum ShaderPath {
     DEFAULT("shaders/vs_default.glsl"),
     SPRITE("shaders/fs_sprite.glsl"),
     SOLID("shaders/fs_solid.glsl"),
@@ -36,7 +36,7 @@ public enum ShaderPath {
         this.path = (String) path;
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
     }
 }

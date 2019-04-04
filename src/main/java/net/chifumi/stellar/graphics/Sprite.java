@@ -37,7 +37,7 @@ import java.util.List;
 public class Sprite implements TexturedDrawable, Polygon {
     private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
-    private final StaticPrimitive staticPrimitive;
+    private final Primitive spritePrimitive;
     private Vector2f position;
     private Vector2f size;
     private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
@@ -51,7 +51,7 @@ public class Sprite implements TexturedDrawable, Polygon {
         rotation = new Quaternionf();
         color = new Vector3f(1.0f, 1.0f, 1.0f);
         this.texture = texture;
-        staticPrimitive = StaticPrimitive.RECT;
+        spritePrimitive = SpritePrimitive.INSTANCE;
         updateModelMatrix();
     }
 
@@ -121,7 +121,7 @@ public class Sprite implements TexturedDrawable, Polygon {
 
     @Override
     public Primitive getPrimitive() {
-        return staticPrimitive;
+        return spritePrimitive;
     }
 
     @Override
@@ -143,7 +143,8 @@ public class Sprite implements TexturedDrawable, Polygon {
         this.color = (Vector3f) color;
     }
 
-    public List<Vector2f> getAbsoluteVertices() { // TODO : Use EBO, then transform vertices
+    @SuppressWarnings("Duplicates")
+    public List<Vector2f> getRealVertices() { // TODO : Use EBO, then transform vertices
         Vector4f localPosition;
         final List<Vector2f> result = new ArrayList<>();
         localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
