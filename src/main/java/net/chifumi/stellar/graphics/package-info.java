@@ -17,38 +17,12 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
 
 /**
- * Interface for object with minimum data for drawing a sharp
+ * Contain classes relate to graphic rendering
  *
  * @author Nattakit Hosapsin
  * @version 1.0.0
  * @since 1.0.0
  */
-public interface Primitive {
-    /**
-     * Get vertices for rendering this object
-     *
-     * @return vertices
-     *
-     * @since 1.0.0
-     */
-    float[] getVertices();
-
-    /**
-     * Get draw mode for rendering this object
-     *
-     * @return openGL draw mode
-     *
-     * @since 1.0.0
-     */
-    int getDrawMode();
-
-    /**
-     * Get number of vertices
-     *
-     * @return number of vertices
-     */
-    int getVerticesNum();
-}
+package net.chifumi.stellar.graphics;

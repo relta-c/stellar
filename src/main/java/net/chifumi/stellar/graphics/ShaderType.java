@@ -34,7 +34,7 @@ enum ShaderType {
         this.name = (String) name;
     }
 
-    public int getId() {
+    public int getID() {
         return id;
     }
 

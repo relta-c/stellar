@@ -57,11 +57,11 @@ public class CircleSolid extends Solid {
     }
 
     public void setOrigin(final Vector2fc origin) {
-        circle = new Circle(origin, getRadius());
+        circle = new Circle(origin, circle.getRadius());
     }
 
     public void setOrigin(final float x, final float y) {
-        circle = new Circle(new Vector2f(x, y), getRadius());
+        circle = new Circle(new Vector2f(x, y), circle.getRadius());
     }
 
     public float getRadius() {
@@ -69,15 +69,15 @@ public class CircleSolid extends Solid {
     }
 
     public void SetRadius(final float radius) {
-        circle = new Circle(getOrigin(), radius);
+        circle = new Circle(circle.getOrigin(), radius);
     }
 
 
     @Override
     protected void updateModelMatrix() {
         final Matrix4f modelMatrix = new Matrix4f();
-        modelMatrix.translate(new Vector3f(getOrigin(), 0.0f));
-        modelMatrix.scale(new Vector3f(getRadius(), getRadius(), 1.0F));
+        modelMatrix.translate(new Vector3f(circle.getOrigin(), 0.0f));
+        modelMatrix.scale(new Vector3f(circle.getRadius(), circle.getRadius(), 1.0F));
         setModelMatrix(modelMatrix);
     }
 }

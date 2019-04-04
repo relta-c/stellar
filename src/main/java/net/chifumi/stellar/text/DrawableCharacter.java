@@ -38,7 +38,7 @@ public class DrawableCharacter implements TexturedDrawable {
     private CharacterInfo characterInfo;
     private FontFamily family;
 
-    public DrawableCharacter(final int id, final int size, final FontFamily family) {
+    DrawableCharacter(final int id, final int size, final FontFamily family) {
         position = new Vector2f();
         this.size = size;
         this.id = id;
@@ -140,8 +140,8 @@ public class DrawableCharacter implements TexturedDrawable {
     }
 
     private Vector2f getDrawSize() {
-        final float width = (characterInfo.getWidth() / (float) family.getMaxSize()) * size;
-        final float height = (characterInfo.getHeight() / (float) family.getMaxSize()) * size;
+        final float width = (characterInfo.getWidth() / (float) family.getNativeSize()) * size;
+        final float height = (characterInfo.getHeight() / (float) family.getNativeSize()) * size;
         return new Vector2f(width, height);
     }
 }

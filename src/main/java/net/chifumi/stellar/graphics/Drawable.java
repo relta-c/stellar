@@ -26,14 +26,21 @@ import org.joml.Vector3fc;
  * Interface for object that can be draw.
  *
  * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
  */
 public interface Drawable {
+    /**
+     * Max color value
+     */
     float RGB_MAX = 255.0f;
 
     /**
      * Get {@link Primitive} for drawing.
      *
      * @return primitive
+     *
+     * @since 1.0.0
      */
     Primitive getPrimitive();
 
@@ -41,21 +48,37 @@ public interface Drawable {
      * Get object model matrix to transform object to global space.
      *
      * @return model transform matrix
+     *
+     * @since 1.0.0
      */
     Matrix4fc getModelMatrix();
 
     /**
      * @param modelMatrix
      *         model transform matrix
+     *
+     * @since 1.0.0
      */
     void setModelMatrix(final Matrix4fc modelMatrix);
 
     /**
-     * Gen object color for drawing.
+     * Get object color.
      *
      * @return object color
+     *
+     * @since 1.0.0
      */
     Vector3fc getColor();
 
+    /**
+     * @param red
+     *         amount of red color (0-255)
+     * @param green
+     *         amount of green color (0-255)
+     * @param blue
+     *         amount of blue color (0-255)
+     *
+     * @since 1.0.0
+     */
     void setColor(final float red, final float green, final float blue);
 }

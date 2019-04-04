@@ -41,7 +41,7 @@ public class FontFamily {
         return fontInfo.getName();
     }
 
-    public int getMaxSize() {
+    int getNativeSize() {
         return fontInfo.getSize();
     }
 

@@ -35,6 +35,7 @@ public abstract class Solid implements Drawable {
         color = new Vector3f(1.0f, 1.0f, 1.0f);
     }
 
+    @Override
     public void setColor(final float red, final float green, final float blue) {
         color = new Vector3f(red / RGB_MAX, green / RGB_MAX, blue / RGB_MAX);
     }

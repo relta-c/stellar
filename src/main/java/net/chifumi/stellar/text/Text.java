@@ -80,10 +80,10 @@ public class Text {
         for (int i = 0; i <= index; i++) {
             final DrawableCharacter character = getCharacterAt(i);
             if (i == index) {
-                cursor.x += (character.getXOffset() / (float) family.getMaxSize()) * size;
-                cursor.y += (character.getYOffset() / (float) family.getMaxSize()) * size;
+                cursor.x += (character.getXOffset() / (float) family.getNativeSize()) * size;
+                cursor.y += (character.getYOffset() / (float) family.getNativeSize()) * size;
             } else {
-                cursor.x += (character.getAdvance() / (float) family.getMaxSize()) * size;
+                cursor.x += (character.getAdvance() / (float) family.getNativeSize()) * size;
             }
         }
         return cursor;

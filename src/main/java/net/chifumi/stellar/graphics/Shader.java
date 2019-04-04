@@ -92,7 +92,7 @@ class Shader {
     }
 
     private static int createShader(final CharSequence source, final ShaderType type) {
-        final int shaderID = glCreateShader(type.getId());
+        final int shaderID = glCreateShader(type.getID());
         glShaderSource(shaderID, source);
         glCompileShader(shaderID);
         checkCompileError(shaderID, type);
