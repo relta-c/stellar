@@ -17,11 +17,11 @@
  *
  */
 
-package net.chifumi.stellar.font;
+package net.chifumi.stellar.text;
 
 import net.chifumi.stellar.graphics.Primitive;
 import net.chifumi.stellar.graphics.TexturedDrawable;
-import net.chifumi.stellar.image.Texture;
+import net.chifumi.stellar.texture.Texture;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Vector2d;

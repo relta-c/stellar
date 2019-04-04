@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.font;
+package net.chifumi.stellar.text;
 
 public class CharacterInfo {
     private final int x;

@@ -84,9 +84,10 @@ public class PostProcessor {
                           GL_COLOR_BUFFER_BIT,
                           GL_NEAREST);
         Framebuffer.bindDefault();
+        draw();
     }
 
-    public void draw() {
+    private void draw() {
         glBindVertexArray(vertexArray);
         glActiveTexture(GL_TEXTURE0); // TODO : Can optimize
         for (int i = 0; i < framebufferList.size(); i++) {

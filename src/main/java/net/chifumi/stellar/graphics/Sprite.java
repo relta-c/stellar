@@ -20,7 +20,7 @@
 package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.geometry.Polygon;
-import net.chifumi.stellar.image.Texture;
+import net.chifumi.stellar.texture.Texture;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
 import org.joml.Quaternionf;

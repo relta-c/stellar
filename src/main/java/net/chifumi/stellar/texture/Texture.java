@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.image;
+package net.chifumi.stellar.texture;
 
 import org.lwjgl.stb.STBImage;
 

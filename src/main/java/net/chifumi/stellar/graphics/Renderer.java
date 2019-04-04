@@ -19,8 +19,8 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.font.DrawableCharacter;
-import net.chifumi.stellar.font.Text;
+import net.chifumi.stellar.text.DrawableCharacter;
+import net.chifumi.stellar.text.Text;
 import net.chifumi.stellar.utils.IO;
 
 import java.io.FileNotFoundException;
@@ -52,7 +52,7 @@ public class Renderer {
         final Primitive primitive = drawable.getPrimitive();
 
         if (vertexArraySet.get(primitive) == null) {
-            init(primitive);
+            initialize(primitive);
         }
 
         setUniformValues(solidShader, display, drawable);
@@ -64,7 +64,7 @@ public class Renderer {
         final Primitive primitive = texturedDrawable.getPrimitive();
 
         if (vertexArraySet.get(primitive) == null) {
-            init(primitive);
+            initialize(primitive);
         }
 
         setUniformValues(texturedShader, display, texturedDrawable);
@@ -73,6 +73,11 @@ public class Renderer {
         texturedDrawable.getTexture().bind();
 
         drawArrays(primitive);
+
+        glDeleteVertexArrays(vertexArraySet.get(primitive)); // TODO : Use object ID
+        vertexArraySet.remove(primitive);
+        glDeleteBuffers(vertexBufferSet.get(primitive));
+        vertexBufferSet.remove(primitive);
     }
 
     public void draw(final Display display, final Text text) {
@@ -91,7 +96,7 @@ public class Renderer {
         shader.setUniform("color", drawable.getColor());
     }
 
-    private void init(final Primitive primitive) {
+    private void initialize(final Primitive primitive) {
         vertexArraySet.put(primitive, glGenVertexArrays());
         vertexBufferSet.put(primitive, glGenBuffers());
 
@@ -109,5 +114,15 @@ public class Renderer {
     private void drawArrays(final Primitive primitive) {
         glBindVertexArray(vertexArraySet.get(primitive));
         glDrawArrays(primitive.getDrawMode(), 0, primitive.getVerticesNum());
+    }
+
+    public void terminate() {
+        for (final int vertexArray : vertexArraySet.values()) {
+            glDeleteVertexArrays(vertexArray);
+        }
+
+        for (final int vertexBuffer : vertexBufferSet.values()) {
+            glDeleteBuffers(vertexBuffer);
+        }
     }
 }

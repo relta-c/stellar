@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.image.Texture;
+import net.chifumi.stellar.texture.Texture;
 
 public interface TexturedDrawable extends Drawable {
     Texture getTexture();

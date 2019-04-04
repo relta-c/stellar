@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.font;
+package net.chifumi.stellar.text;
 
 import java.io.File;
 import java.io.FileNotFoundException;

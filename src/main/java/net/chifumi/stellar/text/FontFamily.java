@@ -17,11 +17,11 @@
  *
  */
 
-package net.chifumi.stellar.font;
+package net.chifumi.stellar.text;
 
-import net.chifumi.stellar.image.FilteringMode;
-import net.chifumi.stellar.image.Texture;
-import net.chifumi.stellar.image.TextureLoader;
+import net.chifumi.stellar.texture.FilteringMode;
+import net.chifumi.stellar.texture.Texture;
+import net.chifumi.stellar.texture.TextureLoader;
 import org.joml.Vector2d;
 
 import java.io.File;
