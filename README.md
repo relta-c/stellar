@@ -11,6 +11,7 @@ Designed to be very easy to use.
     - [x] Sprite
     - [x] Camera
     - [x] Postprocessing
+    - [x] Bitmap Font Rendering
     - [ ] Particles
     - [ ] Lighting
 - [x] User Input
@@ -21,7 +22,8 @@ Designed to be very easy to use.
     - [x] Polygon-Polygon
     - [x] Circle-Polygon
     - [x] Circle-Circle
-- [ ] Sound Support
+- [x] Sound Support
+    - [x] Wave File
 
 ### Documentation
 [Getting Start](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
