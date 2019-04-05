@@ -20,42 +20,34 @@
 package net.chifumi.stellar.text;
 
 import net.chifumi.stellar.graphics.Primitive;
-import net.chifumi.stellar.graphics.TexturedDrawable;
-import net.chifumi.stellar.texture.Texture;
+import net.chifumi.stellar.graphics.TexturedDrawableObject;
 import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import org.joml.Vector2d;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
-public class DrawableCharacter implements TexturedDrawable {
-    private int id;
+public class DrawableCharacter extends TexturedDrawableObject {
+    private final int id;
+    private final CharacterInfo characterInfo;
+    private final FontFamily family;
     private int size;
     private Vector2f position;
-    private Vector3f color;
-    private Matrix4f modelMatrix;
-    private CharacterInfo characterInfo;
-    private FontFamily family;
 
     DrawableCharacter(final int id, final int size, final FontFamily family) {
+        super(new CharacterPrimitive(family.getNormalizeCharacterOffset(family.getCharacter(id)),
+                                     family.getNormalizeSize(family.getCharacter(id))), family.getAtlas());
         position = new Vector2f();
         this.size = size;
         this.id = id;
         this.family = family;
-        color = new Vector3f(1.0f, 1.0f, 1.0f);
+
         characterInfo = family.getCharacter(id);
-        modelMatrix = new Matrix4f();
         updateModelMatrix();
     }
 
     public int getID() {
         return id;
-    }
-
-    public void setID(final int id) {
-        this.id = id;
-        characterInfo = family.getCharacter(id);
     }
 
     public CharacterInfo getCharacterInfo() {
@@ -84,41 +76,12 @@ public class DrawableCharacter implements TexturedDrawable {
         return family;
     }
 
-    public void setFamily(final FontFamily family) {
-        this.family = family;
-    }
-
     @Override
     public Primitive getPrimitive() {
         final Vector2d pos = family.getNormalizeCharacterOffset(characterInfo);
         final Vector2d rect = family.getNormalizeSize(characterInfo);
         return new CharacterPrimitive(pos, rect);
 
-    }
-
-    @Override
-    public Matrix4f getModelMatrix() {
-        return modelMatrix;
-    }
-
-    @Override
-    public void setModelMatrix(final Matrix4fc modelMatrix) {
-        this.modelMatrix = (Matrix4f) modelMatrix;
-    }
-
-    @Override
-    public Vector3f getColor() {
-        return color;
-    }
-
-    @Override
-    public void setColor(final float red, final float green, final float blue) {
-        color = new Vector3f(red / RGB_MAX, green / RGB_MAX, blue / RGB_MAX);
-    }
-
-    @Override
-    public Texture getTexture() {
-        return family.getAtlas();
     }
 
     int getXOffset() {
@@ -133,10 +96,11 @@ public class DrawableCharacter implements TexturedDrawable {
         return characterInfo.getAdvance();
     }
 
-    private void updateModelMatrix() {
-        modelMatrix = new Matrix4f();
+    protected void updateModelMatrix() {
+        final Matrix4f modelMatrix = new Matrix4f();
         modelMatrix.translate(new Vector3f(position, 0.0f));
         modelMatrix.scale(new Vector3f(getDrawSize(), 1.0F));
+        setModelMatrix(modelMatrix);
     }
 
     private Vector2f getDrawSize() {

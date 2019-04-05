@@ -6,8 +6,11 @@ out vec4 fragColor;
 
 uniform sampler2D sprite;
 uniform vec3 color;
+uniform float transparency;// TODO : Transparency with blur
 
 void main()
 {
-    fragColor = vec4(color.rgb, 1.0f) * texture(sprite, fragTexCoords);
+    vec4 textureColor = texture(sprite, fragTexCoords);
+    textureColor *= transparency;
+    fragColor = vec4(color.rgb, 1.0) * textureColor;
 }

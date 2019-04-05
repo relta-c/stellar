@@ -30,7 +30,7 @@ import static org.lwjgl.opengl.GL33.*;
  * <p>This class must be initialized before using any rendering function.</p>
  *
  * @author Nattakit Hosapsin
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public class Display {
@@ -47,6 +47,10 @@ public class Display {
      * ID of OpenGL window object
      */
     private long id;
+    /**
+     * Whatever window should be fullscreen or not
+     */
+    private boolean fullscreen;
     /**
      * Window title
      */
@@ -72,6 +76,7 @@ public class Display {
      * @since 1.0.0
      */
     public Display(final int width, final int height, final CharSequence title, final int multisamplingLevel) {
+        fullscreen = false;
         this.title = (String) title;
         this.multisamplingLevel = multisamplingLevel;
         resolution = new Vector2i(width, height);
@@ -102,7 +107,7 @@ public class Display {
     }
 
     /**
-     * Get current {@link net.chifumi.stellar.graphics.Camera}.
+     * Get current {@link net.chifumi.stellar.graphics.Camera} in this object.
      *
      * @return camera object
      *
@@ -124,6 +129,36 @@ public class Display {
      */
     public void setCamera(final Camera camera) {
         this.camera = camera;
+    }
+
+    /**
+     * Check if window are fullscreen
+     *
+     * @return window fullscreen status
+     *
+     * @since 1.0.1
+     */
+    public boolean isFullscreen() {
+        return fullscreen;
+    }
+
+    /**
+     * Set window should be fullscreen or not
+     *
+     * @param fullscreen
+     *         should window be fullscreen
+     *
+     * @since 1.0.1
+     */
+    public void setFullscreen(final boolean fullscreen) {
+        if (this.fullscreen != fullscreen) {
+            this.fullscreen = fullscreen;
+            if (this.fullscreen) {
+                glfwSetWindowMonitor(id, glfwGetPrimaryMonitor(), 0, 0, resolution.x, resolution.y, GLFW_DONT_CARE);
+            } else {
+                glfwSetWindowMonitor(id, 0, 0, 0, resolution.x, resolution.y, GLFW_DONT_CARE);
+            }
+        }
     }
 
     /**
@@ -179,11 +214,14 @@ public class Display {
     }
 
     /**
-     * Terminate window
+     * Restore monitor resolution and terminate window
      *
      * @since 1.0.0
      */
     public void terminate() {
+        if (fullscreen) {
+            glfwSetWindowMonitor(id, 0, 0, 0, 1, 1, GLFW_DONT_CARE);
+        }
         glfwSetWindowShouldClose(id, true);
     }
 
@@ -212,7 +250,7 @@ public class Display {
         glViewport(0, 0, resolution.x, resolution.y);
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
     }
 }

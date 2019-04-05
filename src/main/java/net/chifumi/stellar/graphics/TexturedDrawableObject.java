@@ -21,12 +21,19 @@ package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.texture.Texture;
 
-/**
- * Interface for draw object with texture
- */
-interface TexturedDrawable extends Drawable {
-    /**
-     * @return Set object texture
-     */
-    Texture getTexture();
+public abstract class TexturedDrawableObject extends DrawableObject {
+    private Texture texture;
+
+    protected TexturedDrawableObject(final Primitive primitive, final Texture texture) {
+        super(primitive);
+        this.texture = texture;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(final Texture texture) {
+        this.texture = texture;
+    }
 }

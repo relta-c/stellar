@@ -47,36 +47,40 @@ public class Renderer {
         vertexBufferSet = new HashMap<>();
     }
 
-    public void draw(final Display display, final Drawable drawable) {
-        final Primitive primitive = drawable.getPrimitive();
+    public void draw(final Display display, final DrawableObject drawable) {
+        if (drawable.isVisible()) {
+            final Primitive primitive = drawable.getPrimitive();
 
-        if (vertexArraySet.get(primitive) == null) {
-            initialize(primitive);
+            if (vertexArraySet.get(primitive) == null) {
+                initialize(primitive);
+            }
+
+            setUniformValues(solidShader, display, drawable);
+
+            drawArrays(primitive);
         }
-
-        setUniformValues(solidShader, display, drawable);
-
-        drawArrays(primitive);
     }
 
-    public void draw(final Display display, final TexturedDrawable texturedDrawable) {
-        final Primitive primitive = texturedDrawable.getPrimitive();
+    public void draw(final Display display, final TexturedDrawableObject texturedDrawable) {
+        if (texturedDrawable.isVisible()) {
+            final Primitive primitive = texturedDrawable.getPrimitive();
 
-        if (vertexArraySet.get(primitive) == null) {
-            initialize(primitive);
+            if (vertexArraySet.get(primitive) == null) {
+                initialize(primitive);
+            }
+
+            setUniformValues(texturedShader, display, texturedDrawable);
+
+            glActiveTexture(GL_TEXTURE0);
+            texturedDrawable.getTexture().bind();
+
+            drawArrays(primitive);
+
+            glDeleteVertexArrays(vertexArraySet.get(primitive)); // TODO : Use object ID
+            vertexArraySet.remove(primitive);
+            glDeleteBuffers(vertexBufferSet.get(primitive));
+            vertexBufferSet.remove(primitive);
         }
-
-        setUniformValues(texturedShader, display, texturedDrawable);
-
-        glActiveTexture(GL_TEXTURE0);
-        texturedDrawable.getTexture().bind();
-
-        drawArrays(primitive);
-
-        glDeleteVertexArrays(vertexArraySet.get(primitive)); // TODO : Use object ID
-        vertexArraySet.remove(primitive);
-        glDeleteBuffers(vertexBufferSet.get(primitive));
-        vertexBufferSet.remove(primitive);
     }
 
     public void draw(final Display display, final Text text) {
@@ -98,11 +102,12 @@ public class Renderer {
         }
     }
 
-    private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {
+    private static void setUniformValues(final Shader shader, final Display display, final DrawableObject drawable) {
         shader.setUniform("projection", display.getCamera().getProjectionMatrix());
         shader.setUniform("view", display.getCamera().getViewMatrix());
         shader.setUniform("model", drawable.getModelMatrix());
-        shader.setUniform("color", drawable.getColor());
+        shader.setUniform("color", drawable.getNormalizedColor());
+        shader.setUniform("transparency", drawable.getNormalizedTransparency());
     }
 
     private void initialize(final Primitive primitive) {

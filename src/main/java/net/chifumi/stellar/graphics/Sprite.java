@@ -22,36 +22,28 @@ package net.chifumi.stellar.graphics;
 import net.chifumi.stellar.geometry.Polygon;
 import net.chifumi.stellar.texture.Texture;
 import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector3f;
-import org.joml.Vector3fc;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sprite implements TexturedDrawable, Polygon {
+public class Sprite extends TexturedDrawableObject implements Polygon {
     private static final float HALF = 0.5f;
     private static final int TWO_RADIAN_DEGREE = 360;
-    private final Primitive spritePrimitive;
     private Vector2f position;
     private Vector2f size;
-    private Vector3f color; // TODO : Make color easier to use, may be something like (byte, byte, byte)
-    private Matrix4f modelMatrix;
     private Quaternionf rotation;
-    private Texture texture;
 
     public Sprite(final Texture texture) {
+        super(SpritePrimitive.INSTANCE, texture);
         position = new Vector2f();
         size = new Vector2f(texture.getWidth(), texture.getHeight());
         rotation = new Quaternionf();
-        color = new Vector3f(1.0f, 1.0f, 1.0f);
-        this.texture = texture;
-        spritePrimitive = SpritePrimitive.INSTANCE;
         updateModelMatrix();
     }
 
@@ -107,68 +99,33 @@ public class Sprite implements TexturedDrawable, Polygon {
     }
 
     @Override
-    public void setColor(final float red, final float green, final float blue) {
-        color = new Vector3f(red / RGB_MAX, green / RGB_MAX, blue / RGB_MAX);
-    }
-
-    @Override
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public void setTexture(final Texture texture) {
-        this.texture = texture;
-    }
-
-    @Override
-    public Primitive getPrimitive() {
-        return spritePrimitive;
-    }
-
-    @Override
-    public Matrix4f getModelMatrix() {
-        return modelMatrix;
-    }
-
-    @Override
-    public void setModelMatrix(final Matrix4fc modelMatrix) {
-        this.modelMatrix = (Matrix4f) modelMatrix;
-    }
-
-    @Override
-    public Vector3f getColor() {
-        return color;
-    }
-
-    public void setColor(final Vector3fc color) {
-        this.color = (Vector3f) color;
-    }
-
     @SuppressWarnings("Duplicates")
     public List<Vector2f> getRealVertices() { // TODO : Use EBO, then transform vertices
         Vector4f localPosition;
         final List<Vector2f> result = new ArrayList<>();
         localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topLeft = localPosition.mul(modelMatrix);
+        final Vector4f topLeft = localPosition.mul(getModelMatrix());
         result.add(new Vector2f(topLeft.x, topLeft.y));
         localPosition = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topRight = localPosition.mul(modelMatrix);
+        final Vector4f topRight = localPosition.mul(getModelMatrix());
         result.add(new Vector2f(topRight.x, topRight.y));
         localPosition = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomRight = localPosition.mul(modelMatrix);
+        final Vector4f bottomRight = localPosition.mul(getModelMatrix());
         result.add(new Vector2f(bottomRight.x, bottomRight.y));
         localPosition = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomLeft = localPosition.mul(modelMatrix);
+        final Vector4f bottomLeft = localPosition.mul(getModelMatrix());
         result.add(new Vector2f(bottomLeft.x, bottomLeft.y));
         return result;
     }
 
-    private void updateModelMatrix() {
-        modelMatrix = new Matrix4f();
+    @Override
+    protected void updateModelMatrix() {
+        Matrix4f modelMatrix = new Matrix4f();
         modelMatrix = modelMatrix.translate(new Vector3f(position, 0.0f));
         modelMatrix = modelMatrix.translate(new Vector3f(HALF * size.x(), HALF * size.y(), 0.0F));
         modelMatrix = modelMatrix.rotate(rotation);
         modelMatrix = modelMatrix.translate(new Vector3f(-HALF * size.x(), -HALF * size.y(), 0.0F));
         modelMatrix.scale(new Vector3f(size, 1.0F));
+        setModelMatrix(modelMatrix);
     }
 }

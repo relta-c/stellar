@@ -47,7 +47,7 @@ class FontInfo {
     private String fileName;
 
     FontInfo(final CharSequence path) throws FileNotFoundException { // TODO : Check for error in file
-        final File file = new File((String) path);
+        final File file = new File((String) path);                   // TODO : Kerning
         scanner = new Scanner(file);
         name = "";
         fileName = "";

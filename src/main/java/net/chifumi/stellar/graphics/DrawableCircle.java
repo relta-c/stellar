@@ -26,11 +26,11 @@ import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
 
-public class CircleSolid extends Solid {
+public class DrawableCircle extends DrawableObject {
     private int face;
     private Circle circle;
 
-    public CircleSolid(final Vector2fc origin, final float radius, final int face) {
+    public DrawableCircle(final Vector2fc origin, final float radius, final int face) {
         super(new CirclePrimitive(face));
         this.face = face;
         circle = new Circle(origin, radius);

@@ -19,20 +19,21 @@
 
 package net.chifumi.stellar.graphics;
 
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 
-public class LineSolid extends Solid {
+public class DrawableLine extends DrawableObject {
     private Vector2f pointA;
     private Vector2f pointB;
 
-    public LineSolid(final Vector2fc pointA, final Vector2fc pointB) {
+    public DrawableLine(final Vector2fc pointA, final Vector2fc pointB) {
         super(new LinePrimitive(pointA, pointB));
         this.pointA = (Vector2f) pointA;
         this.pointB = (Vector2f) pointB;
     }
 
-    public LineSolid(final float ax, final float ay, final float bx, final float by) {
+    public DrawableLine(final float ax, final float ay, final float bx, final float by) {
         super(new LinePrimitive(new Vector2f(ax, ay), new Vector2f(bx, by)));
         pointA = new Vector2f(ax, ay);
         pointB = new Vector2f(bx, by);
@@ -68,6 +69,7 @@ public class LineSolid extends Solid {
 
     @Override
     protected void updateModelMatrix() {
+        setModelMatrix(new Matrix4f());
     }
 
     private void updatePrimitive() {
