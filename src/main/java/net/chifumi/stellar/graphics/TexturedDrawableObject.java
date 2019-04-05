@@ -21,6 +21,13 @@ package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.texture.Texture;
 
+/***
+ * Represents drawable object with texture.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.1
+ * @since 1.0.1
+ */
 public abstract class TexturedDrawableObject extends DrawableObject {
     private Texture texture;
 
@@ -29,10 +36,26 @@ public abstract class TexturedDrawableObject extends DrawableObject {
         this.texture = texture;
     }
 
+    /**
+     * Get current texture
+     *
+     * @return texture
+     *
+     * @since 1.0.1
+     */
     public Texture getTexture() {
         return texture;
     }
 
+
+    /**
+     * Set new texture
+     *
+     * @param texture
+     *         new texture
+     *
+     * @since 1.0.1
+     */
     public void setTexture(final Texture texture) {
         this.texture = texture;
     }

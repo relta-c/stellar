@@ -21,17 +21,29 @@ package net.chifumi.stellar.input;
 
 import net.chifumi.stellar.graphics.Display;
 
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+/**
+ * Represent keyboard, use this class to get user keyboard input.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public class Keyboard {
     private final Map<Key, KeyState> state;
     private final Map<Integer, Key> keySet;
 
+    /**
+     * Create a new {@link net.chifumi.stellar.input.Keyboard} object.
+     *
+     * @param display
+     *         window to get input from
+     */
     public Keyboard(final Display display) {
         final long window = display.getID();
         glfwMakeContextCurrent(window);
@@ -44,10 +56,16 @@ public class Keyboard {
         }
     }
 
-    public Map<Key, KeyState> getState() {
-        return Collections.unmodifiableMap(state);
-    }
-
+    /**
+     * Get current key status
+     *
+     * @param key
+     *         key to check
+     *
+     * @return key status
+     *
+     * @since 1.0.0
+     */
     public KeyState getKey(final Key key) {
         return state.get(key);
     }

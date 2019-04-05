@@ -17,16 +17,11 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
-
-import net.chifumi.stellar.texture.Texture;
-
 /**
- * Interface for draw object with texture
+ * Contain classes relate to user input handling
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
  */
-interface TexturedDrawable extends Drawable {
-    /**
-     * @return Set object texture
-     */
-    Texture getTexture();
-}
+package net.chifumi.stellar.input;

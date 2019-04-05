@@ -19,6 +19,13 @@
 
 package net.chifumi.stellar.graphics;
 
+/**
+ * Post processing effects
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public enum Effect {
     BLUR(ShaderPath.BLUR),
     GREYSCALE(ShaderPath.GRAY_SCALE),

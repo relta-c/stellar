@@ -23,6 +23,11 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.1
+ * @since 1.0.1
+ */
 public class DrawableLine extends DrawableObject {
     private Vector2f pointA;
     private Vector2f pointB;

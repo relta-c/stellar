@@ -23,6 +23,11 @@ import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.1
+ * @since 1.0.0
+ */
 public class Text {
     private static final float MAX_RGB = 255.0f;
     private int size;
@@ -95,18 +100,42 @@ public class Text {
         color = new Vector3f(red, green, blue);
     }
 
+    /**
+     * Get text transparency in percent
+     *
+     * @return transparency in percent
+     *
+     * @since 1.0.1
+     */
     public float getTransparency() {
         return transparency;
     }
 
+    /**
+     * Set text transparency in percent
+     *
+     * @since 1.0.1
+     */
     public void setTransparency(final float transparency) {
         this.transparency = transparency;
     }
 
+    /**
+     * Get object visibility.
+     *
+     * @return visibility of object
+     *
+     * @since 1.0.1
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * Set object visibility.
+     *
+     * @since 1.0.1
+     **/
     public void setVisible(final boolean visible) {
         this.visible = visible;
     }

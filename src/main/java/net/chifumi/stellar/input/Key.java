@@ -21,6 +21,13 @@ package net.chifumi.stellar.input;
 
 import static org.lwjgl.glfw.GLFW.*;
 
+/**
+ * Key that can be check for status
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public enum Key {
     ZERO(GLFW_KEY_0),
     ONE(GLFW_KEY_1),
@@ -132,12 +139,26 @@ public enum Key {
     Y(GLFW_KEY_Y),
     Z(GLFW_KEY_Z);
 
+    /**
+     * GLFW enum value
+     */
     private final int id;
 
+    /**
+     * @param id
+     *         GLFW enum value
+     */
     Key(final int id) {
         this.id = id;
     }
 
+    /**
+     * Get GLFW enum value.
+     *
+     * @return GLFW enum value
+     *
+     * @since 1.0.0
+     */
     public int getID() {
         return id;
     }
