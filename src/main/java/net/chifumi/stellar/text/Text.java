@@ -21,18 +21,26 @@ package net.chifumi.stellar.text;
 
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
+import org.joml.Vector3f;
 
 public class Text {
+    private static final float MAX_RGB = 255.0f;
     private int size;
+    private float transparency;
+    private boolean visible;
     private String text;
     private Vector2f position;
+    private Vector3f color;
     private FontFamily family;
 
     public Text(final String text, final int size, final FontFamily family) {
         this.size = size;
         this.text = text;
         this.family = family;
+        visible = true;
+        transparency = 100;
         position = new Vector2f();
+        color = new Vector3f(MAX_RGB, MAX_RGB, MAX_RGB);
     }
 
     public int getSize() {
@@ -72,7 +80,35 @@ public class Text {
     }
 
     public DrawableCharacter getCharacterAt(final int index) {
-        return new DrawableCharacter(text.charAt(index), size, family);
+        final DrawableCharacter character = new DrawableCharacter(text.charAt(index), size, family); // TODO : Use Map
+        character.setColor(color.x, color.y, color.z);
+        character.setTransparency(transparency);
+        character.setVisible(visible);
+        return character;
+    }
+
+    public Vector3f getColor() {
+        return color;
+    }
+
+    public void setColor(final float red, final float green, final float blue) {
+        color = new Vector3f(red, green, blue);
+    }
+
+    public float getTransparency() {
+        return transparency;
+    }
+
+    public void setTransparency(final float transparency) {
+        this.transparency = transparency;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(final boolean visible) {
+        this.visible = visible;
     }
 
     public Vector2f getCursorAt(final int index) {

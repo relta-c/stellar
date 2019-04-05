@@ -26,14 +26,19 @@ import org.joml.Vector3fc;
  * Interface for object that can be draw.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  */
 public interface Drawable {
     /**
      * Max color value
      */
-    float RGB_MAX = 255.0f;
+    float MAX_RGB = 255.0f;
+
+    /**
+     * Max alpha value
+     */
+    float MAX_ALPHA = 100.0f;
 
     /**
      * Get {@link Primitive} for drawing.
@@ -54,6 +59,8 @@ public interface Drawable {
     Matrix4fc getModelMatrix();
 
     /**
+     * Set model transform matrix.
+     *
      * @param modelMatrix
      *         model transform matrix
      *
@@ -70,7 +77,11 @@ public interface Drawable {
      */
     Vector3fc getColor();
 
+    Vector3fc getNormalizedColor();
+
     /**
+     * Set object color.
+     *
      * @param red
      *         amount of red color (0-255)
      * @param green
@@ -81,4 +92,41 @@ public interface Drawable {
      * @since 1.0.0
      */
     void setColor(final float red, final float green, final float blue);
+
+    /**
+     * Get object transparency in percent
+     *
+     * @return transparency value
+     *
+     * @since 1.0.1
+     */
+    float getTransparency();
+
+    float getNormalizedTransparency();
+
+    /**
+     * Set object transparency in percent
+     *
+     * @since 1.0.1
+     */
+    void setTransparency(final float transparency);
+
+    /**
+     * Get object visibility.
+     *
+     * @return visibility of object
+     *
+     * @since 1.0.1
+     */
+    boolean isVisible();
+
+    /**
+     * Set object visibility.
+     *
+     * @param visible
+     *         whatever this object should be visible or not
+     *
+     * @since 1.0.1
+     */
+    void setVisible(boolean visible);
 }

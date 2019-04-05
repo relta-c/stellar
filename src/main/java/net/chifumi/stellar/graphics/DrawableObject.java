@@ -24,20 +24,60 @@ import org.joml.Matrix4fc;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
-public abstract class Solid implements Drawable {
+/**
+ * Represents drawable object without texture
+ */
+public abstract class DrawableObject implements Drawable {
     private Primitive primitive;
     private Vector3f color;
+    private float transparency;
+    private boolean visible;
     private Matrix4f modelMatrix;
 
-    Solid(final Primitive primitive) {
+    DrawableObject(final Primitive primitive) {
         this.primitive = primitive;
+        visible = true;
         modelMatrix = new Matrix4f();
-        color = new Vector3f(1.0f, 1.0f, 1.0f);
+        transparency = MAX_ALPHA;
+        color = new Vector3f(MAX_RGB, MAX_RGB, MAX_RGB);
     }
 
     @Override
     public void setColor(final float red, final float green, final float blue) {
-        color = new Vector3f(red / RGB_MAX, green / RGB_MAX, blue / RGB_MAX);
+        float setRed = red > MAX_RGB ? MAX_RGB : red;
+        setRed = setRed < 0 ? 0 : red;
+        float setGreen = green > MAX_RGB ? MAX_RGB : green;
+        setGreen = setGreen < 0 ? 0 : green;
+        float setBlue = blue > MAX_RGB ? MAX_RGB : blue;
+        setBlue = setBlue < 0 ? 0 : blue;
+        color = new Vector3f(setRed, setGreen, setBlue);
+    }
+
+    @Override
+    public float getTransparency() {
+        return transparency;
+    }
+
+    @Override
+    public void setTransparency(final float transparency) {
+        float setTransparency = transparency > MAX_ALPHA ? MAX_ALPHA : transparency;
+        setTransparency = setTransparency < 0 ? 0 : setTransparency;
+        this.transparency = setTransparency;
+    }
+
+    @Override
+    public float getNormalizedTransparency() {
+        return transparency / MAX_ALPHA;
+    }
+
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
+
+    @Override
+    public void setVisible(final boolean visible) {
+        this.visible = visible;
     }
 
     @Override
@@ -56,8 +96,9 @@ public abstract class Solid implements Drawable {
         return color;
     }
 
-    public void setColor(final Vector3fc color) {
-        this.color = (Vector3f) color;
+    @Override
+    public Vector3fc getNormalizedColor() {
+        return new Vector3f(color.x / MAX_RGB, color.y / MAX_RGB, color.z / MAX_RGB);
     }
 
     @Override
