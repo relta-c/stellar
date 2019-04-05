@@ -26,6 +26,11 @@ import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.1
+ * @since 1.0.1
+ */
 public class DrawableCircle extends DrawableObject {
     private int face;
     private Circle circle;

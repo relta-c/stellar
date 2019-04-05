@@ -25,7 +25,11 @@ import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
 /**
- * Represents drawable object without texture
+ * Represents drawable object without texture.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.1
+ * @since 1.0.1
  */
 public abstract class DrawableObject implements Drawable {
     private Primitive primitive;

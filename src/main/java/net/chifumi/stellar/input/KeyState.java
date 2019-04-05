@@ -19,6 +19,13 @@
 
 package net.chifumi.stellar.input;
 
+/**
+ * Represent key state.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public enum KeyState {
     PRESS,
     RELEASE

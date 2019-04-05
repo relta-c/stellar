@@ -124,7 +124,7 @@ public interface Drawable {
      * Set object visibility.
      *
      * @param visible
-     *         whatever this object should be visible or not
+     *         visibility of object
      *
      * @since 1.0.1
      */
