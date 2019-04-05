@@ -19,12 +19,16 @@
 
 package net.chifumi.stellar.texture;
 
-import static org.lwjgl.opengl.GL33.GL_RGB;
+import static org.lwjgl.opengl.GL11.GL_RGB;
+import static org.lwjgl.opengl.GL21.GL_SRGB;
+import static org.lwjgl.opengl.GL21.GL_SRGB_ALPHA;
 import static org.lwjgl.opengl.GL33.GL_RGBA;
 
 public enum ImageFormat {
     RGB(GL_RGB),
-    RGBA(GL_RGBA);
+    RGBA(GL_RGBA),
+    SRGB(GL_SRGB),
+    SRGB_ALPHA(GL_SRGB_ALPHA);
 
     private final int id;
 

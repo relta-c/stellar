@@ -36,7 +36,7 @@ public class TextureLoader {
 
     public TextureLoader() {
         rawImageFormat = ImageFormat.RGBA;
-        internalImageFormat = ImageFormat.RGBA; // TODO : Automatic format detection
+        internalImageFormat = ImageFormat.SRGB_ALPHA;
         wrapS = WrapMode.REPEAT;
         wrapT = WrapMode.REPEAT;
         filterMin = FilteringMode.NEAREST;
@@ -53,22 +53,6 @@ public class TextureLoader {
         loadTextureFile.setFilterMax(filterMax);
         loadTextureFile.generate();
         return loadTextureFile;
-    }
-
-    public TextureLoader rawImageFormat(final ImageFormat format) {
-        rawImageFormat = format;
-        return this;
-    }
-
-    public TextureLoader internalImageFormat(final ImageFormat format) {
-        internalImageFormat = format;
-        return this;
-    }
-
-    public TextureLoader imageFormat(final ImageFormat format) {
-        rawImageFormat = format;
-        internalImageFormat = format;
-        return this;
     }
 
     public TextureLoader wrapT(final WrapMode wrapMode) {
@@ -103,7 +87,17 @@ public class TextureLoader {
         return this;
     }
 
-    private static Texture LoadTextureFile(final CharSequence path) throws FileNotFoundException {
+    private void setImageFormat(final ImageFormat format) {
+        if (format == ImageFormat.RGB) {
+            rawImageFormat = ImageFormat.RGB;
+            internalImageFormat = ImageFormat.SRGB;
+        } else {
+            rawImageFormat = ImageFormat.RGBA;
+            internalImageFormat = ImageFormat.SRGB_ALPHA;
+        }
+    }
+
+    private Texture LoadTextureFile(final CharSequence path) throws FileNotFoundException {
         final ByteBuffer data;
         final int width;
         final int height;
@@ -117,6 +111,15 @@ public class TextureLoader {
             }
             width = rawWidth.get();
             height = rawHeight.get();
+
+            final int colorChannels = channels.get();
+            if (colorChannels == 4) {
+                setImageFormat(ImageFormat.RGBA);
+            } else if (colorChannels == 3) {
+                setImageFormat(ImageFormat.RGB);
+            } else {
+                throw new IllegalStateException("Unsupported image channels : " + colorChannels);
+            }
         }
         return new Texture(width, height, data);
     }
