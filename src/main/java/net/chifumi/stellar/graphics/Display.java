@@ -250,6 +250,7 @@ public class Display {
         glViewport(0, 0, resolution.x, resolution.y);
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
+        glEnable(GL_FRAMEBUFFER_SRGB);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
     }
