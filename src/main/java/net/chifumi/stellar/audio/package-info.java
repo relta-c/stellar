@@ -22,7 +22,7 @@
  * Contain classes relate to playing audio
  *
  * @author Nattakit Hosapsin
- * @version 1.0.0
+ * @version 1.0.2
  * @since 1.0.0
  */
 package net.chifumi.stellar.audio;

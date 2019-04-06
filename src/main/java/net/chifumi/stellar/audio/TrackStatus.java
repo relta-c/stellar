@@ -19,9 +19,34 @@
 
 package net.chifumi.stellar.audio;
 
-public enum TrackState {
+/**
+ * Audio status
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
+public enum TrackStatus {
+    /**
+     * nothing have been done
+     * @since 1.0.2
+     */
     INITIAL,
-    PLAYING,
+    /**
+     * track have been paused
+     *
+     * @since 1.0.2
+     */
     PAUSED,
+    /**
+     * track is playing
+     *
+     * @since 1.0.2
+     */
+    PLAYING,
+    /**
+     * track have been stopped
+     * @since 1.0.2
+     */
     STOPPED
 }

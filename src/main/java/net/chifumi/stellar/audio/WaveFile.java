@@ -32,8 +32,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+/**
+ * Represents wav file data.
+ *
+ * @author Nattakit Hosapin
+ * @version 1.0.0
+ * @apiNote
+ * @since 1.0.0
+ */
 final class WaveFile {
-
     private final int format;
     private final int sampleRate;
     private final int totalBytes;
@@ -41,6 +48,17 @@ final class WaveFile {
     private final AudioInputStream audioStream;
     private final byte[] dataArray;
 
+    /**
+     * Create a {@link net.chifumi.stellar.audio.WaveFile} object and load wav file.
+     *
+     * @param path
+     *         path to wav file
+     *
+     * @throws IOException
+     *         something wrong with IO operation (e.g. file not found)
+     * @throws UnsupportedAudioFileException
+     *         file format is not wav
+     */
     @SuppressWarnings({"NumericCastThatLosesPrecision", "OverlyBroadThrowsClause"})
     WaveFile(final CharSequence path) throws IOException, UnsupportedAudioFileException {
         final InputStream stream = new FileInputStream((String) path);
@@ -57,6 +75,9 @@ final class WaveFile {
         }
     }
 
+    /**
+     * Dispose data stream and close stream.
+     */
     void dispose() {
         try {
             audioStream.close();
@@ -66,18 +87,43 @@ final class WaveFile {
         }
     }
 
+    /**
+     * Get openAL file format.
+     *
+     * @return openAL file format
+     */
     int getFormat() {
         return format;
     }
 
+    /**
+     * Get sample rate.
+     *
+     * @return sample rate
+     */
     int getSampleRate() {
         return sampleRate;
     }
 
+    /**
+     * Get file data.
+     *
+     * @return wav file data
+     */
     ByteBuffer getData() {
         return data;
     }
 
+    /**
+     * Get openAL audio format from file info.
+     *
+     * @param channels
+     *         number of audio channels
+     * @param bitsPerSample
+     *         bit per sample
+     *
+     * @return openAL audio format
+     */
     private static int getOpenAlFormat(final int channels, final int bitsPerSample) {
         if (channels == 1) {
             return bitsPerSample == 8 ? AL10.AL_FORMAT_MONO8 : AL10.AL_FORMAT_MONO16;
@@ -86,6 +132,12 @@ final class WaveFile {
         }
     }
 
+    /**
+     * Load file data.
+     *
+     * @throws IOException
+     *         something wrong with IO operation (e.g. file not found)
+     */
     private void loadData() throws IOException {
         final int bytesRead = audioStream.read(dataArray, 0, totalBytes);
         getData().clear();
