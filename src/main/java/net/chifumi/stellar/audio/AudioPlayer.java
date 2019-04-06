@@ -29,9 +29,25 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.openal.AL10.*;
 
+/**
+ * Represents audio player.
+ * <p>This class have to be create before loading and playing any audio.</p>
+ *
+ * @author Nattakit Hosapin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
 public class AudioPlayer {
+    /**
+     * audio device id
+     */
     private final long device;
 
+    /**
+     * Create a new {@link net.chifumi.stellar.audio.AudioPlayer}.
+     *
+     * @since 1.0.2
+     */
     public AudioPlayer() {
         device = ALC10.alcOpenDevice((ByteBuffer) null);
         final ALCCapabilities deviceCaps = ALC.createCapabilities(device);
@@ -44,6 +60,12 @@ public class AudioPlayer {
         alListener3f(AL_VELOCITY, 0, 0, 0);
     }
 
+    /**
+     * Terminate audio player and close audio device.
+     * <p>This method should be called after all audio operation have finished.</p>
+     *
+     * @since 1.0.2
+     */
     public void terminate() {
         ALC10.alcCloseDevice(device);
     }
