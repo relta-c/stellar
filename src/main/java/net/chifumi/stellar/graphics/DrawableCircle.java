@@ -20,33 +20,35 @@
 package net.chifumi.stellar.graphics;
 
 import net.chifumi.stellar.geometry.Circle;
+import net.chifumi.stellar.geometry.MutableCircle;
+import net.chifumi.stellar.math.Vector2;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
 
 /**
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
-public class DrawableCircle extends DrawableObject {
+public class DrawableCircle extends DrawableObject implements Circle {
+    private final MutableCircle circle;
     private int face;
-    private Circle circle;
 
-    public DrawableCircle(final Vector2fc origin, final float radius, final int face) {
+    /**
+     * @param origin
+     *         origin location
+     * @param radius
+     *         radius of circle
+     * @param face
+     *         sharp face number, this value should be high enough for circle to look smooth
+     *
+     * @since 1.0.2
+     */
+    public DrawableCircle(final Vector2<Float> origin, final float radius, final int face) {
         super(new CirclePrimitive(face));
         this.face = face;
-        circle = new Circle(origin, radius);
-    }
-
-    public Circle getSharp() {
-        return circle;
-    }
-
-    public void setSharp(final Circle circle) {
-        this.circle = circle;
+        circle = new MutableCircle(origin, radius);
     }
 
     public int getFace() {
@@ -57,31 +59,53 @@ public class DrawableCircle extends DrawableObject {
         this.face = face;
     }
 
-    public Vector2f getOrigin() {
+    @Override
+    public Vector2<Float> getOrigin() {
         return circle.getOrigin();
     }
 
-    public void setOrigin(final Vector2fc origin) {
-        circle = new Circle(origin, circle.getRadius());
+    /**
+     * @param origin
+     *         origin location
+     *
+     * @since 1.0.2
+     */
+    public void setOrigin(final Vector2<Float> origin) {
+        circle.setOrigin(origin);
     }
 
+    /**
+     * @param x
+     *         x-axis position of origin
+     * @param y
+     *         y-axis position of origin
+     *
+     * @since 1.0.1
+     */
     public void setOrigin(final float x, final float y) {
-        circle = new Circle(new Vector2f(x, y), circle.getRadius());
+        circle.setOrigin(x, y);
     }
 
+    @Override
     public float getRadius() {
         return circle.getRadius();
     }
 
+    /**
+     * @param radius
+     *         radius of circle
+     *
+     * @since 1.0.1
+     */
     public void SetRadius(final float radius) {
-        circle = new Circle(circle.getOrigin(), radius);
+        circle.setRadius(radius);
     }
 
 
     @Override
     protected void updateModelMatrix() {
         final Matrix4f modelMatrix = new Matrix4f();
-        modelMatrix.translate(new Vector3f(circle.getOrigin(), 0.0f));
+        modelMatrix.translate(new Vector3f(circle.getOrigin().getX(), circle.getOrigin().getY(), 0.0f));
         modelMatrix.scale(new Vector3f(circle.getRadius(), circle.getRadius(), 1.0F));
         setModelMatrix(modelMatrix);
     }

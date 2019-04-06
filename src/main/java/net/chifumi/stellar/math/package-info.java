@@ -17,13 +17,12 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
 
-import net.chifumi.stellar.math.Vector2;
-
-import java.util.List;
-
-@FunctionalInterface
-public interface Polygon {
-    List<Vector2<Float>> getVertices();
-}
+/**
+ * Contain classes relate to math operations and data
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
+package net.chifumi.stellar.math;

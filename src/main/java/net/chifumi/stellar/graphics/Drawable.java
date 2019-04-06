@@ -19,14 +19,14 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.math.Vector3;
 import org.joml.Matrix4fc;
-import org.joml.Vector3fc;
 
 /**
  * Interface for object that can be draw.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public interface Drawable {
@@ -73,11 +73,22 @@ public interface Drawable {
      *
      * @return object color
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    Vector3fc getColor();
+    Vector3<Float> getColor();
 
-    Vector3fc getNormalizedColor();
+    /**
+     * @param color
+     *         1.0.2
+     */
+    void setColor(Vector3<Float> color);
+
+    /**
+     * @return normalized color
+     *
+     * @since 1.0.2
+     */
+    Vector3<Float> getNormalizedColor();
 
     /**
      * Set object color.
@@ -102,14 +113,19 @@ public interface Drawable {
      */
     float getTransparency();
 
-    float getNormalizedTransparency();
-
     /**
      * Set object transparency in percent
      *
      * @since 1.0.1
      */
     void setTransparency(final float transparency);
+
+    /**
+     * @return normalizedTransparency
+     *
+     * @since 1.0.2
+     */
+    float getNormalizedTransparency();
 
     /**
      * Get object visibility.

@@ -19,56 +19,108 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.geometry.Line;
+import net.chifumi.stellar.geometry.MutableLine;
+import net.chifumi.stellar.math.Vector2;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
 
 /**
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
-public class DrawableLine extends DrawableObject {
-    private Vector2f pointA;
-    private Vector2f pointB;
+public class DrawableLine extends DrawableObject implements Line {
+    private final MutableLine line;
 
-    public DrawableLine(final Vector2fc pointA, final Vector2fc pointB) {
-        super(new LinePrimitive(pointA, pointB));
-        this.pointA = (Vector2f) pointA;
-        this.pointB = (Vector2f) pointB;
+    /**
+     * @param pointA
+     *         point a position
+     * @param pointB
+     *         point b position
+     *
+     * @since 1.0.2
+     */
+    public DrawableLine(final Vector2<Float> pointA, final Vector2<Float> pointB) {
+        super(new LinePrimitive(new MutableLine(pointA, pointB)));
+        line = new MutableLine(pointA, pointB);
     }
 
+    /**
+     * @param ax
+     *         point a point a x-axis position
+     * @param ay
+     *         point a point a y-axis position
+     * @param bx
+     *         point b point a x-axis position
+     * @param by
+     *         point b point a y-axis position
+     *
+     * @since 1.0.1
+     */
     public DrawableLine(final float ax, final float ay, final float bx, final float by) {
-        super(new LinePrimitive(new Vector2f(ax, ay), new Vector2f(bx, by)));
-        pointA = new Vector2f(ax, ay);
-        pointB = new Vector2f(bx, by);
+        super(new LinePrimitive(new MutableLine(ax, ay, bx, by)));
+        line = new MutableLine(ax, ay, bx, by);
     }
 
-    public Vector2f getPointA() {
-        return pointA;
+    /**
+     * @return point a position
+     *
+     * @since 1.0.2
+     */
+    public Vector2<Float> getPointA() {
+        return line.getPointA();
     }
 
-    public void setPointA(final Vector2fc pointA) {
-        this.pointA = (Vector2f) pointA;
+    /**
+     * @param pointA
+     *         point a position
+     *
+     * @since 1.0.2
+     */
+    public void setPointA(final Vector2<Float> pointA) {
+        line.setPointA(pointA);
         updatePrimitive();
     }
 
+    /**
+     * @param x
+     *         point a x-axis position
+     * @param y
+     *         point a y-axis position
+     *
+     * @since 1.0.1
+     */
     public void setPointA(final float x, final float y) {
-        pointA = new Vector2f(x, y);
+        line.setPointA(x, y);
         updatePrimitive();
     }
 
-    public Vector2f getPointB() {
-        return pointB;
+    @Override
+    public Vector2<Float> getPointB() {
+        return line.getPointB();
     }
 
-    public void setPointB(final Vector2fc pointB) {
-        this.pointB = (Vector2f) pointB;
+    /**
+     * @param pointB
+     *         point b position
+     *
+     * @since 1.0.2
+     */
+    public void setPointB(final Vector2<Float> pointB) {
+        line.setPointB(pointB);
         updatePrimitive();
     }
 
+    /**
+     * @param x
+     *         point b x-axis position
+     * @param y
+     *         point b x-axis position
+     *
+     * @since 1.0.1
+     */
     public void setPointB(final float x, final float y) {
-        pointB = new Vector2f(x, y);
+        line.setPointB(x, y);
         updatePrimitive();
     }
 
@@ -77,7 +129,10 @@ public class DrawableLine extends DrawableObject {
         setModelMatrix(new Matrix4f());
     }
 
+    /**
+     * @since 1.0.1
+     */
     private void updatePrimitive() {
-        setPrimitive(new LinePrimitive(pointA, pointB));
+        setPrimitive(new LinePrimitive(line));
     }
 }

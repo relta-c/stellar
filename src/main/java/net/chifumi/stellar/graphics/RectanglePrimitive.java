@@ -19,30 +19,23 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Line;
+enum RectanglePrimitive implements Primitive { // TODO : Use EBO
+    INSTANCE;
 
-/**
- * @version 1.0.2
- * @since 1.0.0
- */
-class LinePrimitive implements Primitive {
     private final float[] vertices;
     private final int verticesNum;
     private final int drawMode;
 
-
-    /**
-     * @param line
-     *         line
-     *
-     * @since 1.0.2
-     */
-    LinePrimitive(final Line line) {
+    RectanglePrimitive() {
         vertices = new float[]{
-                line.getPointA().getX(), line.getPointA().getY(), 0.0f, 0.0f,
-                line.getPointB().getX(), line.getPointB().getY(), 0.0f, 0.0f};
-        verticesNum = 2;
-        drawMode = DrawMode.LINE.getID();
+                0.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 0.0f,
+                0.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 1.0f, 0.0f, 1.0f,
+                1.0f, 1.0f, 1.0f, 1.0f,
+                1.0f, 0.0f, 1.0f, 0.0f};
+        verticesNum = 6;
+        drawMode = DrawMode.TRIANGLES.getID();
     }
 
     @Override

@@ -19,16 +19,17 @@
 
 package net.chifumi.stellar.graphics;
 
-import org.joml.Vector2i;
+import net.chifumi.stellar.math.Vector2;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL33.*;
 
 public class PostProcessor {
-    private final Vector2i resolution;
+    private final Vector2<Integer> resolution;
     private final Framebuffer multiSampledFramebuffer;
     private final List<Effect> effectList;
     private final List<Framebuffer> framebufferList;

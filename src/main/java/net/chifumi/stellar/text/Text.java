@@ -19,9 +19,11 @@
 
 package net.chifumi.stellar.text;
 
+import net.chifumi.stellar.math.MutableVector2;
+import net.chifumi.stellar.math.MutableVector3;
+import net.chifumi.stellar.math.Vector2;
+import net.chifumi.stellar.math.Vector3;
 import org.joml.Vector2f;
-import org.joml.Vector2fc;
-import org.joml.Vector3f;
 
 /**
  * @author Nattakit Hosapsin
@@ -30,12 +32,12 @@ import org.joml.Vector3f;
  */
 public class Text {
     private static final float MAX_RGB = 255.0f;
+    private final MutableVector2<Float> position;
+    private final MutableVector3<Float> color;
     private int fontSize;
     private float transparency;
     private boolean visible;
     private String text;
-    private Vector2f position;
-    private Vector3f color;
     private FontFamily family;
 
     public Text(final String text, final int fontSize, final FontFamily family) {
@@ -44,8 +46,8 @@ public class Text {
         this.family = family;
         visible = true;
         transparency = 100;
-        position = new Vector2f();
-        color = new Vector3f(MAX_RGB, MAX_RGB, MAX_RGB);
+        position = new MutableVector2<>(0.0f, 0.0f);
+        color = new MutableVector3<>(MAX_RGB, MAX_RGB, MAX_RGB);
     }
 
     public int getFontSize() {
@@ -64,16 +66,16 @@ public class Text {
         this.text = text;
     }
 
-    public Vector2f getPosition() {
-        return position;
+    public Vector2<Float> getPosition() {
+        return position.toImmutable();
+    }
+
+    public void setPosition(final Vector2<Float> position) {
+        this.position.set(position);
     }
 
     public void setPosition(final float x, final float y) {
-        setPosition(new Vector2f(x, y));
-    }
-
-    public void setPosition(final Vector2fc position) {
-        this.position = (Vector2f) position;
+        position.set(x, y);
     }
 
     public FontFamily getFamily() {
@@ -91,18 +93,18 @@ public class Text {
     public DrawableCharacter getCharacterAt(final int index) {
         final DrawableCharacter character = new DrawableCharacter(text.charAt(index), fontSize,
                                                                   family); // TODO : Use Map
-        character.setColor(color.x, color.y, color.z);
+        character.setColor(color);
         character.setTransparency(transparency);
         character.setVisible(visible);
         return character;
     }
 
-    public Vector3f getColor() {
-        return color;
+    public Vector3<Float> getColor() {
+        return color.toImmutable();
     }
 
     public void setColor(final float red, final float green, final float blue) {
-        color = new Vector3f(red, green, blue);
+        color.set(red, green, blue);
     }
 
     /**
@@ -160,7 +162,7 @@ public class Text {
     }
 
     public Vector2f getCursorAt(final int index) {
-        final Vector2f cursor = new Vector2f(position);
+        final Vector2f cursor = new Vector2f(position.getX(), position.getY());
         for (int i = 0; i <= index; i++) {
             final DrawableCharacter character = getCharacterAt(i);
             if (i == index) {

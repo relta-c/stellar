@@ -19,7 +19,8 @@
 
 package net.chifumi.stellar.graphics;
 
-import org.joml.Vector2i;
+import net.chifumi.stellar.math.MutableVector2;
+import net.chifumi.stellar.math.Vector2;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -30,14 +31,14 @@ import static org.lwjgl.opengl.GL33.*;
  * <p>This class must be initialized before using any rendering function.</p>
  *
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class Display {
     /**
      * Window resolution
      */
-    private final Vector2i resolution;
+    private final MutableVector2<Integer> resolution;
 
     /**
      * Level of multisample anti-aliasing
@@ -48,7 +49,7 @@ public class Display {
      */
     private long id;
     /**
-     * Whatever window should be fullscreen or not
+     * fullscreen mode
      */
     private boolean fullscreen;
     /**
@@ -61,8 +62,8 @@ public class Display {
     private Camera camera;
 
     /**
-     * Create a new {@link net.chifumi.stellar.graphics.Display}
-     * with some default values for further rendering operation.
+     * Create a new {@link net.chifumi.stellar.graphics.Display} with some default values for further rendering
+     * operation.
      *
      * @param width
      *         window resolution width
@@ -79,7 +80,7 @@ public class Display {
         fullscreen = false;
         this.title = (String) title;
         this.multisamplingLevel = multisamplingLevel;
-        resolution = new Vector2i(width, height);
+        resolution = new MutableVector2<>(width, height);
         camera = new Camera(resolution);
         initialize();
     }
@@ -87,12 +88,12 @@ public class Display {
     /**
      * Get current window resolution.
      *
-     * @return window resolution
+     * @return window resolution in {@link net.chifumi.stellar.math.ImmutableVector2}
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    public Vector2i getResolution() {
-        return resolution;
+    public Vector2<Integer> getResolution() {
+        return resolution.toImmutable();
     }
 
     /**
@@ -154,9 +155,11 @@ public class Display {
         if (this.fullscreen != fullscreen) {
             this.fullscreen = fullscreen;
             if (this.fullscreen) {
-                glfwSetWindowMonitor(id, glfwGetPrimaryMonitor(), 0, 0, resolution.x, resolution.y, GLFW_DONT_CARE);
+                glfwSetWindowMonitor(id, glfwGetPrimaryMonitor(), 0, 0,
+                                     resolution.getX(), resolution.getY(), GLFW_DONT_CARE);
             } else {
-                glfwSetWindowMonitor(id, 0, 0, 0, resolution.x, resolution.y, GLFW_DONT_CARE);
+                glfwSetWindowMonitor(id, 0, 0, 0,
+                                     resolution.getX(), resolution.getY(), GLFW_DONT_CARE);
             }
         }
     }
@@ -243,11 +246,11 @@ public class Display {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
         glfwWindowHint(GLFW_SAMPLES, multisamplingLevel);
-        id = glfwCreateWindow(resolution.x, resolution.y, title, 0L, 0L);
+        id = glfwCreateWindow(resolution.getX(), resolution.getY(), title, 0L, 0L);
         glfwMakeContextCurrent(id);
 
         GL.createCapabilities();
-        glViewport(0, 0, resolution.x, resolution.y);
+        glViewport(0, 0, resolution.getX(), resolution.getY());
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_FRAMEBUFFER_SRGB);

@@ -17,39 +17,40 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.geometry;
 
-enum SpritePrimitive implements Primitive { // TODO : Use EBO
-    INSTANCE;
+import net.chifumi.stellar.math.MutableVector2;
+import net.chifumi.stellar.math.Vector2;
 
-    private final float[] vertices;
-    private final int verticesNum;
-    private final int drawMode;
+public class MutableCircle implements Circle {
+    private final MutableVector2<Float> origin;
+    private float radius;
 
-    SpritePrimitive() {
-        vertices = new float[]{
-                0.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, 1.0f, 0.0f, 1.0f,
-                1.0f, 1.0f, 1.0f, 1.0f,
-                1.0f, 0.0f, 1.0f, 0.0f};
-        verticesNum = 6;
-        drawMode = DrawMode.TRIANGLES.getID();
+    public MutableCircle(final Vector2<Float> origin, final float radius) {
+        this.origin = new MutableVector2<>(origin.getX(), origin.getY());
+        this.radius = radius;
+    }
+
+
+    @Override
+    public Vector2<Float> getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(final Vector2<Float> origin) {
+        this.origin.set(origin);
+    }
+
+    public void setOrigin(final float x, final float y) {
+        origin.set(x, y);
     }
 
     @Override
-    public float[] getVertices() {
-        return vertices.clone();
+    public float getRadius() {
+        return radius;
     }
 
-    @Override
-    public int getDrawMode() {
-        return drawMode;
-    }
-
-    @Override
-    public int getVerticesNum() {
-        return verticesNum;
+    public void setRadius(final float radius) {
+        this.radius = radius;
     }
 }

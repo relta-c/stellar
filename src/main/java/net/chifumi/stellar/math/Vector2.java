@@ -17,13 +17,22 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.math;
 
-import net.chifumi.stellar.math.Vector2;
+public interface Vector2<Type extends Number> {
+    Type getX();
 
-import java.util.List;
+    Type getY();
 
-@FunctionalInterface
-public interface Polygon {
-    List<Vector2<Float>> getVertices();
+    Type dot(final Vector2<? extends Type> vector2);
+
+    Type lengthSquared();
+
+    Type length();
+
+    Vector2<Type> subtract(final Vector2<? extends Type> vector2);
+
+    Vector2<Type> normalize();
+
+    Vector2<Type> perpendicular();
 }
