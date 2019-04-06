@@ -30,7 +30,7 @@ import org.joml.Vector3f;
  */
 public class Text {
     private static final float MAX_RGB = 255.0f;
-    private int size;
+    private int fontSize;
     private float transparency;
     private boolean visible;
     private String text;
@@ -38,8 +38,8 @@ public class Text {
     private Vector3f color;
     private FontFamily family;
 
-    public Text(final String text, final int size, final FontFamily family) {
-        this.size = size;
+    public Text(final String text, final int fontSize, final FontFamily family) {
+        this.fontSize = fontSize;
         this.text = text;
         this.family = family;
         visible = true;
@@ -48,12 +48,12 @@ public class Text {
         color = new Vector3f(MAX_RGB, MAX_RGB, MAX_RGB);
     }
 
-    public int getSize() {
-        return size;
+    public int getFontSize() {
+        return fontSize;
     }
 
-    public void setSize(final int size) {
-        this.size = size;
+    public void setFontSize(final int fontSize) {
+        this.fontSize = fontSize;
     }
 
     public String getText() {
@@ -66,6 +66,10 @@ public class Text {
 
     public Vector2f getPosition() {
         return position;
+    }
+
+    public void setPosition(final float x, final float y) {
+        setPosition(new Vector2f(x, y));
     }
 
     public void setPosition(final Vector2fc position) {
@@ -85,7 +89,8 @@ public class Text {
     }
 
     public DrawableCharacter getCharacterAt(final int index) {
-        final DrawableCharacter character = new DrawableCharacter(text.charAt(index), size, family); // TODO : Use Map
+        final DrawableCharacter character = new DrawableCharacter(text.charAt(index), fontSize,
+                                                                  family); // TODO : Use Map
         character.setColor(color.x, color.y, color.z);
         character.setTransparency(transparency);
         character.setVisible(visible);
@@ -140,15 +145,29 @@ public class Text {
         this.visible = visible;
     }
 
+    public Vector2f getSize() {
+        float width = 0;
+        float height = 0;
+        for (int i = 0; i < getLength(); i++) {
+            final DrawableCharacter character = getCharacterAt(i);
+            width += (character.getAdvance() / (float) family.getNativeSize()) * fontSize;
+            final float charHeight = (character.getYOffset() / (float) family.getNativeSize()) * fontSize;
+            if (charHeight > height) {
+                height = charHeight;
+            }
+        }
+        return new Vector2f(width, height);
+    }
+
     public Vector2f getCursorAt(final int index) {
         final Vector2f cursor = new Vector2f(position);
         for (int i = 0; i <= index; i++) {
             final DrawableCharacter character = getCharacterAt(i);
             if (i == index) {
-                cursor.x += (character.getXOffset() / (float) family.getNativeSize()) * size;
-                cursor.y += (character.getYOffset() / (float) family.getNativeSize()) * size;
+                cursor.x += (character.getXOffset() / (float) family.getNativeSize()) * fontSize;
+                cursor.y += (character.getYOffset() / (float) family.getNativeSize()) * fontSize;
             } else {
-                cursor.x += (character.getAdvance() / (float) family.getNativeSize()) * size;
+                cursor.x += (character.getAdvance() / (float) family.getNativeSize()) * fontSize;
             }
         }
         return cursor;

@@ -31,14 +31,14 @@ public class DrawableCharacter extends TexturedDrawableObject {
     private final int id;
     private final CharacterInfo characterInfo;
     private final FontFamily family;
-    private int size;
+    private int fontSize;
     private Vector2f position;
 
-    DrawableCharacter(final int id, final int size, final FontFamily family) {
+    DrawableCharacter(final int id, final int fontSize, final FontFamily family) {
         super(new CharacterPrimitive(family.getNormalizeCharacterOffset(family.getCharacter(id)),
                                      family.getNormalizeSize(family.getCharacter(id))), family.getAtlas());
         position = new Vector2f();
-        this.size = size;
+        this.fontSize = fontSize;
         this.id = id;
         this.family = family;
 
@@ -63,12 +63,12 @@ public class DrawableCharacter extends TexturedDrawableObject {
         updateModelMatrix();
     }
 
-    public int getSize() {
-        return size;
+    public int getFontSize() {
+        return fontSize;
     }
 
-    public void setSize(final int size) {
-        this.size = size;
+    public void setFontSize(final int fontSize) {
+        this.fontSize = fontSize;
         updateModelMatrix();
     }
 
@@ -104,8 +104,8 @@ public class DrawableCharacter extends TexturedDrawableObject {
     }
 
     private Vector2f getDrawSize() {
-        final float width = (characterInfo.getWidth() / (float) family.getNativeSize()) * size;
-        final float height = (characterInfo.getHeight() / (float) family.getNativeSize()) * size;
+        final float width = (characterInfo.getWidth() / (float) family.getNativeSize()) * fontSize;
+        final float height = (characterInfo.getHeight() / (float) family.getNativeSize()) * fontSize;
         return new Vector2f(width, height);
     }
 }
