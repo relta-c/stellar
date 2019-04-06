@@ -33,7 +33,10 @@ public class FontFamily {
 
     public FontFamily(final CharSequence path) throws FileNotFoundException {
         fontInfo = new FontInfo(path);
-        final String atlasPath = getPath((String) path) + "/" + fontInfo.getFileName();
+
+        final String atlasPath;
+        atlasPath = ((String) path).contains("/") ?
+                getPath((String) path) + "/" + fontInfo.getFileName() : fontInfo.getFileName();
         atlas = new TextureLoader().filter(FilteringMode.LINEAR).load(atlasPath);
     }
 
