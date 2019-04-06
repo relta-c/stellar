@@ -19,8 +19,8 @@
 
 package net.chifumi.stellar.geometry;
 
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
+import net.chifumi.stellar.math.ImmutableVector2;
+import net.chifumi.stellar.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +29,12 @@ public enum Collision {
     ;
 
     public static boolean check(final Polygon polygonA, final Polygon polygonB) { // TODO : MTV
-        final List<Vector2f> axes = getAxis(polygonA.getRealVertices());
-        axes.addAll(getAxis(polygonB.getRealVertices()));
+        final List<Vector2<Float>> axes = getAxis(polygonA.getVertices());
+        axes.addAll(getAxis(polygonB.getVertices()));
         boolean result = true;
-        for (final Vector2f axis : axes) {
-            final Vector2f projectionA = project(axis, polygonA.getRealVertices());
-            final Vector2f projectionB = project(axis, polygonB.getRealVertices());
+        for (final Vector2<Float> axis : axes) {
+            final Vector2<Float> projectionA = project(axis, polygonA.getVertices());
+            final Vector2<Float> projectionB = project(axis, polygonB.getVertices());
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
                 break;
@@ -44,11 +44,11 @@ public enum Collision {
     }
 
     public static boolean check(final Polygon polygonA, final Circle circle) {
-        final List<Vector2f> axes = getCircleAxis(circle.getOrigin(), polygonA);
+        final List<Vector2<Float>> axes = getCircleAxis(circle.getOrigin(), polygonA);
         boolean result = true;
-        for (final Vector2fc axis : axes) {
-            final Vector2fc projectionA = project(axis, polygonA.getRealVertices());
-            final Vector2fc projectionB = projectCircle(axis, circle);
+        for (final Vector2<Float> axis : axes) {
+            final Vector2<Float> projectionA = project(axis, polygonA.getVertices());
+            final Vector2<Float> projectionB = projectCircle(axis, circle);
             if (isOverlap(projectionA, projectionB)) {
                 result = false;
                 break;
@@ -58,15 +58,15 @@ public enum Collision {
     }
 
     public static boolean check(final Circle circleA, final Circle circleB) {
-        final Vector2f originVector = new Vector2f(circleB.getOrigin());
-        originVector.sub(circleA.getOrigin());
-        final float originDistant = originVector.length();
+        final Vector2<Float> originB = circleB.getOrigin();
+        final Vector2<Float> subVector = originB.subtract(circleA.getOrigin());
+        final float originDistant = subVector.length();
         final float radiusSum = circleA.getRadius() + circleB.getRadius();
 
         return originDistant < radiusSum;
     }
 
-    private static Vector2f project(final Vector2fc axis, final List<? extends Vector2f> vertices) {
+    private static Vector2<Float> project(final Vector2<Float> axis, final List<? extends Vector2<Float>> vertices) {
         float min = axis.dot(vertices.get(0));
         float max = min;
 
@@ -78,39 +78,40 @@ public enum Collision {
                 max = point;
             }
         }
-        return new Vector2f(min, max);
+        return new ImmutableVector2<>(min, max);
     }
 
-    private static Vector2f projectCircle(final Vector2fc axis, final Circle circle) {
+    private static Vector2<Float> projectCircle(final Vector2<Float> axis, final Circle circle) {
         final float projection = axis.dot(circle.getOrigin());
-        return new Vector2f(projection - circle.getRadius(), projection + circle.getRadius());
+        return new ImmutableVector2<>(projection - circle.getRadius(), projection + circle.getRadius());
     }
 
-    private static List<Vector2f> getAxis(final List<? extends Vector2f> conner) { // TODO : optimize for rectangles
-        final List<Vector2f> result = new ArrayList<>();
+
+    private static List<Vector2<Float>> getAxis(final List<? extends Vector2<Float>> conner) { // TODO : optimize for rectangles
+        final List<Vector2<Float>> result = new ArrayList<>();
         for (int i = 0; i < conner.size(); i++) {
-            final Vector2f currentVertex = conner.get(i);
-            final Vector2f nextVertex = conner.get((i + 1) % conner.size());
-            final Vector2f edge = currentVertex.sub(nextVertex);
-            final Vector2f normal = edge.perpendicular();
+            final Vector2<Float> currentVertex = conner.get(i);
+            final Vector2<Float> nextVertex = conner.get((i + 1) % conner.size());
+            final Vector2<Float> edge = currentVertex.subtract(nextVertex);
+            final Vector2<Float> normal = edge.perpendicular();
             result.add(normal);
         }
         return result;
     }
 
-    private static List<Vector2f> getCircleAxis(final Vector2fc origin, final Polygon polygon) {
-        final List<Vector2f> result = new ArrayList<>();
-        Vector2f circleAxis = null;
-        for (int i = 0; i < polygon.getRealVertices()
+    private static List<Vector2<Float>> getCircleAxis(final Vector2<Float> origin, final Polygon polygon) {
+        final List<Vector2<Float>> result = new ArrayList<>();
+        Vector2<Float> circleAxis = null;
+        for (int i = 0; i < polygon.getVertices()
                 .size(); i++) { // TODO : Optimize this (Beware, Vector is mutable)
-            final Vector2f currentVertex = polygon.getRealVertices().get(i);
-            final Vector2f nextVertex = polygon.getRealVertices()
-                    .get((i + 1) % polygon.getRealVertices().size());
-            final Vector2f edge = currentVertex.sub(nextVertex);
-            final Vector2f normal = edge.perpendicular();
+            final Vector2<Float> currentVertex = polygon.getVertices().get(i);
+            final Vector2<Float> nextVertex = polygon.getVertices()
+                    .get((i + 1) % polygon.getVertices().size());
+            final Vector2<Float> edge = currentVertex.subtract(nextVertex);
+            final Vector2<Float> normal = edge.perpendicular();
             result.add(normal.normalize());
 
-            final Vector2f vertexToCircle = polygon.getRealVertices().get(i).sub(origin);
+            final Vector2<Float> vertexToCircle = polygon.getVertices().get(i).subtract(origin);
             if (circleAxis != null) {
                 if (vertexToCircle.lengthSquared() < circleAxis.lengthSquared()) {
                     circleAxis = vertexToCircle;
@@ -124,7 +125,9 @@ public enum Collision {
         return result;
     }
 
-    private static boolean isOverlap(final Vector2fc projectionA, final Vector2fc projectionB) {
-        return projectionA.x() > projectionB.y() || projectionB.x() > projectionA.y();
+
+    private static boolean isOverlap(final Vector2<Float> projectionA,
+                                     final Vector2<Float> projectionB) {
+        return projectionA.getX() > projectionB.getY() || projectionB.getX() > projectionA.getY();
     }
 }

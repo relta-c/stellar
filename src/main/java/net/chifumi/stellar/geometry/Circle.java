@@ -19,31 +19,11 @@
 
 package net.chifumi.stellar.geometry;
 
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
+import net.chifumi.stellar.math.Vector2;
 
-public class Circle {
-    private Vector2f origin;
-    private float radius;
+public interface Circle {
 
-    public Circle(final Vector2fc origin, final float radius) {
-        this.origin = (Vector2f) origin;
-        this.radius = radius;
-    }
+    Vector2<Float> getOrigin();
 
-    public Vector2f getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(final Vector2fc origin) {
-        this.origin = (Vector2f) origin;
-    }
-
-    public float getRadius() {
-        return radius;
-    }
-
-    public void setRadius(final float radius) {
-        this.radius = radius;
-    }
+    float getRadius();
 }

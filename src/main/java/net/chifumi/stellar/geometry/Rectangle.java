@@ -21,9 +21,8 @@ package net.chifumi.stellar.geometry;
 
 import net.chifumi.stellar.math.Vector2;
 
-import java.util.List;
+public interface Rectangle {
+    Vector2<Float> getPosition();
 
-@FunctionalInterface
-public interface Polygon {
-    List<Vector2<Float>> getVertices();
+    Vector2<Float> getSize();
 }

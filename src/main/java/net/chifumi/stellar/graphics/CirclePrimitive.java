@@ -24,9 +24,9 @@ class CirclePrimitive implements Primitive {
     private float[] vertices;
     private int verticesNum;
 
-    CirclePrimitive(final int side) {
+    CirclePrimitive(final int face) {
         drawMode = DrawMode.TRIANGLE_FAN.getID();
-        createVertices(side);
+        createVertices(face);
     }
 
     @Override
@@ -45,8 +45,8 @@ class CirclePrimitive implements Primitive {
     }
 
     @SuppressWarnings("NumericCastThatLosesPrecision")
-    private void createVertices(final int side) {
-        verticesNum = side + 2;
+    private void createVertices(final int face) {
+        verticesNum = face + 2;
         final double doublePi = 2 * Math.PI;
 
         final double[] verticesX = new double[verticesNum];
@@ -56,8 +56,8 @@ class CirclePrimitive implements Primitive {
         verticesY[0] = 0;
 
         for (int i = 1; i < verticesNum; i++) {
-            verticesX[i] = StrictMath.cos(i * doublePi / side);
-            verticesY[i] = StrictMath.sin(i * doublePi / side);
+            verticesX[i] = StrictMath.cos(i * doublePi / face);
+            verticesY[i] = StrictMath.sin(i * doublePi / face);
         }
 
         vertices = new float[verticesNum * 4];

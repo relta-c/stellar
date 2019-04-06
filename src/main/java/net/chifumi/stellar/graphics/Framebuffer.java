@@ -19,12 +19,16 @@
 
 package net.chifumi.stellar.graphics;
 
-import org.joml.Vector2ic;
+import net.chifumi.stellar.math.Vector2;
 
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * @version 1.0.2
+ * @since 1.0.0
+ */
 class Framebuffer {
     private final int id;
     private int attachment;
@@ -54,18 +58,34 @@ class Framebuffer {
         return attachment;
     }
 
-    void createRenderBufferAttachment(final Vector2ic resolution, final int multiSampleLevel) {
+
+    /**
+     * @param resolution
+     *         Framebuffer size
+     * @param multiSampleLevel
+     *         Multisampling anti-alias level Should be same as display
+     *
+     * @since 1.0.2
+     */
+    void createRenderBufferAttachment(final Vector2<Integer> resolution, final int multiSampleLevel) {
         bind();
         final int renderbuffer = glGenRenderbuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, id);
         glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
-        glRenderbufferStorageMultisample(GL_RENDERBUFFER, multiSampleLevel, GL_RGB, resolution.x(), resolution.y());
+        glRenderbufferStorageMultisample(GL_RENDERBUFFER, multiSampleLevel, GL_RGB, resolution.getX(),
+                                         resolution.getY());
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
         attachment = renderbuffer;
         bindDefault();
     }
 
-    void createTextureAttachment(final Vector2ic resolution) {
+    /**
+     * @param resolution
+     *         texture size
+     *
+     * @since 1.0.2
+     */
+    void createTextureAttachment(final Vector2<Integer> resolution) {
         bind();
         final int textures = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textures);
@@ -73,7 +93,7 @@ class Framebuffer {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, resolution.x(), resolution.y(), 0,
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, resolution.getX(), resolution.getY(), 0,
                      GL_RGB, GL_UNSIGNED_BYTE, (ByteBuffer) null);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textures, 0);
         attachment = textures;

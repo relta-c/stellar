@@ -19,28 +19,26 @@
 
 package net.chifumi.stellar.geometry;
 
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
+import net.chifumi.stellar.math.Vector2;
 
-public class Line {
-    private final Vector2f pointA;
-    private final Vector2f pointB;
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.0
+ */
+public interface Line {
+    /**
+     * @return point a position
+     *
+     * @since 1.0.2
+     */
+    Vector2<Float> getPointA();
 
-    public Line(final Vector2fc pointA, final Vector2fc pointB) {
-        this.pointA = (Vector2f) pointA;
-        this.pointB = (Vector2f) pointB;
-    }
 
-    public Line(final float pointAX, final float pointAY, final float pointBX, final float pointBY) {
-        pointA = new Vector2f(pointAX, pointAY);
-        pointB = new Vector2f(pointBX, pointBY);
-    }
-
-    public Vector2f getPointA() {
-        return pointA;
-    }
-
-    public Vector2f getPointB() {
-        return pointB;
-    }
+    /**
+     * @return point b position
+     *
+     * @since 1.0.2
+     */
+    Vector2<Float> getPointB();
 }

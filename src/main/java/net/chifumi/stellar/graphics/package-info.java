@@ -22,7 +22,7 @@
  * Contain classes relate to graphic rendering
  *
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.0
  */
 package net.chifumi.stellar.graphics;

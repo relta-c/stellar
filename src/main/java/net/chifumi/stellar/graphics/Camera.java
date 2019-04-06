@@ -19,13 +19,11 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.math.MutableVector2;
+import net.chifumi.stellar.math.Vector2;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
-import org.joml.Vector2i;
-import org.joml.Vector2ic;
 import org.joml.Vector3f;
 
 /**
@@ -33,7 +31,7 @@ import org.joml.Vector3f;
  * <p>Can be used to manipulate game view</p>
  *
  * @author Nattakit Hosapsin
- * @version 1.0.0
+ * @version 1.0.2
  * @since 1.0.0
  */
 public class Camera {
@@ -43,15 +41,15 @@ public class Camera {
      * Camera resolution
      * <p>Should be same as display resolution.</p>
      */
-    private final Vector2i resolution;
+    private final Vector2<Integer> resolution;
+    /**
+     * Camera position
+     */
+    private final MutableVector2<Float> position;
     /**
      * Camera zoom level
      */
     private float zoom;
-    /**
-     * Camera position
-     */
-    private Vector2f position;
     /**
      * View transform matrix
      * <p>Use to transform world space to view space.</p>
@@ -73,11 +71,11 @@ public class Camera {
      * @param resolution
      *         resolution of camera
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    public Camera(final Vector2ic resolution) {
-        this.resolution = (Vector2i) resolution;
-        position = new Vector2f();
+    public Camera(final Vector2<Integer> resolution) {
+        this.resolution = resolution;
+        position = new MutableVector2<>(0.0f, 0.0f);
         viewMatrix = new Matrix4f();
         projectionMatrix = new Matrix4f();
         rotation = new Quaternionf();
@@ -91,9 +89,9 @@ public class Camera {
      *
      * @return camera position
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    public Vector2f getPosition() {
+    public Vector2<Float> getPosition() {
         return position;
     }
 
@@ -101,12 +99,12 @@ public class Camera {
      * Set new camera position.
      *
      * @param position
-     *         new camera position in {@link org.joml.Vector2f}
+     *         camera position
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    public void setPosition(final Vector2fc position) {
-        this.position = (Vector2f) position;
+    public void setPosition(final Vector2<Float> position) {
+        this.position.set(position);
     }
 
 
@@ -114,18 +112,18 @@ public class Camera {
      * Set new camera position.
      *
      * @param x
-     *         x-axis offset of new position
+     *         x-axis offset of position
      * @param y
-     *         y-axis offset of new position
+     *         y-axis offset of position
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
     public void setPosition(final float x, final float y) {
-        setPosition(new Vector2f(x, y));
+        position.set(x, y);
     }
 
     /**
-     * Get rotation in {@link org.joml.Quaternionf}.
+     * Get rotation in quaternion.
      *
      * @return quaternion rotation
      *
@@ -221,10 +219,10 @@ public class Camera {
      */
     void updateViewMatrix() {
         viewMatrix = new Matrix4f();
-        viewMatrix.translate(new Vector3f(-position.x, -position.y, 0.0f));
-        viewMatrix.translate(new Vector3f(HALF * resolution.x, HALF * resolution.y, 0.0f));
+        viewMatrix.translate(new Vector3f(-position.getX(), -position.getY(), 0.0f));
+        viewMatrix.translate(new Vector3f(HALF * resolution.getX(), HALF * resolution.getY(), 0.0f));
         viewMatrix = viewMatrix.rotate(rotation);
-        viewMatrix.translate(new Vector3f(-HALF * resolution.x, -HALF * resolution.y, 0.0f));
+        viewMatrix.translate(new Vector3f(-HALF * resolution.getX(), -HALF * resolution.getY(), 0.0f));
     }
 
     /**
@@ -233,8 +231,8 @@ public class Camera {
     void updateProjectionMatrix() {
         projectionMatrix = new Matrix4f().ortho2D(
                 0.0F - getZoomX(),
-                resolution.x + getZoomX(),
-                resolution.y + getZoomY(),
+                resolution.getX() + getZoomX(),
+                resolution.getY() + getZoomY(),
                 0.0F - getZoomY());
     }
 
@@ -244,16 +242,15 @@ public class Camera {
      * @return x-axis offset
      */
     private float getZoomX() {
-        return (resolution.x * zoom) - resolution.x;
+        return (resolution.getX() * zoom) - resolution.getX();
     }
 
     /**
-     * Get y-axis offset for current zoom level,
-     * use for updating projection matrix.
+     * Get y-axis offset for current zoom level, use for updating projection matrix.
      *
      * @return y-axis offset
      */
     private float getZoomY() {
-        return (resolution.y * zoom) - resolution.y;
+        return (resolution.getY() * zoom) - resolution.getY();
     }
 }

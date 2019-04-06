@@ -19,31 +19,38 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.math.ImmutableVector3;
+import net.chifumi.stellar.math.MutableVector3;
+import net.chifumi.stellar.math.Vector3;
 import org.joml.Matrix4f;
 import org.joml.Matrix4fc;
-import org.joml.Vector3f;
-import org.joml.Vector3fc;
 
 /**
  * Represents drawable object without texture.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.1
  */
 public abstract class DrawableObject implements Drawable {
+    private final MutableVector3<Float> color;
     private Primitive primitive;
-    private Vector3f color;
     private float transparency;
     private boolean visible;
     private Matrix4f modelMatrix;
 
-    DrawableObject(final Primitive primitive) {
+    /**
+     * @param primitive
+     *         primitive
+     *
+     * @since 1.0.1
+     */
+    protected DrawableObject(final Primitive primitive) {
         this.primitive = primitive;
         visible = true;
         modelMatrix = new Matrix4f();
         transparency = MAX_ALPHA;
-        color = new Vector3f(MAX_RGB, MAX_RGB, MAX_RGB);
+        color = new MutableVector3<>(MAX_RGB, MAX_RGB, MAX_RGB);
     }
 
     @Override
@@ -54,7 +61,7 @@ public abstract class DrawableObject implements Drawable {
         setGreen = setGreen < 0 ? 0 : green;
         float setBlue = blue > MAX_RGB ? MAX_RGB : blue;
         setBlue = setBlue < 0 ? 0 : blue;
-        color = new Vector3f(setRed, setGreen, setBlue);
+        color.set(setRed, setGreen, setBlue);
     }
 
     @Override
@@ -96,13 +103,18 @@ public abstract class DrawableObject implements Drawable {
     }
 
     @Override
-    public Vector3f getColor() {
+    public Vector3<Float> getColor() {
         return color;
     }
 
     @Override
-    public Vector3fc getNormalizedColor() {
-        return new Vector3f(color.x / MAX_RGB, color.y / MAX_RGB, color.z / MAX_RGB);
+    public void setColor(final Vector3<Float> color) {
+        this.color.set(color);
+    }
+
+    @Override
+    public Vector3<Float> getNormalizedColor() {
+        return new ImmutableVector3<>(color.getX() / MAX_RGB, color.getY() / MAX_RGB, color.getZ() / MAX_RGB);
     }
 
     @Override
@@ -110,9 +122,16 @@ public abstract class DrawableObject implements Drawable {
         return primitive;
     }
 
+    /**
+     * @param primitive
+     *         primitive
+     */
     void setPrimitive(final Primitive primitive) {
         this.primitive = primitive;
     }
 
+    /**
+     * Update model transform matrix.
+     */
     protected abstract void updateModelMatrix();
 }

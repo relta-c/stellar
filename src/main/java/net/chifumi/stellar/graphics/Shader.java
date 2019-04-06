@@ -19,6 +19,7 @@
 
 package net.chifumi.stellar.graphics;
 
+import net.chifumi.stellar.math.Vector3;
 import org.apache.commons.io.IOUtils;
 import org.joml.Matrix4fc;
 import org.joml.Vector2fc;
@@ -34,6 +35,11 @@ import java.nio.charset.StandardCharsets;
 
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.0
+ */
 @SuppressWarnings({"unused", "SameParameterValue"})
 class Shader {
     private static final int MATRIX4_CAPACITY = 16;
@@ -65,8 +71,8 @@ class Shader {
         glUniform2f(getUniformLocation(name), x, y);
     }
 
-    void setUniform(final CharSequence name, final Vector2fc vec2) {
-        glUniform2f(getUniformLocation(name), vec2.x(), vec2.y());
+    void setUniform(final CharSequence name, final Vector2fc vec2) { // TODO : Rename vec to vector
+        glUniform2f(getUniformLocation(name), vec2.x(), vec2.y());   // TODO : Remove all JOML vectors
     }
 
     void setUniform(final CharSequence name, final float x, final float y, final float z) {
@@ -75,6 +81,18 @@ class Shader {
 
     void setUniform(final CharSequence name, final Vector3fc vec3) {
         glUniform3f(getUniformLocation(name), vec3.x(), vec3.y(), vec3.z());
+    }
+
+    /**
+     * @param name
+     *         name of uniform
+     * @param vector3
+     *         value
+     *
+     * @since 1.0.2
+     */
+    void setUniform(final CharSequence name, final Vector3<Float> vector3) {
+        glUniform3f(getUniformLocation(name), vector3.getX(), vector3.getY(), vector3.getZ());
     }
 
     void setUniform(final CharSequence name, final float x, final float y, final float z, final float w) {
@@ -138,21 +156,6 @@ class Shader {
         }
     }
 
-    private void compile(final CharSequence vertexSource, final CharSequence fragmentSource) {
-        final int vertex;
-        final int fragment;
-        vertex = createShader(vertexSource, ShaderType.VERTEX);
-        fragment = createShader(fragmentSource, ShaderType.FRAGMENT);
-        id = createProgram(vertex, fragment);
-        glDeleteShader(vertex);
-        glDeleteShader(fragment);
-    }
-
-    private int getUniformLocation(final CharSequence name) {
-        use();
-        return glGetUniformLocation(id, name);
-    }
-
     private static String loadTextFile(final CharSequence path) throws FileNotFoundException {
         final String result;
         final InputStream fileStream = loadResourceFile(path);
@@ -174,5 +177,20 @@ class Shader {
             throw new FileNotFoundException("File not found : " + path);
         }
         return fileStream;
+    }
+
+    private void compile(final CharSequence vertexSource, final CharSequence fragmentSource) {
+        final int vertex;
+        final int fragment;
+        vertex = createShader(vertexSource, ShaderType.VERTEX);
+        fragment = createShader(fragmentSource, ShaderType.FRAGMENT);
+        id = createProgram(vertex, fragment);
+        glDeleteShader(vertex);
+        glDeleteShader(fragment);
+    }
+
+    private int getUniformLocation(final CharSequence name) {
+        use();
+        return glGetUniformLocation(id, name);
     }
 }

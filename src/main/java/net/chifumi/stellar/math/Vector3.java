@@ -17,13 +17,20 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.math;
 
-import net.chifumi.stellar.math.Vector2;
+public interface Vector3<Type extends Number> {
+    Type getX();
 
-import java.util.List;
+    Type getY();
 
-@FunctionalInterface
-public interface Polygon {
-    List<Vector2<Float>> getVertices();
+    Type getZ();
+
+    Type dot(final Vector3<? extends Type> vector3);
+
+    Type lengthSquared();
+
+    Type length();
+
+    Vector3<Type> subtract(final Vector3<? extends Type> vector3);
 }
