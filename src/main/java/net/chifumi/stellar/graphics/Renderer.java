@@ -69,6 +69,11 @@ public class Renderer {
                 initialize(primitive);
             }
 
+            if (texturedDrawable.isSolidFilled()) {
+                texturedShader.setUniform("solidFilled", GL_TRUE);
+            } else {
+                texturedShader.setUniform("solidFilled", GL_FALSE);
+            }
             setUniformValues(texturedShader, display, texturedDrawable);
 
             glActiveTexture(GL_TEXTURE0);

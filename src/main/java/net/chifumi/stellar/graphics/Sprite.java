@@ -99,33 +99,12 @@ public class Sprite extends TexturedDrawableObject implements Polygon {
     }
 
     @Override
-    @SuppressWarnings("Duplicates")
-    public List<Vector2f> getRealVertices() { // TODO : Use EBO, then transform vertices
-        Vector4f localPosition;
-        final List<Vector2f> result = new ArrayList<>();
-        localPosition = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topLeft = localPosition.mul(getModelMatrix());
-        result.add(new Vector2f(topLeft.x, topLeft.y));
-        localPosition = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-        final Vector4f topRight = localPosition.mul(getModelMatrix());
-        result.add(new Vector2f(topRight.x, topRight.y));
-        localPosition = new Vector4f(1.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomRight = localPosition.mul(getModelMatrix());
-        result.add(new Vector2f(bottomRight.x, bottomRight.y));
-        localPosition = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-        final Vector4f bottomLeft = localPosition.mul(getModelMatrix());
-        result.add(new Vector2f(bottomLeft.x, bottomLeft.y));
-        return result;
+    public boolean isSolidFilled() {
+        return solidFilled;
     }
 
     @Override
-    protected void updateModelMatrix() {
-        Matrix4f modelMatrix = new Matrix4f();
-        modelMatrix = modelMatrix.translate(new Vector3f(position, 0.0f));
-        modelMatrix = modelMatrix.translate(new Vector3f(HALF * size.x(), HALF * size.y(), 0.0F));
-        modelMatrix = modelMatrix.rotate(rotation);
-        modelMatrix = modelMatrix.translate(new Vector3f(-HALF * size.x(), -HALF * size.y(), 0.0F));
-        modelMatrix.scale(new Vector3f(size, 1.0F));
-        setModelMatrix(modelMatrix);
+    public void setSolidFilled(final boolean solidFilled) {
+        this.solidFilled = solidFilled;
     }
 }

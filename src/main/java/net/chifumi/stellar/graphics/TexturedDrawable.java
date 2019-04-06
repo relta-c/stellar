@@ -56,7 +56,15 @@ public abstract class TexturedDrawableObject extends DrawableObject {
      *
      * @since 1.0.1
      */
-    public void setTexture(final Texture texture) {
-        this.texture = texture;
-    }
+    boolean isSolidFilled();
+
+    /**
+     * Set this to {@code true} to fill alpha with solid color
+     *
+     * @param solidFilled
+     *         solid filled mode
+     *
+     * @since 1.0.2
+     */
+    void setSolidFilled(final boolean solidFilled);
 }
