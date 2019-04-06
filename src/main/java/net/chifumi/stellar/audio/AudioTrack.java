@@ -24,12 +24,12 @@ import java.io.IOException;
 
 import static org.lwjgl.openal.AL10.*;
 
-public class Track {
+public class AudioTrack {
     private static final float MAX_VOLUME = 100.0f;
     private final int id;
     private final int buffer;
 
-    public Track(final String path) throws IOException, UnsupportedAudioFileException {
+    public AudioTrack(final String path) throws IOException, UnsupportedAudioFileException {
         id = alGenSources();
         alSourcef(id, AL_GAIN, 1);
         alSourcef(id, AL_PITCH, 1);
