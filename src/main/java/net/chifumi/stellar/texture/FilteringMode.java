@@ -22,8 +22,23 @@ package net.chifumi.stellar.texture;
 import static org.lwjgl.opengl.GL33.GL_LINEAR;
 import static org.lwjgl.opengl.GL33.GL_NEAREST;
 
+/**
+ * Texture filtering mode.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 public enum FilteringMode {
+    /**
+     * nearest mode will make texture more crisp, this is default
+     * <p><use this for pixelated texture/p></>
+     */
     NEAREST(GL_NEAREST),
+    /**
+     * linear mode will make texture more smooth
+     * <p>use this for realistic texture</p>
+     */
     LINEAR(GL_LINEAR);
 
     private final int id;

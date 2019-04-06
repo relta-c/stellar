@@ -27,10 +27,35 @@ package net.chifumi.stellar.graphics;
  * @since 1.0.0
  */
 public enum Effect {
+    /**
+     * blur image
+     *
+     * @since 1.0.0
+     */
     BLUR(ShaderPath.BLUR),
+    /**
+     * turn image into b/w image
+     *
+     * @since 1.0.0
+     */
     GREYSCALE(ShaderPath.GRAY_SCALE),
+    /**
+     * invert image color
+     *
+     * @since 1.0.0
+     */
     INVERT(ShaderPath.INVERT),
+    /**
+     * do nothing
+     *
+     * @since 1.0.0
+     */
     NORMAL(ShaderPath.NORMAL),
+    /**
+     * sharpen image
+     *
+     * @since 1.0.0
+     */
     SHARPEN(ShaderPath.SHARPEN);
 
     private final ShaderPath path;

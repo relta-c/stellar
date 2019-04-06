@@ -22,31 +22,21 @@ package net.chifumi.stellar.graphics;
 import net.chifumi.stellar.texture.Texture;
 
 /***
- * Represents drawable object with texture.
+ * Interface for drawable object with texture.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.1
- * @since 1.0.1
+ * @version 1.0.2
+ * @since 1.0.2
  */
-public abstract class TexturedDrawableObject extends DrawableObject {
-    private Texture texture;
-
-    protected TexturedDrawableObject(final Primitive primitive, final Texture texture) {
-        super(primitive);
-        this.texture = texture;
-    }
-
+public interface TexturedDrawable extends Drawable {
     /**
      * Get current texture
      *
      * @return texture
      *
-     * @since 1.0.1
+     * @since 1.0.2
      */
-    public Texture getTexture() {
-        return texture;
-    }
-
+    Texture getTexture();
 
     /**
      * Set new texture
@@ -54,7 +44,16 @@ public abstract class TexturedDrawableObject extends DrawableObject {
      * @param texture
      *         new texture
      *
-     * @since 1.0.1
+     * @since 1.0.2
+     */
+    void setTexture(final Texture texture);
+
+    /**
+     * Check if solid filled mode is activated
+     *
+     * @return solid filled mode
+     *
+     * @since 1.0.2
      */
     boolean isSolidFilled();
 
