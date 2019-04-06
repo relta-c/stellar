@@ -29,10 +29,10 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.openal.AL10.*;
 
-public class Mixer {
+public class AudioPlayer {
     private final long device;
 
-    public Mixer() {
+    public AudioPlayer() {
         device = ALC10.alcOpenDevice((ByteBuffer) null);
         final ALCCapabilities deviceCaps = ALC.createCapabilities(device);
 
