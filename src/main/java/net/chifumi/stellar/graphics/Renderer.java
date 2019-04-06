@@ -28,13 +28,20 @@ import java.util.Map;
 
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * @author Nattakit Hosapin
+ * @version 1.0.2
+ * @since 1.0.0
+ */
 public class Renderer {
     private final Map<Primitive, Integer> vertexArraySet;
     private final Map<Primitive, Integer> vertexBufferSet;
+    private final Display display;
     private Shader texturedShader;
     private Shader solidShader;
 
     public Renderer(final Display display) {
+        this.display = display;
         try {
             texturedShader = new Shader(ShaderPath.DEFAULT, ShaderPath.SPRITE);
             solidShader = new Shader(ShaderPath.DEFAULT, ShaderPath.SOLID);
@@ -47,7 +54,17 @@ public class Renderer {
         vertexBufferSet = new HashMap<>();
     }
 
-    public void draw(final Display display, final DrawableObject drawable) {
+    public Display getDisplay() {
+        return display;
+    }
+
+    /**
+     * @param drawable
+     *         drawable object
+     *
+     * @since 1.0.2
+     */
+    public void draw(final Drawable drawable) {
         if (drawable.isVisible()) {
             final Primitive primitive = drawable.getPrimitive();
 
@@ -61,7 +78,13 @@ public class Renderer {
         }
     }
 
-    public void draw(final Display display, final TexturedDrawableObject texturedDrawable) {
+    /**
+     * @param texturedDrawable
+     *         drawable object with texture
+     *
+     * @since 1.0.2
+     */
+    public void draw(final TexturedDrawable texturedDrawable) {
         if (texturedDrawable.isVisible()) {
             final Primitive primitive = texturedDrawable.getPrimitive();
 
@@ -88,12 +111,18 @@ public class Renderer {
         }
     }
 
-    public void draw(final Display display, final Text text) {
+    /**
+     * @param text
+     *         text
+     *
+     * @since 1.0.2
+     */
+    public void draw(final Text text) {
         final int length = text.getLength();
         for (int i = 0; i < length; i++) {
             final DrawableCharacter character = text.getCharacterAt(i);
             character.setPosition(text.getCursorAt(i));
-            draw(display, character);
+            draw(character);
         }
     }
 
@@ -107,7 +136,7 @@ public class Renderer {
         }
     }
 
-    private static void setUniformValues(final Shader shader, final Display display, final DrawableObject drawable) {
+    private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {
         shader.setUniform("projection", display.getCamera().getProjectionMatrix());
         shader.setUniform("view", display.getCamera().getViewMatrix());
         shader.setUniform("model", drawable.getModelMatrix());

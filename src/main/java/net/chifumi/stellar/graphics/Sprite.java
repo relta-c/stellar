@@ -19,83 +19,31 @@
 
 package net.chifumi.stellar.graphics;
 
-import net.chifumi.stellar.geometry.Polygon;
 import net.chifumi.stellar.texture.Texture;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Quaternionfc;
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Sprite extends TexturedDrawableObject implements Polygon {
-    private static final float HALF = 0.5f;
-    private static final int TWO_RADIAN_DEGREE = 360;
-    private Vector2f position;
-    private Vector2f size;
-    private Quaternionf rotation;
+/**
+ * @author Nattakit Hopasin
+ * @version 1.0.2
+ * @since 1.0.0
+ */
+public class Sprite extends DrawableRectangle implements TexturedDrawable {
+    private Texture texture;
+    private boolean solidFilled;
 
     public Sprite(final Texture texture) {
-        super(SpritePrimitive.INSTANCE, texture);
-        position = new Vector2f();
-        size = new Vector2f(texture.getWidth(), texture.getHeight());
-        rotation = new Quaternionf();
+        super(0.0f, 0.0f, 1.0f, 1.0f);
+        this.texture = texture;
         updateModelMatrix();
     }
 
-    public Vector2f getPosition() {
-        return position;
+    @Override
+    public Texture getTexture() {
+        return texture;
     }
 
-    public void setPosition(final Vector2fc position) {
-        this.position = (Vector2f) position;
-        updateModelMatrix();
-    }
-
-    public void setPosition(final float x, final float y) {
-        position = new Vector2f(x, y);
-        updateModelMatrix();
-    }
-
-    public Vector2f getSize() {
-        return size;
-    }
-
-    public void setSize(final Vector2fc size) {
-        this.size = (Vector2f) size;
-        updateModelMatrix();
-    }
-
-    public void setSize(final float width, final float height) {
-        size = new Vector2f(width, height);
-        updateModelMatrix();
-    }
-
-    public Quaternionf getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(final Quaternionfc rotation) {
-        this.rotation = (Quaternionf) rotation;
-        updateModelMatrix();
-    }
-
-    @SuppressWarnings("NumericCastThatLosesPrecision")
-    public float getDegreesRotation() {
-        float degree = (float) Math.toDegrees(rotation.angle());
-        if (rotation.z <= 0 ^ rotation.w <= 0) {
-            degree = TWO_RADIAN_DEGREE - degree;
-        }
-        return degree;
-    }
-
-    public void setDegreesRotation(final float angle) {
-        rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
-        updateModelMatrix();
+    @Override
+    public void setTexture(final Texture texture) {
+        this.texture = texture;
     }
 
     @Override

@@ -28,6 +28,11 @@ import java.util.List;
 
 import static org.lwjgl.opengl.GL33.*;
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.0
+ */
 public class PostProcessor {
     private final Vector2<Integer> resolution;
     private final Framebuffer multiSampledFramebuffer;
@@ -49,7 +54,7 @@ public class PostProcessor {
         initializeRenderData();
     }
 
-    public void addEffect(final Effect effect) {
+    public void add(final Effect effect) {
         if (!effectList.contains(effect)) {
             Shader newShader;
             try {
@@ -67,6 +72,28 @@ public class PostProcessor {
         }
     }
 
+    /**
+     * Remove all postprocessing effect.
+     *
+     * @since 1.0.2
+     */
+    public void clear() { // TODO : Remove each effect
+        effectList.clear();
+        framebufferList.clear();
+        shaderList.clear();
+    }
+
+    /**
+     * Get a list of current postprocessing effect
+     *
+     * @return list of postprocessing effect
+     *
+     * @since 1.0.2
+     */
+    public List<Effect> list() {
+        return Collections.unmodifiableList(effectList);
+    }
+
     public void begin() {
         multiSampledFramebuffer.bind();
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -75,12 +102,12 @@ public class PostProcessor {
 
     public void end() {
         if (framebufferList.isEmpty()) {
-            addEffect(Effect.NORMAL);
+            add(Effect.NORMAL);
         }
         multiSampledFramebuffer.bindRead();
         framebufferList.get(0).bindDraw();
-        glBlitFramebuffer(0, 0, resolution.x, resolution.y,
-                          0, 0, resolution.x, resolution.y,
+        glBlitFramebuffer(0, 0, resolution.getX(), resolution.getY(),
+                          0, 0, resolution.getX(), resolution.getY(),
                           GL_COLOR_BUFFER_BIT,
                           GL_NEAREST);
         Framebuffer.bindDefault();

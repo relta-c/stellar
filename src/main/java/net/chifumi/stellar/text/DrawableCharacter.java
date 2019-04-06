@@ -19,29 +19,33 @@
 
 package net.chifumi.stellar.text;
 
+import net.chifumi.stellar.graphics.DrawableObject;
 import net.chifumi.stellar.graphics.Primitive;
-import net.chifumi.stellar.graphics.TexturedDrawableObject;
+import net.chifumi.stellar.graphics.TexturedDrawable;
+import net.chifumi.stellar.texture.Texture;
 import org.joml.Matrix4f;
 import org.joml.Vector2d;
 import org.joml.Vector2f;
 import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
-public class DrawableCharacter extends TexturedDrawableObject {
+public class DrawableCharacter extends DrawableObject implements TexturedDrawable {
     private final int id;
     private final CharacterInfo characterInfo;
     private final FontFamily family;
     private int fontSize;
     private Vector2f position;
+    private Texture texture;
+    private boolean solidFilled;
 
     DrawableCharacter(final int id, final int fontSize, final FontFamily family) {
         super(new CharacterPrimitive(family.getNormalizeCharacterOffset(family.getCharacter(id)),
-                                     family.getNormalizeSize(family.getCharacter(id))), family.getAtlas());
+                                     family.getNormalizeSize(family.getCharacter(id))));
         position = new Vector2f();
         this.fontSize = fontSize;
         this.id = id;
         this.family = family;
-
+        texture = family.getAtlas();
         characterInfo = family.getCharacter(id);
         updateModelMatrix();
     }
@@ -84,6 +88,33 @@ public class DrawableCharacter extends TexturedDrawableObject {
 
     }
 
+    @Override
+    public Texture getTexture() {
+        return texture;
+    }
+
+    @Override
+    public void setTexture(final Texture texture) {
+        this.texture = texture;
+    }
+
+    @Override
+    public boolean isSolidFilled() {
+        return solidFilled;
+    }
+
+    @Override
+    public void setSolidFilled(final boolean solidFilled) {
+        this.solidFilled = solidFilled;
+    }
+
+    protected void updateModelMatrix() {
+        final Matrix4f modelMatrix = new Matrix4f();
+        modelMatrix.translate(new Vector3f(position, 0.0f));
+        modelMatrix.scale(new Vector3f(getDrawSize(), 1.0F));
+        setModelMatrix(modelMatrix);
+    }
+
     int getXOffset() {
         return characterInfo.getXOffset();
     }
@@ -94,13 +125,6 @@ public class DrawableCharacter extends TexturedDrawableObject {
 
     int getAdvance() {
         return characterInfo.getAdvance();
-    }
-
-    protected void updateModelMatrix() {
-        final Matrix4f modelMatrix = new Matrix4f();
-        modelMatrix.translate(new Vector3f(position, 0.0f));
-        modelMatrix.scale(new Vector3f(getDrawSize(), 1.0F));
-        setModelMatrix(modelMatrix);
     }
 
     private Vector2f getDrawSize() {

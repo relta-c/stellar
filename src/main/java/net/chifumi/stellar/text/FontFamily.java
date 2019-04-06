@@ -44,6 +44,15 @@ public class FontFamily {
         return fontInfo.getName();
     }
 
+    /**
+     * Delete font texture and free memory
+     *
+     * @since 1.0.2
+     */
+    public void delete() {
+        atlas.delete();
+    }
+
     int getNativeSize() {
         return fontInfo.getSize();
     }
