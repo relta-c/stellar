@@ -22,9 +22,6 @@ package net.chifumi.stellar.graphics;
 import net.chifumi.stellar.math.Vector3;
 import org.apache.commons.io.IOUtils;
 import org.joml.Matrix4fc;
-import org.joml.Vector2fc;
-import org.joml.Vector3fc;
-import org.joml.Vector4fc;
 import org.lwjgl.BufferUtils;
 
 import java.io.FileNotFoundException;
@@ -40,7 +37,7 @@ import static org.lwjgl.opengl.GL33.*;
  * @version 1.0.2
  * @since 1.0.0
  */
-@SuppressWarnings({"unused", "SameParameterValue"})
+@SuppressWarnings("SameParameterValue")
 class Shader {
     private static final int MATRIX4_CAPACITY = 16;
     private int id;
@@ -67,22 +64,6 @@ class Shader {
         glUniform1f(getUniformLocation(name), value);
     }
 
-    void setUniform(final CharSequence name, final float x, final float y) {
-        glUniform2f(getUniformLocation(name), x, y);
-    }
-
-    void setUniform(final CharSequence name, final Vector2fc vec2) { // TODO : Rename vec to vector
-        glUniform2f(getUniformLocation(name), vec2.x(), vec2.y());   // TODO : Remove all JOML vectors
-    }
-
-    void setUniform(final CharSequence name, final float x, final float y, final float z) {
-        glUniform3f(getUniformLocation(name), x, y, z);
-    }
-
-    void setUniform(final CharSequence name, final Vector3fc vec3) {
-        glUniform3f(getUniformLocation(name), vec3.x(), vec3.y(), vec3.z());
-    }
-
     /**
      * @param name
      *         name of uniform
@@ -93,14 +74,6 @@ class Shader {
      */
     void setUniform(final CharSequence name, final Vector3<Float> vector3) {
         glUniform3f(getUniformLocation(name), vector3.getX(), vector3.getY(), vector3.getZ());
-    }
-
-    void setUniform(final CharSequence name, final float x, final float y, final float z, final float w) {
-        glUniform4f(getUniformLocation(name), x, y, z, w);
-    }
-
-    void setUniform(final CharSequence name, final Vector4fc vec4) {
-        glUniform4f(getUniformLocation(name), vec4.x(), vec4.y(), vec4.z(), vec4.w());
     }
 
     void setUniform(final CharSequence name, final Matrix4fc mat4) {
