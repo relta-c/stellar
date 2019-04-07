@@ -28,7 +28,7 @@ Designed to be very easy to use.
 ### Documentation
 [Getting Start](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
 
-[Java Doc](https://git.chifumi.net/delta047/stellar/wiki/Getting-Start)
+[Java Doc](https://projects.chifumi.net/stellar/docs/)
 
 ### Dependencies
 - [Apache Common IO](http://commons.apache.org/proper/commons-io/)
