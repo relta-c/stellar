@@ -31,7 +31,7 @@ public class Sprite extends DrawableRectangle implements TexturedDrawable {
     private boolean solidFilled;
 
     public Sprite(final Texture texture) {
-        super(0.0f, 0.0f, 1.0f, 1.0f);
+        super(0.0f, 0.0f, texture.getWidth(), texture.getHeight());
         this.texture = texture;
         updateModelMatrix();
     }
