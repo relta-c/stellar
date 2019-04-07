@@ -22,6 +22,8 @@ package net.chifumi.stellar.geometry;
 import net.chifumi.stellar.math.Vector2;
 
 /**
+ * Interface for object with line properties.
+ *
  * @author Nattakit Hosapsin
  * @version 1.0.2
  * @since 1.0.0

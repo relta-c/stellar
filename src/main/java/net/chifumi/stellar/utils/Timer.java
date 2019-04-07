@@ -32,7 +32,6 @@ public class Timer {
     private boolean started;
     private float startTime;
     private float lastRecordedTime;
-
     /**
      * Create a new {@link net.chifumi.stellar.utils.Timer}.
      */

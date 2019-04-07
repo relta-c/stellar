@@ -19,7 +19,7 @@
 
 
 /**
- * Contain classes relate to math operations and data
+ * Contain classes related to math operations and data
  *
  * @author Nattakit Hosapsin
  * @version 1.0.2

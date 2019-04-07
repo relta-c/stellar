@@ -17,26 +17,22 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
+package net.chifumi.stellar.math;
 
-import net.chifumi.stellar.math.Vector2;
+public interface Vector4<Type extends Number> {
+    Type getX();
 
-import java.util.List;
+    Type getY();
 
-/**
- * Interface for <b>convex shapes</b> polygon.
- *
- * @author Nattakit Hosapsin
- * @version 1.0.2
- * @since 1.0.0
- */
-public interface Polygon {
-    /**
-     * Get conner vertices of polygon.
-     *
-     * @return vertices
-     *
-     * @since 1.0.2
-     */
-    List<Vector2<Float>> getVertices();
+    Type getZ();
+
+    Type getW();
+
+    Type dot(final Vector4<? extends Type> vector4);
+
+    Type lengthSquared();
+
+    Type length();
+
+    Vector4<Type> sub(final Vector4<? extends Type> vector4);
 }

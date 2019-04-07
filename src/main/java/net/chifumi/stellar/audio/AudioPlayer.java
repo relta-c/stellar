@@ -31,7 +31,7 @@ import static org.lwjgl.openal.AL10.*;
 
 /**
  * Represents audio player.
- * <p>This class have to be create before loading and playing any audio.</p>
+ * <p>This class have to be create before loading or playing any audio.</p>
  *
  * @author Nattakit Hosapin
  * @version 1.0.2

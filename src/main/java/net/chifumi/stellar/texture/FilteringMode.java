@@ -32,7 +32,7 @@ import static org.lwjgl.opengl.GL33.GL_NEAREST;
 public enum FilteringMode {
     /**
      * nearest mode will make texture more crisp, this is default
-     * <p><use this for pixelated texture/p></>
+     * <p>use this for pixelated texture</p>
      */
     NEAREST(GL_NEAREST),
     /**

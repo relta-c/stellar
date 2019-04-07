@@ -61,9 +61,10 @@ class Framebuffer {
 
     /**
      * @param resolution
-     *         Framebuffer size
+     *         framebuffer size
      * @param multiSampleLevel
-     *         Multisampling anti-alias level Should be same as display
+     *         multisampling anti-alias level
+     *         <p>This value should be the same as value in display</p>
      *
      * @since 1.0.2
      */

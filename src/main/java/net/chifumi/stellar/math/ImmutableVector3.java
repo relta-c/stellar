@@ -19,6 +19,8 @@
 
 package net.chifumi.stellar.math;
 
+import static net.chifumi.stellar.math.GenericMath.*;
+
 public class ImmutableVector3<Type extends Number> implements Vector3<Type> {
     private final Type x;
     private final Type y;
@@ -51,19 +53,19 @@ public class ImmutableVector3<Type extends Number> implements Vector3<Type> {
         return z;
     }
 
-    public Vector3<Type> subtract(final Vector3<? extends Type> vector3) {
-        final Type resultX = GenericMath.subtract(getX(), vector3.getX());
-        final Type resultY = GenericMath.subtract(getY(), vector3.getY());
-        final Type resultZ = GenericMath.subtract(getZ(), vector3.getZ());
+    public Vector3<Type> sub(final Vector3<? extends Type> vector3) {
+        final Type resultX = subtract(getX(), vector3.getX());
+        final Type resultY = subtract(getY(), vector3.getY());
+        final Type resultZ = subtract(getZ(), vector3.getZ());
         return new ImmutableVector3<>(resultX, resultY, resultZ);
     }
 
 
     public Type dot(final Vector3<? extends Type> vector3) {
-        final Type resultX = GenericMath.multiply(getX(), vector3.getX());
-        final Type resultY = GenericMath.multiply(getY(), vector3.getY());
-        final Type resultZ = GenericMath.multiply(getY(), vector3.getZ());
-        return GenericMath.add(GenericMath.add(resultX, resultY), resultZ);
+        final Type resultX = multiply(getX(), vector3.getX());
+        final Type resultY = multiply(getY(), vector3.getY());
+        final Type resultZ = multiply(getZ(), vector3.getZ());
+        return add(add(resultX, resultY), resultZ);
     }
 
     public Type lengthSquared() {
@@ -71,6 +73,6 @@ public class ImmutableVector3<Type extends Number> implements Vector3<Type> {
     }
 
     public Type length() {
-        return GenericMath.sqrt(lengthSquared());
+        return sqrt(lengthSquared());
     }
 }

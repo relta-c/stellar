@@ -21,9 +21,30 @@ package net.chifumi.stellar.geometry;
 
 import net.chifumi.stellar.math.Vector2;
 
+/**
+ * Interface for object with circle properties.
+ *
+ * @author Nattakit Hosapin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
 public interface Circle {
 
+    /**
+     * Get circle origin position
+     *
+     * @return origin position
+     *
+     * @since 1.0.2
+     */
     Vector2<Float> getOrigin();
 
+    /**
+     * Get radius of circle
+     *
+     * @return radius of circle
+     *
+     * @since 1.0.2
+     */
     float getRadius();
 }

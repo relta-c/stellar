@@ -75,7 +75,7 @@ public class MutableVector3<Type extends Number> implements Vector3<Type> {
         this.z = z;
     }
 
-    public Vector3<Type> subtract(final Vector3<? extends Type> vector3) {
+    public Vector3<Type> sub(final Vector3<? extends Type> vector3) {
         final Type resultX = GenericMath.subtract(getX(), vector3.getX());
         final Type resultY = GenericMath.subtract(getY(), vector3.getY());
         final Type resultZ = GenericMath.subtract(getZ(), vector3.getZ());

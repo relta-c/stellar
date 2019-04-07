@@ -20,8 +20,8 @@
 package net.chifumi.stellar.text;
 
 import net.chifumi.stellar.graphics.Primitive;
-import org.joml.Vector2d;
-import org.joml.Vector2dc;
+import net.chifumi.stellar.math.ImmutableVector2;
+import net.chifumi.stellar.math.Vector2;
 
 import static org.lwjgl.opengl.GL33.GL_TRIANGLES;
 
@@ -30,19 +30,18 @@ class CharacterPrimitive implements Primitive {
     private static final int drawMode = GL_TRIANGLES;
     private final float[] vertices;
 
-    @SuppressWarnings("NumericCastThatLosesPrecision")
-    CharacterPrimitive(final Vector2dc position, final Vector2dc size) {
-        final Vector2d topLeft = (Vector2d) position;
-        final Vector2d topRight = new Vector2d(position.x() + size.x(), position.y());
-        final Vector2d bottomLeft = new Vector2d(position.x(), position.y() + size.y());
-        final Vector2d bottomRight = new Vector2d(position.x() + size.x(), position.y() + size.y());
+    CharacterPrimitive(final Vector2<Double> topLeft, final Vector2<Double> size) {
+        final Vector2<Double> topRight = new ImmutableVector2<>(topLeft.getX() + size.getX(), topLeft.getY());
+        final Vector2<Double> bottomLeft = new ImmutableVector2<>(topLeft.getX(), topLeft.getY() + size.getY());
+        final Vector2<Double> bottomRight = new ImmutableVector2<>(topLeft.getX() + size.getX(),
+                                                                   topLeft.getY() + size.getY());
         vertices = new float[]{
-                0.0f, 1.0f, (float) bottomLeft.x, (float) bottomLeft.y,
-                1.0f, 0.0f, (float) topRight.x, (float) topRight.y,
-                0.0f, 0.0f, (float) topLeft.x, (float) topLeft.y,
-                0.0f, 1.0f, (float) bottomLeft.x, (float) bottomLeft.y,
-                1.0f, 1.0f, (float) bottomRight.x, (float) bottomRight.y,
-                1.0f, 0.0f, (float) topRight.x, (float) topRight.y
+                0.0f, 1.0f, bottomLeft.getX().floatValue(), bottomLeft.getY().floatValue(),
+                1.0f, 0.0f, topRight.getX().floatValue(), topRight.getY().floatValue(),
+                0.0f, 0.0f, topLeft.getX().floatValue(), topLeft.getY().floatValue(),
+                0.0f, 1.0f, bottomLeft.getX().floatValue(), bottomLeft.getY().floatValue(),
+                1.0f, 1.0f, bottomRight.getX().floatValue(), bottomRight.getY().floatValue(),
+                1.0f, 0.0f, topRight.getX().floatValue(), topRight.getY().floatValue()
         };
     }
 

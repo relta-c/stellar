@@ -32,5 +32,5 @@ public interface Vector3<Type extends Number> {
 
     Type length();
 
-    Vector3<Type> subtract(final Vector3<? extends Type> vector3);
+    Vector3<Type> sub(final Vector3<? extends Type> vector3);
 }

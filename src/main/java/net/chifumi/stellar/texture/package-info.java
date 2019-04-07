@@ -17,26 +17,12 @@
  *
  */
 
-package net.chifumi.stellar.geometry;
-
-import net.chifumi.stellar.math.Vector2;
-
-import java.util.List;
 
 /**
- * Interface for <b>convex shapes</b> polygon.
+ * Contain classes related to texture management
  *
  * @author Nattakit Hosapsin
  * @version 1.0.2
  * @since 1.0.0
  */
-public interface Polygon {
-    /**
-     * Get conner vertices of polygon.
-     *
-     * @return vertices
-     *
-     * @since 1.0.2
-     */
-    List<Vector2<Float>> getVertices();
-}
+package net.chifumi.stellar.texture;
