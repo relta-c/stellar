@@ -25,13 +25,14 @@ import org.lwjgl.glfw.GLFW;
  * Represents timer, can be used to get delta time.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.2
+ * @version 1.0.4
  * @since 1.0.2
  */
 public class Timer {
     private boolean started;
     private float startTime;
     private float lastRecordedTime;
+    private float stopTime;
     /**
      * Create a new {@link net.chifumi.stellar.utils.Timer}.
      */
@@ -39,6 +40,7 @@ public class Timer {
         started = false;
         startTime = 0;
         lastRecordedTime = 0;
+        stopTime = 0;
     }
 
     @SuppressWarnings("NumericCastThatLosesPrecision")
@@ -68,12 +70,13 @@ public class Timer {
         return startTime;
     }
 
-    public float getLastRecordedTime() {
-        return lastRecordedTime;
-    }
-
-    public float getSumRecordedTime() {
-        return getCurrentTime() - startTime;
+    /**
+     * @return recorded time since timer start
+     *
+     * @since 1.0.4
+     */
+    public float getRecordedTime() {
+        return started ? getCurrentTime() - startTime : stopTime;
     }
 
     public void reset() {
@@ -84,6 +87,7 @@ public class Timer {
         startTime = 0;
         lastRecordedTime = 0;
         started = false;
+        stopTime = getRecordedTime();
     }
 
     public boolean isStarted() {
