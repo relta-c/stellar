@@ -32,6 +32,10 @@ import org.joml.Vector4f;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @version 1.0.3
+ * @since 1.0.2
+ */
 public class DrawableRectangle extends DrawableObject implements Rectangle, Polygon {
     private static final float HALF = 0.5f;
     private static final int DEGREE_IN_TWO_RADIAN = 360;
@@ -80,17 +84,13 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
         updateModelMatrix();
     }
 
-    public Quaternionf getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(final Quaternionf rotation) {
-        this.rotation = rotation;
-        updateModelMatrix();
-    }
-
+    /**
+     * @return the angle of rotation in degree
+     *
+     * @since 1.0.3
+     */
     @SuppressWarnings("NumericCastThatLosesPrecision")
-    public float getDegreesRotation() {
+    public float getRotation() {
         float degree = (float) Math.toDegrees(rotation.angle());
         if (rotation.z <= 0 ^ rotation.w <= 0) {
             degree = DEGREE_IN_TWO_RADIAN - degree;
@@ -98,7 +98,15 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
         return degree;
     }
 
-    public void setDegreesRotation(final float angle) {
+    /**
+     * Set angle of rotation in degree
+     *
+     * @param angle
+     *         the angle of rotation in degree
+     *
+     * @since 1.0.3
+     */
+    public void setRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
         updateModelMatrix();
     }

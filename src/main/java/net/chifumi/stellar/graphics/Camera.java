@@ -23,7 +23,6 @@ import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
 /**
@@ -31,7 +30,7 @@ import org.joml.Vector3f;
  * <p>Can be used to manipulate game view</p>
  *
  * @author Nattakit Hosapsin
- * @version 1.0.2
+ * @version 1.0.3
  * @since 1.0.0
  */
 public class Camera {
@@ -123,37 +122,14 @@ public class Camera {
     }
 
     /**
-     * Get rotation in quaternion.
-     *
-     * @return quaternion rotation
-     *
-     * @since 1.0.0
-     */
-    public Quaternionf getRotation() {
-        return rotation;
-    }
-
-    /**
-     * Set rotation in quaternion.
-     *
-     * @param rotation
-     *         quaternion rotation
-     *
-     * @since 1.0.0
-     */
-    public void setRotation(final Quaternionfc rotation) {
-        this.rotation = (Quaternionf) rotation;
-    }
-
-    /**
      * Get rotation in degree.
      *
      * @return degree rotation
      *
-     * @since 1.0.0
+     * @since 1.0.3
      */
     @SuppressWarnings("NumericCastThatLosesPrecision")
-    public float getDegreesRotation() {
+    public float getRotation() {
         float degree = (float) Math.toDegrees(rotation.angle());
         if (rotation.z <= 0 ^ rotation.w <= 0) {
             degree = TWO_RADIAN_DEGREE - degree;
@@ -167,9 +143,9 @@ public class Camera {
      * @param angle
      *         rotation in degree
      *
-     * @since 1.0.0
+     * @since 1.0.3
      */
-    public void setDegreesRotation(final float angle) {
+    public void setRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
     }
 
