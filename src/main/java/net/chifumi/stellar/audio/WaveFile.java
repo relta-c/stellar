@@ -37,7 +37,6 @@ import java.nio.ByteBuffer;
  *
  * @author Nattakit Hosapin
  * @version 1.0.0
- * @apiNote
  * @since 1.0.0
  */
 final class WaveFile {
@@ -55,9 +54,9 @@ final class WaveFile {
      *         path to wav file
      *
      * @throws IOException
-     *         something wrong with IO operation (e.g. file not found)
+     *         if something wrong with IO operation (e.g. file not found)
      * @throws UnsupportedAudioFileException
-     *         file format is not wav
+     *         if file format is not wav
      */
     @SuppressWarnings({"NumericCastThatLosesPrecision", "OverlyBroadThrowsClause"})
     WaveFile(final CharSequence path) throws IOException, UnsupportedAudioFileException {

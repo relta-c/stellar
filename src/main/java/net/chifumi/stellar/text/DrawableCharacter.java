@@ -22,11 +22,11 @@ package net.chifumi.stellar.text;
 import net.chifumi.stellar.graphics.DrawableObject;
 import net.chifumi.stellar.graphics.Primitive;
 import net.chifumi.stellar.graphics.TexturedDrawable;
+import net.chifumi.stellar.math.ImmutableVector2;
+import net.chifumi.stellar.math.MutableVector2;
+import net.chifumi.stellar.math.Vector2;
 import net.chifumi.stellar.texture.Texture;
 import org.joml.Matrix4f;
-import org.joml.Vector2d;
-import org.joml.Vector2f;
-import org.joml.Vector2fc;
 import org.joml.Vector3f;
 
 public class DrawableCharacter extends DrawableObject implements TexturedDrawable {
@@ -34,14 +34,14 @@ public class DrawableCharacter extends DrawableObject implements TexturedDrawabl
     private final CharacterInfo characterInfo;
     private final FontFamily family;
     private int fontSize;
-    private Vector2f position;
+    private final MutableVector2<Float> position;
     private Texture texture;
     private boolean solidFilled;
 
     DrawableCharacter(final int id, final int fontSize, final FontFamily family) {
         super(new CharacterPrimitive(family.getNormalizeCharacterOffset(family.getCharacter(id)),
                                      family.getNormalizeSize(family.getCharacter(id))));
-        position = new Vector2f();
+        position = new MutableVector2<>(0.0f, 0.0f);
         this.fontSize = fontSize;
         this.id = id;
         this.family = family;
@@ -58,12 +58,12 @@ public class DrawableCharacter extends DrawableObject implements TexturedDrawabl
         return characterInfo;
     }
 
-    public Vector2f getPosition() {
+    public Vector2<Float> getPosition() {
         return position;
     }
 
-    public void setPosition(final Vector2fc position) {
-        this.position = (Vector2f) position;
+    public void setPosition(final Vector2<Float> position) {
+        this.position.set(position);
         updateModelMatrix();
     }
 
@@ -82,8 +82,8 @@ public class DrawableCharacter extends DrawableObject implements TexturedDrawabl
 
     @Override
     public Primitive getPrimitive() {
-        final Vector2d pos = family.getNormalizeCharacterOffset(characterInfo);
-        final Vector2d rect = family.getNormalizeSize(characterInfo);
+        final Vector2<Double> pos = family.getNormalizeCharacterOffset(characterInfo);
+        final Vector2<Double> rect = family.getNormalizeSize(characterInfo);
         return new CharacterPrimitive(pos, rect);
 
     }
@@ -110,8 +110,8 @@ public class DrawableCharacter extends DrawableObject implements TexturedDrawabl
 
     protected void updateModelMatrix() {
         final Matrix4f modelMatrix = new Matrix4f();
-        modelMatrix.translate(new Vector3f(position, 0.0f));
-        modelMatrix.scale(new Vector3f(getDrawSize(), 1.0F));
+        modelMatrix.translate(new Vector3f(position.getX(), position.getY(), 0.0f));
+        modelMatrix.scale(new Vector3f(getDrawSize().getX(), getDrawSize().getY(), 1.0F));
         setModelMatrix(modelMatrix);
     }
 
@@ -127,9 +127,9 @@ public class DrawableCharacter extends DrawableObject implements TexturedDrawabl
         return characterInfo.getAdvance();
     }
 
-    private Vector2f getDrawSize() {
+    private Vector2<Float> getDrawSize() {
         final float width = (characterInfo.getWidth() / (float) family.getNativeSize()) * fontSize;
         final float height = (characterInfo.getHeight() / (float) family.getNativeSize()) * fontSize;
-        return new Vector2f(width, height);
+        return new ImmutableVector2<>(width, height);
     }
 }

@@ -46,7 +46,7 @@ public class ImmutableVector2<Type extends Number> implements Vector2<Type> {
 
 
     @Override
-    public Vector2<Type> subtract(final Vector2<? extends Type> vector2) {
+    public Vector2<Type> sub(final Vector2<? extends Type> vector2) {
         final Type resultX = GenericMath.subtract(getX(), vector2.getX());
         final Type resultY = GenericMath.subtract(getY(), vector2.getY());
         return new ImmutableVector2<>(resultX, resultY);

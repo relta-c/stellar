@@ -20,7 +20,7 @@
 package net.chifumi.stellar.graphics;
 
 /**
- * Interface for object with minimum data for drawing a sharp
+ * Interface for object with data for drawing a sharpe.
  *
  * @author Nattakit Hosapsin
  * @version 1.0.0
@@ -28,7 +28,8 @@ package net.chifumi.stellar.graphics;
  */
 public interface Primitive {
     /**
-     * Get vertices for rendering this object
+     * Get vertices for rendering this object.
+     * <p>Vertex consist of vector2 of local space location and vector2 of texture coordinate.</p>
      *
      * @return vertices
      *
@@ -37,7 +38,7 @@ public interface Primitive {
     float[] getVertices();
 
     /**
-     * Get draw mode for rendering this object
+     * Get draw mode for rendering this object.
      *
      * @return openGL draw mode
      *
@@ -46,7 +47,7 @@ public interface Primitive {
     int getDrawMode();
 
     /**
-     * Get number of vertices
+     * Get number of vertices.
      *
      * @return number of vertices
      */

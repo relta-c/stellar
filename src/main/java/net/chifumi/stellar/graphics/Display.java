@@ -28,7 +28,7 @@ import static org.lwjgl.opengl.GL33.*;
 
 /**
  * Represents game window and various window properties.
- * <p>This class must be initialized before using any rendering function.</p>
+ * <p>This class <b>must</b> be initialized before using any rendering function.</p>
  *
  * @author Nattakit Hosapsin
  * @version 1.0.2
@@ -36,16 +36,16 @@ import static org.lwjgl.opengl.GL33.*;
  */
 public class Display {
     /**
-     * Window resolution
+     * window resolution
      */
     private final MutableVector2<Integer> resolution;
 
     /**
-     * Level of multisample anti-aliasing
+     * level of multisample anti-aliasing
      */
     private final int multisamplingLevel;
     /**
-     * ID of OpenGL window object
+     * id of openGL display object
      */
     private long id;
     /**
@@ -53,11 +53,11 @@ public class Display {
      */
     private boolean fullscreen;
     /**
-     * Window title
+     * window title
      */
     private String title;
     /**
-     * Camera object that will be use to transform view
+     * camera object that will be use to transform view
      */
     private Camera camera;
 
@@ -97,7 +97,7 @@ public class Display {
     }
 
     /**
-     * Get multisample anti-aliasing level
+     * Get multisample anti-aliasing level.
      *
      * @return level of multisampling
      *
@@ -133,7 +133,7 @@ public class Display {
     }
 
     /**
-     * Check if window are fullscreen
+     * Check if window are fullscreen.
      *
      * @return window fullscreen status
      *
@@ -144,7 +144,7 @@ public class Display {
     }
 
     /**
-     * Set window should be fullscreen or not
+     * Set if window should be fullscreen or not.
      *
      * @param fullscreen
      *         should window be fullscreen
@@ -176,7 +176,7 @@ public class Display {
     }
 
     /**
-     * Set window title
+     * Set window title.
      *
      * @param title
      *         window title
@@ -189,7 +189,7 @@ public class Display {
     }
 
     /**
-     * Swap buffer and clear old buffer to update window state.
+     * Swap buffer then clear old buffers to update window state.
      * <p>This method should be used after every thing have been drawn</p>
      *
      * @since 1.0.0
@@ -217,7 +217,7 @@ public class Display {
     }
 
     /**
-     * Restore monitor resolution and terminate window
+     * Restore monitor resolution and terminate window.
      *
      * @since 1.0.0
      */
@@ -229,7 +229,9 @@ public class Display {
     }
 
     /**
-     * @return window OpenGL object id
+     * Get openGL display id
+     *
+     * @return openGL display id
      *
      * @since 1.0.0
      */
@@ -238,7 +240,7 @@ public class Display {
     }
 
     /**
-     * Initialize glfw and openGL with default configuration
+     * Initialize glfw and openGL with default configuration.
      */
     private void initialize() {
         glfwInit();

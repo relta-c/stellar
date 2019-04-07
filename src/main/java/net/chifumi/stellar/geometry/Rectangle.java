@@ -21,8 +21,30 @@ package net.chifumi.stellar.geometry;
 
 import net.chifumi.stellar.math.Vector2;
 
+/**
+ * Interface for object with rectangle properties.
+ * <p>Rectangle represents with top-left conner and offset to bottom-right.</p>
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
 public interface Rectangle {
+    /**
+     * Get top-left position.
+     *
+     * @return top-left position
+     *
+     * @since 1.0.2
+     */
     Vector2<Float> getPosition();
 
+    /**
+     * Get size of rectangle.
+     *
+     * @return width and height of rectangle
+     *
+     * @since 1.0.2
+     */
     Vector2<Float> getSize();
 }

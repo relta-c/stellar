@@ -30,7 +30,7 @@ public interface Vector2<Type extends Number> {
 
     Type length();
 
-    Vector2<Type> subtract(final Vector2<? extends Type> vector2);
+    Vector2<Type> sub(final Vector2<? extends Type> vector2);
 
     Vector2<Type> normalize();
 

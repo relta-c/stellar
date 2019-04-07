@@ -31,12 +31,12 @@ import org.joml.Matrix4fc;
  */
 public interface Drawable {
     /**
-     * Max color value
+     * max color value
      */
     float MAX_RGB = 255.0f;
 
     /**
-     * Max alpha value
+     * max alpha value
      */
     float MAX_ALPHA = 100.0f;
 
@@ -71,7 +71,7 @@ public interface Drawable {
     /**
      * Get object color.
      *
-     * @return object color
+     * @return object color in rgb
      *
      * @since 1.0.2
      */
@@ -94,27 +94,29 @@ public interface Drawable {
      * Set object color.
      *
      * @param red
-     *         amount of red color (0-255)
+     *         amount of red color (0 - {@value #MAX_RGB})
      * @param green
-     *         amount of green color (0-255)
+     *         amount of green color (0 - {@value #MAX_RGB})
      * @param blue
-     *         amount of blue color (0-255)
+     *         amount of blue color (0 - {@value #MAX_RGB})
      *
      * @since 1.0.0
      */
     void setColor(final float red, final float green, final float blue);
 
     /**
-     * Get object transparency in percent
+     * Get object transparency in percentage
      *
-     * @return transparency value
+     * @return transparency value in percentage
      *
      * @since 1.0.1
      */
     float getTransparency();
 
     /**
-     * Set object transparency in percent
+     * Set object transparency in percentage
+     *
+     * @param transparency in percentage
      *
      * @since 1.0.1
      */

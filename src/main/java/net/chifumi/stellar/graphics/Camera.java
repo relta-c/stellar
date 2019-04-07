@@ -38,38 +38,38 @@ public class Camera {
     private static final int TWO_RADIAN_DEGREE = 360;
     private static final float HALF = 0.5F;
     /**
-     * Camera resolution
+     * camera resolution
      * <p>Should be same as display resolution.</p>
      */
     private final Vector2<Integer> resolution;
     /**
-     * Camera position
+     * camera position
      */
     private final MutableVector2<Float> position;
     /**
-     * Camera zoom level
+     * camera zoom level
      */
     private float zoom;
     /**
-     * View transform matrix
-     * <p>Use to transform world space to view space.</p>
+     * view transform matrix
+     * <p>use to transform world space to view space.</p>
      */
     private Matrix4f viewMatrix;
     /**
-     * Projection transform matrix
+     * projection transform matrix
      * <p>Use to transform view space to clip space.</p>
      */
     private Matrix4f projectionMatrix;
     /**
-     * Camera rotation
+     * camera rotation
      */
     private Quaternionf rotation;
 
     /**
-     * Create a new {@link net.chifumi.stellar.graphics.Camera} with supplied resolution.
+     * create a new {@link net.chifumi.stellar.graphics.Camera} with supplied resolution.
      *
      * @param resolution
-     *         resolution of camera
+     *         size of camera
      *
      * @since 1.0.2
      */

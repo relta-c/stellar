@@ -19,11 +19,26 @@
 
 package net.chifumi.stellar.graphics;
 
+/**
+ * Class for creating primitive with circle.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 class CirclePrimitive implements Primitive {
     private final int drawMode;
     private float[] vertices;
     private int verticesNum;
 
+    /**
+     * Create primitive for circle.
+     *
+     * @param face
+     *         face of sharpe
+     *
+     * @since 1.0.0
+     */
     CirclePrimitive(final int face) {
         drawMode = DrawMode.TRIANGLE_FAN.getID();
         createVertices(face);
@@ -44,6 +59,14 @@ class CirclePrimitive implements Primitive {
         return verticesNum;
     }
 
+    /**
+     * Create vertices with circle.
+     *
+     * @param face
+     *         face of sharpe
+     *
+     * @since 1.0.0
+     */
     @SuppressWarnings("NumericCastThatLosesPrecision")
     private void createVertices(final int face) {
         verticesNum = face + 2;
@@ -65,8 +88,8 @@ class CirclePrimitive implements Primitive {
             final int index = i * 4;
             vertices[index] = (float) verticesX[i];
             vertices[index + 1] = (float) verticesY[i];
-            vertices[index + 2] = 0;
-            vertices[index + 3] = 0;
+            vertices[index + 2] = (float) verticesX[i];
+            vertices[index + 3] = (float) verticesY[i];
         }
     }
 }

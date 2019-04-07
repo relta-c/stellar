@@ -27,6 +27,9 @@ import org.joml.Vector3f;
 
 
 /**
+ * Represents circle that can be draw on screen.
+ * <p>This sharpe is not actually a circle but a convex shapes with many sides.</p>
+ *
  * @author Nattakit Hosapsin
  * @version 1.0.2
  * @since 1.0.1
@@ -36,12 +39,30 @@ public class DrawableCircle extends DrawableObject implements Circle {
     private int face;
 
     /**
+     * Create a new {@link net.chifumi.stellar.graphics.DrawableCircle}.
+     *
+     * @param origin
+     *         origin location
+     * @param radius
+     *         radius of circle
+     *
+     * @since 1.0.2
+     */
+    @SuppressWarnings("NumericCastThatLosesPrecision")
+    public DrawableCircle(final Vector2<Float> origin, final float radius) {
+        this(origin, radius, (int) radius);
+    }
+
+    /**
+     * Create a new {@link net.chifumi.stellar.graphics.DrawableCircle}.
+     *
      * @param origin
      *         origin location
      * @param radius
      *         radius of circle
      * @param face
-     *         sharp face number, this value should be high enough for circle to look smooth
+     *         sharp face number
+     *         <p>this value should be high enough for circle to look smooth</p>
      *
      * @since 1.0.2
      */
@@ -51,10 +72,25 @@ public class DrawableCircle extends DrawableObject implements Circle {
         circle = new MutableCircle(origin, radius);
     }
 
+    /**
+     * Get face number.
+     *
+     * @return face of sharpe
+     *
+     * @since 1.0.0
+     */
     public int getFace() {
         return face;
     }
 
+    /**
+     * Set face number.
+     *
+     * @param face
+     *         face of sharpe
+     *
+     * @since 1.0.0
+     */
     public void setFace(final int face) {
         this.face = face;
     }
@@ -65,6 +101,8 @@ public class DrawableCircle extends DrawableObject implements Circle {
     }
 
     /**
+     * Set circle origin position
+     *
      * @param origin
      *         origin location
      *
@@ -75,6 +113,8 @@ public class DrawableCircle extends DrawableObject implements Circle {
     }
 
     /**
+     * Set circle origin position
+     *
      * @param x
      *         x-axis position of origin
      * @param y
@@ -92,6 +132,8 @@ public class DrawableCircle extends DrawableObject implements Circle {
     }
 
     /**
+     * Set radius of circle
+     *
      * @param radius
      *         radius of circle
      *

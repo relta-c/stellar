@@ -22,6 +22,14 @@ package net.chifumi.stellar.geometry;
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;
 
+
+/**
+ * Represents a rectangle that parameters can be edited.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
 public class MutableRectangle implements Rectangle {
     private final MutableVector2<Float> position;
     private final MutableVector2<Float> size;

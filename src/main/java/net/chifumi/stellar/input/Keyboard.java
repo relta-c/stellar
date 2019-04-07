@@ -57,12 +57,12 @@ public class Keyboard {
     }
 
     /**
-     * Get current key status
+     * Get key status.
      *
      * @param key
-     *         key to check
+     *         {@link net.chifumi.stellar.input.Key} to check
      *
-     * @return key status
+     * @return {@link net.chifumi.stellar.input.KeyState}
      *
      * @since 1.0.0
      */

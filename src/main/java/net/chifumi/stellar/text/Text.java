@@ -19,11 +19,11 @@
 
 package net.chifumi.stellar.text;
 
+import net.chifumi.stellar.math.ImmutableVector2;
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.MutableVector3;
 import net.chifumi.stellar.math.Vector2;
 import net.chifumi.stellar.math.Vector3;
-import org.joml.Vector2f;
 
 /**
  * @author Nattakit Hosapsin
@@ -108,9 +108,9 @@ public class Text {
     }
 
     /**
-     * Get text transparency in percent
+     * Get text transparency in percentage
      *
-     * @return transparency in percent
+     * @return transparency in percentage
      *
      * @since 1.0.1
      */
@@ -119,7 +119,10 @@ public class Text {
     }
 
     /**
-     * Set text transparency in percent
+     * Set text transparency in percentage
+     *
+     * @param transparency
+     *         transparency in percentage
      *
      * @since 1.0.1
      */
@@ -141,13 +144,16 @@ public class Text {
     /**
      * Set object visibility.
      *
+     * @param visible
+     *         visibility of object
+     *
      * @since 1.0.1
      **/
     public void setVisible(final boolean visible) {
         this.visible = visible;
     }
 
-    public Vector2f getSize() {
+    public Vector2<Float> getSize() {
         float width = 0;
         float height = 0;
         for (int i = 0; i < getLength(); i++) {
@@ -158,18 +164,18 @@ public class Text {
                 height = charHeight;
             }
         }
-        return new Vector2f(width, height);
+        return new ImmutableVector2<>(width, height);
     }
 
-    public Vector2f getCursorAt(final int index) {
-        final Vector2f cursor = new Vector2f(position.getX(), position.getY());
+    public Vector2<Float> getCursorAt(final int index) {
+        final MutableVector2<Float> cursor = new MutableVector2<>(position.getX(), position.getY());
         for (int i = 0; i <= index; i++) {
             final DrawableCharacter character = getCharacterAt(i);
             if (i == index) {
-                cursor.x += (character.getXOffset() / (float) family.getNativeSize()) * fontSize;
-                cursor.y += (character.getYOffset() / (float) family.getNativeSize()) * fontSize;
+                cursor.setX(cursor.getX() + (character.getXOffset() / (float) family.getNativeSize()) * fontSize);
+                cursor.setY(cursor.getY() + (character.getYOffset() / (float) family.getNativeSize()) * fontSize);
             } else {
-                cursor.x += (character.getAdvance() / (float) family.getNativeSize()) * fontSize;
+                cursor.setX(cursor.getX() + (character.getAdvance() / (float) family.getNativeSize()) * fontSize);
             }
         }
         return cursor;

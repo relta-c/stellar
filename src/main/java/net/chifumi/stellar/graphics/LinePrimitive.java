@@ -33,7 +33,7 @@ class LinePrimitive implements Primitive {
 
     /**
      * @param line
-     *         line
+     *         a line for creating primitive
      *
      * @since 1.0.2
      */

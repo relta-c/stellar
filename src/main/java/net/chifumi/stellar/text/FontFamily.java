@@ -19,10 +19,11 @@
 
 package net.chifumi.stellar.text;
 
+import net.chifumi.stellar.math.ImmutableVector2;
+import net.chifumi.stellar.math.Vector2;
 import net.chifumi.stellar.texture.FilteringMode;
 import net.chifumi.stellar.texture.Texture;
 import net.chifumi.stellar.texture.TextureLoader;
-import org.joml.Vector2d;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -61,14 +62,14 @@ public class FontFamily {
         return fontInfo.getCharacterMap().get(id);
     }
 
-    Vector2d getNormalizeCharacterOffset(final CharacterInfo characterInfo) {
-        return new Vector2d(characterInfo.getX() / (double) fontInfo.getAtlasWidth(),
-                            characterInfo.getY() / (double) fontInfo.getAtlasHeight());
+    Vector2<Double> getNormalizeCharacterOffset(final CharacterInfo characterInfo) {
+        return new ImmutableVector2<>(characterInfo.getX() / (double) fontInfo.getAtlasWidth(),
+                                      characterInfo.getY() / (double) fontInfo.getAtlasHeight());
     }
 
-    Vector2d getNormalizeSize(final CharacterInfo characterInfo) {
-        return new Vector2d(characterInfo.getWidth() / (double) (fontInfo.getAtlasWidth()),
-                            characterInfo.getHeight() / (double) fontInfo.getAtlasHeight());
+    Vector2<Double> getNormalizeSize(final CharacterInfo characterInfo) {
+        return new ImmutableVector2<>(characterInfo.getWidth() / (double) (fontInfo.getAtlasWidth()),
+                                      characterInfo.getHeight() / (double) fontInfo.getAtlasHeight());
     }
 
     Texture getAtlas() {

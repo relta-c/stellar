@@ -161,7 +161,7 @@ public class AudioTrack {
     /**
      * Check if track is looping.
      *
-     * @return looping
+     * @return is track looping
      *
      * @since 1.0.2
      */
@@ -173,7 +173,7 @@ public class AudioTrack {
      * Set looping mode.
      *
      * @param looping
-     *         looping
+     *         is track should be looping
      */
     public void setLooping(final boolean looping) {
         final int value = looping ? AL_TRUE : AL_FALSE;

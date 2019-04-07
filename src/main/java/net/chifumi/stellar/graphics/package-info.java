@@ -19,7 +19,7 @@
 
 
 /**
- * Contain classes relate to graphic rendering
+ * Contain classes related to graphic rendering
  *
  * @author Nattakit Hosapsin
  * @version 1.0.2

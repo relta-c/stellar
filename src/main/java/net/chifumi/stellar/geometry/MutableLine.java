@@ -22,6 +22,13 @@ package net.chifumi.stellar.geometry;
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;
 
+/**
+ * Represents a line that parameters can be edited.
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
 public class MutableLine implements Line {
     private final MutableVector2<Float> pointA;
     private final MutableVector2<Float> pointB;
