@@ -25,6 +25,7 @@ import static org.lwjgl.opengl.GL21.GL_SRGB_ALPHA;
 import static org.lwjgl.opengl.GL33.GL_RGBA;
 
 public enum ImageFormat {
+    AUTOMATIC(-1),
     RGB(GL_RGB),
     RGBA(GL_RGBA),
     SRGB(GL_SRGB),
