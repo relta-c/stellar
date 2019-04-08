@@ -26,6 +26,11 @@ import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+/**
+ * @author Nattakit Hosapsin
+ * @version 1.0.3.2
+ * @since 1.0.0
+ */
 public class TextureLoader {
     private ImageFormat rawImageFormat;
     private ImageFormat internalImageFormat;
@@ -33,10 +38,14 @@ public class TextureLoader {
     private WrapMode wrapT;
     private FilteringMode filterMin;
     private FilteringMode filterMax;
+    private int colorChannels;
 
+    /**
+     * @since 1.0.0
+     */
     public TextureLoader() {
-        rawImageFormat = ImageFormat.RGBA;
-        internalImageFormat = ImageFormat.SRGB_ALPHA;
+        rawImageFormat = ImageFormat.AUTOMATIC;
+        internalImageFormat = ImageFormat.AUTOMATIC;
         wrapS = WrapMode.REPEAT;
         wrapT = WrapMode.REPEAT;
         filterMin = FilteringMode.NEAREST;
@@ -45,6 +54,8 @@ public class TextureLoader {
 
     public Texture load(final CharSequence path) throws FileNotFoundException {
         final Texture loadTextureFile = LoadTextureFile(path);
+        setRawImageFormat();
+        setInternalImageFormat();
         loadTextureFile.setRawImageFormat(rawImageFormat);
         loadTextureFile.setInternalImageFormat(internalImageFormat);
         loadTextureFile.setWrapS(wrapS);
@@ -87,13 +98,50 @@ public class TextureLoader {
         return this;
     }
 
-    private void setImageFormat(final ImageFormat format) {
-        if (format == ImageFormat.RGB) {
-            rawImageFormat = ImageFormat.RGB;
-            internalImageFormat = ImageFormat.SRGB;
-        } else {
-            rawImageFormat = ImageFormat.RGBA;
-            internalImageFormat = ImageFormat.SRGB_ALPHA;
+    /**
+     * @param rawImageFormat
+     *         raw format
+     *
+     * @since 1.0.3.2
+     */
+    public TextureLoader rawImageFormat(final ImageFormat rawImageFormat) {
+        this.rawImageFormat = rawImageFormat;
+        return this;
+    }
+
+    /**
+     * @param internalImageFormat
+     *         internal format
+     *
+     * @since 1.0.3.2
+     */
+    public TextureLoader internalImageFormat(final ImageFormat internalImageFormat) {
+        this.internalImageFormat = internalImageFormat;
+        return this;
+    }
+
+    private void setInternalImageFormat() {
+        if (internalImageFormat == ImageFormat.AUTOMATIC) {
+            if (colorChannels == 3) {
+                internalImageFormat = ImageFormat.SRGB;
+            } else if (colorChannels == 4) {
+                internalImageFormat = ImageFormat.SRGB_ALPHA;
+            } else {
+                throw new IllegalStateException("Unsupported number of color channels");
+            }
+        }
+    }
+
+    private void setRawImageFormat() {
+        if (rawImageFormat == ImageFormat.AUTOMATIC ||
+                rawImageFormat == ImageFormat.SRGB_ALPHA || rawImageFormat == ImageFormat.RGBA) {
+            if (colorChannels == 3) {
+                rawImageFormat = ImageFormat.RGB;
+            } else if (colorChannels == 4) {
+                rawImageFormat = ImageFormat.RGBA;
+            } else {
+                throw new IllegalStateException("Unsupported number of color channels");
+            }
         }
     }
 
@@ -111,15 +159,7 @@ public class TextureLoader {
             }
             width = rawWidth.get();
             height = rawHeight.get();
-
-            final int colorChannels = channels.get();
-            if (colorChannels == 4) {
-                setImageFormat(ImageFormat.RGBA);
-            } else if (colorChannels == 3) {
-                setImageFormat(ImageFormat.RGB);
-            } else {
-                throw new IllegalStateException("Unsupported image channels : " + colorChannels);
-            }
+            colorChannels = channels.get();
         }
         return new Texture(width, height, data);
     }
