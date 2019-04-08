@@ -84,10 +84,10 @@ public class Timer {
     }
 
     public void stop() {
+        stopTime = getRecordedTime();
         startTime = 0;
         lastRecordedTime = 0;
         started = false;
-        stopTime = getRecordedTime();
     }
 
     public boolean isStarted() {
