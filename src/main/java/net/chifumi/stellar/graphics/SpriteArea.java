@@ -17,12 +17,24 @@
  *
  */
 
-
-/**
- * Contain classes related to graphic rendering
- *
- * @author Nattakit Hosapsin
- * @version 1.0.4
- * @since 1.0.0
- */
 package net.chifumi.stellar.graphics;
+
+import net.chifumi.stellar.math.Vector2;
+
+class SpriteArea {
+    private final Vector2<Double> position;
+    private final Vector2<Double> size;
+
+    SpriteArea(final Vector2<Double> position, final Vector2<Double> size) {
+        this.position = position;
+        this.size = size;
+    }
+
+    Vector2<Double> getPosition() {
+        return position;
+    }
+
+    Vector2<Double> getSize() {
+        return size;
+    }
+}

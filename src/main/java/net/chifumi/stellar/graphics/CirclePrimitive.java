@@ -67,7 +67,6 @@ class CirclePrimitive implements Primitive {
      *
      * @since 1.0.0
      */
-    @SuppressWarnings("NumericCastThatLosesPrecision")
     private void createVertices(final int face) {
         verticesNum = face + 2;
         final double doublePi = 2 * Math.PI;
