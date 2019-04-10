@@ -128,7 +128,6 @@ public class Camera {
      *
      * @since 1.0.3
      */
-    @SuppressWarnings("NumericCastThatLosesPrecision")
     public float getRotation() {
         float degree = (float) Math.toDegrees(rotation.angle());
         if (rotation.z <= 0 ^ rotation.w <= 0) {

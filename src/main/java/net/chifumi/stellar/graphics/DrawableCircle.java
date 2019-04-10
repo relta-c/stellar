@@ -48,7 +48,6 @@ public class DrawableCircle extends DrawableObject implements Circle {
      *
      * @since 1.0.2
      */
-    @SuppressWarnings("NumericCastThatLosesPrecision")
     public DrawableCircle(final Vector2<Float> origin, final float radius) {
         this(origin, radius, (int) radius);
     }
