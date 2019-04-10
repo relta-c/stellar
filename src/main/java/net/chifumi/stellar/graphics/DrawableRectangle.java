@@ -54,6 +54,12 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
         rotation = new Quaternionf();
     }
 
+    DrawableRectangle(final Vector2<Float> position, final Vector2<Float> size, final Primitive primitive) {
+        super(primitive);
+        rectangle = new MutableRectangle(position, size);
+        rotation = new Quaternionf();
+    }
+
     @Override
     public Vector2<Float> getPosition() {
         return rectangle.getPosition();
