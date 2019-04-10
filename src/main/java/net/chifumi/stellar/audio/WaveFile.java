@@ -58,7 +58,6 @@ final class WaveFile {
      * @throws UnsupportedAudioFileException
      *         if file format is not wav
      */
-    @SuppressWarnings({"NumericCastThatLosesPrecision", "OverlyBroadThrowsClause"})
     WaveFile(final CharSequence path) throws IOException, UnsupportedAudioFileException {
         final InputStream stream = new FileInputStream((String) path);
         try (InputStream bufferedStream = new BufferedInputStream(stream)) {
