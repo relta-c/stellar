@@ -43,7 +43,6 @@ public class Timer {
         stopTime = 0;
     }
 
-    @SuppressWarnings("NumericCastThatLosesPrecision")
     public static float getCurrentTime() {
         return (float) GLFW.glfwGetTime();
     }
