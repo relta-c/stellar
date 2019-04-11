@@ -70,13 +70,13 @@ class Framebuffer {
      */
     void createRenderBufferAttachment(final Vector2<Integer> resolution, final int multiSampleLevel) {
         bind();
-        final int renderbuffer = glGenRenderbuffers();
+        final int renderBuffer = glGenRenderbuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, id);
-        glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+        glBindRenderbuffer(GL_RENDERBUFFER, renderBuffer);
         glRenderbufferStorageMultisample(GL_RENDERBUFFER, multiSampleLevel, GL_RGB, resolution.getX(),
                                          resolution.getY());
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderbuffer);
-        attachment = renderbuffer;
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, renderBuffer);
+        attachment = renderBuffer;
         bindDefault();
     }
 
