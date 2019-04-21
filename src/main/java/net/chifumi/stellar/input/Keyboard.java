@@ -19,7 +19,7 @@
 
 package net.chifumi.stellar.input;
 
-import net.chifumi.stellar.graphics.Display;
+import net.chifumi.stellar.graphic.Display;
 
 import java.util.EnumMap;
 import java.util.HashMap;

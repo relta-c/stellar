@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;
@@ -62,7 +62,7 @@ public class Display {
     private Camera camera;
 
     /**
-     * Create a new {@link net.chifumi.stellar.graphics.Display} with some default values for further rendering
+     * Create a new {@link net.chifumi.stellar.graphic.Display} with some default values for further rendering
      * operation.
      *
      * @param width
@@ -108,7 +108,7 @@ public class Display {
     }
 
     /**
-     * Get current {@link net.chifumi.stellar.graphics.Camera} in this object.
+     * Get current {@link net.chifumi.stellar.graphic.Camera} in this object.
      *
      * @return camera object
      *
@@ -120,7 +120,7 @@ public class Display {
     }
 
     /**
-     * Set a new {@link net.chifumi.stellar.graphics.Camera} to transform view.
+     * Set a new {@link net.chifumi.stellar.graphic.Camera} to transform view.
      * <p>This have to be used very time to change camera's parameter.</p>
      *
      * @param camera
@@ -202,22 +202,22 @@ public class Display {
         camera.updateProjectionMatrix();
 
         glfwSwapBuffers(id);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
     }
 
     /**
-     * Check if window should be close.
+     * Check if display is terminating.
      *
-     * @return window closing status
+     * @return the display terminate status
      *
-     * @since 1.0.0
+     * @since 1.0.4
      */
-    public boolean shouldClose() {
+    public boolean isTerminating() {
         return glfwWindowShouldClose(id);
     }
 
     /**
-     * Restore monitor resolution and terminate window.
+     * Restore monitor resolution and terminate display.
      *
      * @since 1.0.0
      */
@@ -256,7 +256,7 @@ public class Display {
         glEnable(GL_BLEND);
         glEnable(GL_MULTISAMPLE);
         glEnable(GL_FRAMEBUFFER_SRGB);
-        glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+        glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // TODO : Make clear color customizable
     }
 }

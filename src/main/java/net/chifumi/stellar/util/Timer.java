@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.utils;
+package net.chifumi.stellar.util;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -34,7 +34,7 @@ public class Timer {
     private float lastRecordedTime;
     private float stopTime;
     /**
-     * Create a new {@link net.chifumi.stellar.utils.Timer}.
+     * Create a new {@link net.chifumi.stellar.util.Timer}.
      */
     public Timer() {
         started = false;
@@ -78,8 +78,12 @@ public class Timer {
         return started ? getCurrentTime() - startTime : stopTime;
     }
 
+    /**
+     * @since 1.0.4
+     */
     public void reset() {
-        lastRecordedTime = getCurrentTime();
+        stop();
+        start();
     }
 
     public void stop() {

@@ -17,12 +17,13 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.math.Vector2;
 import net.chifumi.stellar.texture.Texture;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,5 +68,16 @@ public class SpriteMap {
 
     public Texture getTextureMap() {
         return textureMap;
+    }
+
+    /**
+     * @return the list of sprite name
+     *
+     * @since 1.0.4
+     */
+    public List<CharSequence> getSpriteList() {
+        final List<CharSequence> spriteList = new ArrayList<>(spriteMapData.keySet());
+        spriteList.sort(null);
+        return spriteList;
     }
 }

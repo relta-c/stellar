@@ -87,6 +87,14 @@ public class MutableVector2<Type extends Number> implements Vector2<Type> {
     }
 
     @Override
+    public Type distant(final Vector2<? extends Type> vector2) {
+        return  GenericMath.sqrt(
+                GenericMath.add(
+                        GenericMath.multiply(GenericMath.subtract(vector2.getX(),getX()), GenericMath.subtract(vector2.getX(),getX())),
+                        GenericMath.multiply(GenericMath.subtract(vector2.getY(), vector2.getY()), GenericMath.subtract(vector2.getY(), vector2.getY()))));
+    }
+
+    @Override
     public Vector2<Type> normalize() {
         final Type magnitude = length();
         final Type newX = GenericMath.divide(getX(), magnitude);

@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.geometry.MutableRectangle;
 import net.chifumi.stellar.geometry.Polygon;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @version 1.0.3
+ * @version 1.0.4
  * @since 1.0.2
  */
 public class DrawableRectangle extends DrawableObject implements Rectangle, Polygon {
@@ -58,6 +58,15 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
         super(primitive);
         rectangle = new MutableRectangle(position, size);
         rotation = new Quaternionf();
+    }
+
+    /**
+     * @return rectangle
+     *
+     * @since 1.0.4
+     */
+    public MutableRectangle getRectangle() {
+        return rectangle;
     }
 
     @Override
@@ -105,6 +114,15 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
     }
 
     /**
+     * @return quaternion rotation
+     *
+     * @since 1.0.4
+     */
+    public Quaternionf getQuaternionRotation() {
+        return rotation;
+    }
+
+    /**
      * Set angle of rotation in degree
      *
      * @param angle
@@ -114,6 +132,16 @@ public class DrawableRectangle extends DrawableObject implements Rectangle, Poly
      */
     public void setRotation(final float angle) {
         rotation = new Quaternionf().fromAxisAngleDeg(new Vector3f(0.0f, 0.0f, 1.0f), angle);
+        updateModelMatrix();
+    }
+
+    /**
+     * @param rotation quaternion rotation
+     *
+     * @since 1.0.4
+     */
+    public void setQuaternionRotation(final Quaternionf rotation) {
+        this.rotation = rotation;
         updateModelMatrix();
     }
 

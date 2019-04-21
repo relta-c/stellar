@@ -17,8 +17,9 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
+import net.chifumi.stellar.math.Vector2;
 import net.chifumi.stellar.text.DrawableCharacter;
 import net.chifumi.stellar.text.Text;
 
@@ -30,9 +31,10 @@ import static org.lwjgl.opengl.GL33.*;
 
 /**
  * @author Nattakit Hosapin
- * @version 1.0.2
+ * @version 1.0.4
  * @since 1.0.0
  */
+@SuppressWarnings("MethodMayBeStatic")
 public class Renderer {
     private final Map<Primitive, Integer> vertexArraySet;
     private final Map<Primitive, Integer> vertexBufferSet;
@@ -134,6 +136,27 @@ public class Renderer {
         for (final int vertexBuffer : vertexBufferSet.values()) {
             glDeleteBuffers(vertexBuffer);
         }
+    }
+
+    /**
+     * @param position
+     *         the position of scissor
+     * @param size
+     *         the size of scissor
+     *
+     * @since 1.0.4
+     */
+    public void enableMask(final Vector2<Integer> position, final Vector2<Integer> size) {
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(position.getX(), display.getResolution().getY() - position.getY() - size.getY(),
+                  size.getX(), size.getY());
+    }
+
+    /**
+     * @since 1.0.4
+     */
+    public void disableMask() {
+        glDisable(GL_SCISSOR_TEST);
     }
 
     private static void setUniformValues(final Shader shader, final Display display, final Drawable drawable) {

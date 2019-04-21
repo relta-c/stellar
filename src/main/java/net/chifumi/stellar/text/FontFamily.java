@@ -27,6 +27,7 @@ import net.chifumi.stellar.texture.TextureLoader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 
 public class FontFamily {
     private final FontInfo fontInfo;
@@ -36,8 +37,7 @@ public class FontFamily {
         fontInfo = new FontInfo(path);
 
         final String atlasPath;
-        atlasPath = ((String) path).contains("/") ?
-                getPath((String) path) + "/" + fontInfo.getFileName() : fontInfo.getFileName();
+        atlasPath = Paths.get(new File(((String) path)).getParentFile().toString(), fontInfo.getFileName()).toString();
         atlas = new TextureLoader().filter(FilteringMode.LINEAR).load(atlasPath);
     }
 

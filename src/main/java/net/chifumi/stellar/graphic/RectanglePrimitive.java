@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 enum RectanglePrimitive implements Primitive { // TODO : Use EBO
     INSTANCE;

@@ -17,54 +17,53 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
-/**
- * Post processing effects
+import net.chifumi.stellar.texture.Texture;
+
+/***
+ * Interface for drawable object with texture.
  *
  * @author Nattakit Hosapsin
- * @version 1.0.0
- * @since 1.0.0
+ * @version 1.0.2
+ * @since 1.0.2
  */
-public enum Effect {
+public interface TexturedDrawable extends Drawable {
     /**
-     * blur image
+     * Get current texture
      *
-     * @since 1.0.0
-     */
-    BLUR(ShaderPath.BLUR),
-    /**
-     * turn image into b/w image
+     * @return texture
      *
-     * @since 1.0.0
+     * @since 1.0.2
      */
-    GREYSCALE(ShaderPath.GRAY_SCALE),
-    /**
-     * invert image color
-     *
-     * @since 1.0.0
-     */
-    INVERT(ShaderPath.INVERT),
-    /**
-     * do nothing
-     *
-     * @since 1.0.0
-     */
-    NORMAL(ShaderPath.NORMAL),
-    /**
-     * sharpen image
-     *
-     * @since 1.0.0
-     */
-    SHARPEN(ShaderPath.SHARPEN);
+    Texture getTexture();
 
-    private final ShaderPath path;
+    /**
+     * Set new texture
+     *
+     * @param texture
+     *         new texture
+     *
+     * @since 1.0.2
+     */
+    void setTexture(final Texture texture);
 
-    Effect(final ShaderPath path) {
-        this.path = path;
-    }
+    /**
+     * Check if solid filled mode is activated
+     *
+     * @return solid filled mode
+     *
+     * @since 1.0.2
+     */
+    boolean isSolidFilled();
 
-    ShaderPath getPath() {
-        return path;
-    }
+    /**
+     * Set this to {@code true} to fill alpha with solid color
+     *
+     * @param solidFilled
+     *         solid filled mode
+     *
+     * @since 1.0.2
+     */
+    void setSolidFilled(final boolean solidFilled);
 }

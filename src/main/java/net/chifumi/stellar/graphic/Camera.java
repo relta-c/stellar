@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;
@@ -65,7 +65,7 @@ public class Camera {
     private Quaternionf rotation;
 
     /**
-     * create a new {@link net.chifumi.stellar.graphics.Camera} with supplied resolution.
+     * create a new {@link net.chifumi.stellar.graphic.Camera} with supplied resolution.
      *
      * @param resolution
      *         size of camera

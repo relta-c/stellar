@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.geometry.Circle;
 import net.chifumi.stellar.geometry.MutableCircle;
@@ -39,7 +39,7 @@ public class DrawableCircle extends DrawableObject implements Circle {
     private int face;
 
     /**
-     * Create a new {@link net.chifumi.stellar.graphics.DrawableCircle}.
+     * Create a new {@link net.chifumi.stellar.graphic.DrawableCircle}.
      *
      * @param origin
      *         origin location
@@ -53,7 +53,7 @@ public class DrawableCircle extends DrawableObject implements Circle {
     }
 
     /**
-     * Create a new {@link net.chifumi.stellar.graphics.DrawableCircle}.
+     * Create a new {@link net.chifumi.stellar.graphic.DrawableCircle}.
      *
      * @param origin
      *         origin location
