@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 /**
  * Class for creating primitive with circle.

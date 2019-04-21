@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.math.ImmutableVector2;
 import net.chifumi.stellar.math.Vector2;
@@ -95,8 +95,7 @@ public class Sprite extends DrawableRectangle implements TexturedDrawable {
               new SpritePrimitive(
                       new ImmutableVector2<>(
                               spriteMap.getSpriteArea(name).getPosition().getX() / spriteMap.getTextureMap().getWidth(),
-                              spriteMap.getSpriteArea(name).getPosition().getY() / spriteMap.getTextureMap()
-                                      .getHeight()),
+                              spriteMap.getSpriteArea(name).getPosition().getY() / spriteMap.getTextureMap().getHeight()),
 
                       new ImmutableVector2<>(
                               spriteMap.getSpriteArea(name).getSize().getX() / spriteMap.getTextureMap().getWidth(),

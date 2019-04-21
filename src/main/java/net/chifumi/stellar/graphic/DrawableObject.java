@@ -17,7 +17,7 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
 import net.chifumi.stellar.math.ImmutableVector3;
 import net.chifumi.stellar.math.MutableVector3;

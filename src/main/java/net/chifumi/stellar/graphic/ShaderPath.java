@@ -17,12 +17,26 @@
  *
  */
 
+package net.chifumi.stellar.graphic;
 
-/**
- * Contain classes related to graphic rendering
- *
- * @author Nattakit Hosapsin
- * @version 1.0.4
- * @since 1.0.0
- */
-package net.chifumi.stellar.graphics;
+enum ShaderPath {
+    DEFAULT("shaders/vs_default.glsl"),
+    SPRITE("shaders/fs_sprite.glsl"),
+    SOLID("shaders/fs_solid.glsl"),
+    INVERT("shaders/fs_pos_invert.glsl"),
+    NORMAL("shaders/fs_pos_normal.glsl"),
+    GRAY_SCALE("shaders/fs_pos_greyscale.glsl"),
+    SHARPEN("shaders/fs_pos_sharpen.glsl"),
+    BLUR("shaders/fs_pos_blur.glsl"),
+    FRAMEBUFFER("shaders/vs_pos_framebuffer.glsl");
+
+    private final String path;
+
+    ShaderPath(final CharSequence path) {
+        this.path = (String) path;
+    }
+
+    String getPath() {
+        return path;
+    }
+}

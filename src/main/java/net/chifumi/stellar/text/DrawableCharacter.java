@@ -19,9 +19,9 @@
 
 package net.chifumi.stellar.text;
 
-import net.chifumi.stellar.graphics.DrawableObject;
-import net.chifumi.stellar.graphics.Primitive;
-import net.chifumi.stellar.graphics.TexturedDrawable;
+import net.chifumi.stellar.graphic.DrawableObject;
+import net.chifumi.stellar.graphic.Primitive;
+import net.chifumi.stellar.graphic.TexturedDrawable;
 import net.chifumi.stellar.math.ImmutableVector2;
 import net.chifumi.stellar.math.MutableVector2;
 import net.chifumi.stellar.math.Vector2;

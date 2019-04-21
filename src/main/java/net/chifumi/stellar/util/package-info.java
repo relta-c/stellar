@@ -17,22 +17,12 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
 
-import static org.lwjgl.opengl.GL33.*;
-
-enum DrawMode {
-    LINE(GL_LINES),
-    TRIANGLES(GL_TRIANGLES),
-    TRIANGLE_FAN(GL_TRIANGLE_FAN);
-
-    private final int id;
-
-    DrawMode(final int id) {
-        this.id = id;
-    }
-
-    public int getID() {
-        return id;
-    }
-}
+/**
+ * Contain utilities classes
+ *
+ * @author Nattakit Hosapsin
+ * @version 1.0.2
+ * @since 1.0.2
+ */
+package net.chifumi.stellar.util;

@@ -17,26 +17,22 @@
  *
  */
 
-package net.chifumi.stellar.graphics;
+package net.chifumi.stellar.graphic;
 
-enum ShaderPath {
-    DEFAULT("shaders/vs_default.glsl"),
-    SPRITE("shaders/fs_sprite.glsl"),
-    SOLID("shaders/fs_solid.glsl"),
-    INVERT("shaders/fs_pos_invert.glsl"),
-    NORMAL("shaders/fs_pos_normal.glsl"),
-    GRAY_SCALE("shaders/fs_pos_greyscale.glsl"),
-    SHARPEN("shaders/fs_pos_sharpen.glsl"),
-    BLUR("shaders/fs_pos_blur.glsl"),
-    FRAMEBUFFER("shaders/vs_pos_framebuffer.glsl");
+import static org.lwjgl.opengl.GL33.*;
 
-    private final String path;
+enum DrawMode {
+    LINE(GL_LINES),
+    TRIANGLES(GL_TRIANGLES),
+    TRIANGLE_FAN(GL_TRIANGLE_FAN);
 
-    ShaderPath(final CharSequence path) {
-        this.path = (String) path;
+    private final int id;
+
+    DrawMode(final int id) {
+        this.id = id;
     }
 
-    String getPath() {
-        return path;
+    public int getID() {
+        return id;
     }
 }

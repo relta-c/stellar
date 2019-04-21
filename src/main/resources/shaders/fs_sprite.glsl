@@ -19,7 +19,7 @@ void main()
         textureColor.a == 1;
         fragColor = vec4(color.rgb, 1.0) * textureColor;
     } else {
-        textureColor *= transparency;
+        textureColor.a *= transparency;
         fragColor = vec4(color.rgb, 1.0) * textureColor;
     }
 }
