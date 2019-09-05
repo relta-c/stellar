@@ -1,6 +1,6 @@
 ## Stellar Game Framework
 
-Stellar is a simple java 2D game framework. 
+Stellar is a simple java OpenGL 2D game framework.
 Designed to be very easy to use.
 
 ### Features
